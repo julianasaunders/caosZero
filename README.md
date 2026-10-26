@@ -13,7 +13,7 @@ O **CaosZero** é uma aplicação leve desenvolvida em linha de comando (CLI) co
 ## 👥 2. Integrantes do Grupo
 
 * Juliana Saunders;
-* Jaqueline Feitoza.
+* Jaquelline Feitoza.
 
 ---
 
