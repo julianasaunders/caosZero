@@ -1,15 +1,18 @@
 #!/bin/bash
 
-# Cria pasta de teste
-PASTA_TESTE="sandbox_teste"
-mkdir -p "$PASTA_TESTE"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PASTA_TESTE="$SCRIPT_DIR/sandbox_teste"
 
-# Gera arquivos ficticios
-touch "$PASTA_TESTE/relatorio.pdf"
-touch "$PASTA_TESTE/foto_ferias.jpg"
-touch "$PASTA_TESTE/video_aula.mp4"
-touch "$PASTA_TESTE/backup.zip"
-touch "$PASTA_TESTE/notas.txt"
-touch "$PASTA_TESTE/dados.csv"
+mkdir -p "$PASTA_TESTE"
+for nome in \
+  "relatorio.pdf" \
+  "foto_ferias.jpg" \
+  "video_aula.mp4" \
+  "backup.zip" \
+  "notas.txt" \
+  "dados.csv"
+do
+  : > "$PASTA_TESTE/$nome"
+done
 
 echo "Ambiente de teste criado na pasta '$PASTA_TESTE' com 6 arquivos variados."

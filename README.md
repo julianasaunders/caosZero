@@ -45,10 +45,36 @@ O projeto implementa e demonstra diretamente os seguintes conceitos estudados na
 * **Tratamento de Caminhos Flexíveis:** Permite organizar tanto o diretório atual quanto qualquer pasta específica informada via terminal.
 * **Geração de Log de Auditoria:** Cria um histórico detalhado contendo a data, hora e a ação realizada em cada arquivo movido.
 * **Ambiente de Sandbox para Testes:** Script auxiliar integrado que gera arquivos simulados para validação segura do funcionamento da ferramenta.
+* **Compatibilidade Multiplataforma:** Funciona em Linux e Windows, com scripts específicos para cada sistema.
 
 ---
 
-## 📂 6. Estrutura do Repositório
+## 🪟 6. Como executar em Linux e Windows
+
+### Linux/macOS
+
+```bash
+chmod +x automacao.sh test_ambiente.sh
+./automacao.sh
+./test_ambiente.sh
+```
+
+### Windows (PowerShell)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\automacao.ps1
+powershell -ExecutionPolicy Bypass -File .\test_ambiente.ps1
+```
+
+Também é possível executar o script principal diretamente:
+
+```bash
+python caoszero.py .
+```
+
+---
+
+## 📂 7. Estrutura do Repositório
 
 ```text
 caos-zero/
