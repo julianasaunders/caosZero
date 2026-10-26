@@ -53,7 +53,8 @@
             </p>
 
             <div class="actions">
-              <button class="primary-button" type="button">Acessar demo</button>
+              <input id="folder-input" type="file" webkitdirectory directory multiple hidden />
+              <button id="add-folder-button" class="primary-button" type="button">Adicionar pasta</button>
               <button class="secondary-button" type="button">Ver workflow</button>
             </div>
 
@@ -69,39 +70,22 @@
               <div class="stats-grid">
                 <article class="mini-card accent-a">
                   <span class="label">Arquivos</span>
-                  <strong>2.480</strong>
+                  <strong id="stat-files">0</strong>
                   <small>organizados</small>
                 </article>
                 <article class="mini-card accent-b">
                   <span class="label">Tempo</span>
-                  <strong>03s</strong>
+                  <strong id="stat-time">00s</strong>
                   <small>média</small>
                 </article>
                 <article class="mini-card accent-c">
                   <span class="label">Categorias</span>
-                  <strong>07</strong>
+                  <strong id="stat-categories">0</strong>
                   <small>grupos</small>
                 </article>
               </div>
 
-              <div class="folder-list" aria-label="Lista de categorias">
-                <div class="folder-item">
-                  <span class="folder-name">Documentos</span>
-                  <span class="folder-count">148</span>
-                </div>
-                <div class="folder-item">
-                  <span class="folder-name">Imagens</span>
-                  <span class="folder-count">642</span>
-                </div>
-                <div class="folder-item">
-                  <span class="folder-name">Vídeos</span>
-                  <span class="folder-count">214</span>
-                </div>
-                <div class="folder-item">
-                  <span class="folder-name">Compactados</span>
-                  <span class="folder-count">89</span>
-                </div>
-              </div>
+              <div class="folder-list" aria-label="Lista de categorias"></div>
             </div>
           </div>
         </section>
