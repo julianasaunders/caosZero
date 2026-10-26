@@ -14,6 +14,8 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-theme="dark">
@@ -32,16 +34,16 @@
 
         <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema">
           <span class="toggle-track">
+            <span class="toggle-icon toggle-icon-sun"><ion-icon name="sunny"></ion-icon></span>
+            <span class="toggle-icon toggle-icon-moon"><ion-icon name="moon"></ion-icon></span>
             <span class="toggle-thumb"></span>
           </span>
-          <span class="toggle-label">Dark</span>
         </button>
       </header>
 
       <main class="main-content">
         <section class="hero" id="sobre">
           <div class="hero-copy">
-            <span class="eyebrow">Automação inteligente</span>
             <h1>
               Organize sua pasta com
               <span class="gradient-text">clareza</span>
@@ -53,14 +55,11 @@
             </p>
 
             <div class="actions">
-              <input id="folder-input" type="file" webkitdirectory directory multiple hidden />
               <button id="add-folder-button" class="primary-button" type="button">Adicionar pasta</button>
-              <button class="secondary-button" type="button">Ver workflow</button>
             </div>
 
             <ul class="feature-pills" aria-label="Principais recursos">
               <li>Classificação por extensão</li>
-              <li>Log de auditoria</li>
               <li>Organização automática</li>
             </ul>
           </div>

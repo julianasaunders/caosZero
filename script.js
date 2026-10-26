@@ -1,12 +1,10 @@
 const body = document.body;
 const toggleButton = document.getElementById('theme-toggle');
-const toggleLabel = document.querySelector('.toggle-label');
 const statFiles = document.getElementById('stat-files');
 const statTime = document.getElementById('stat-time');
 const statCategories = document.getElementById('stat-categories');
 const folderList = document.querySelector('.folder-list');
 const addFolderButton = document.getElementById('add-folder-button');
-const folderInput = document.getElementById('folder-input');
 
 const projectCategories = {
   Documentos: ['.pdf', '.docx', '.txt', '.xlsx', '.pptx', '.csv'],
@@ -37,6 +35,14 @@ const getFileCategory = (fileName) => {
 const renderFolderList = (items) => {
   folderList.innerHTML = '';
 
+  if (!items.length) {
+    const emptyItem = document.createElement('div');
+    emptyItem.className = 'folder-item';
+    emptyItem.innerHTML = '<span class="folder-name">Nenhuma pasta</span><span class="folder-count">0</span>';
+    folderList.appendChild(emptyItem);
+    return;
+  }
+
   items.forEach((item) => {
     const folderItem = document.createElement('div');
     folderItem.className = 'folder-item';
@@ -57,11 +63,20 @@ const renderFolderList = (items) => {
 const updateStats = (stats) => {
   const totalFiles = stats.reduce((sum, item) => sum + item.count, 0);
   const totalCategories = stats.filter((item) => item.count > 0).length;
-  const averageSeconds = totalFiles > 0 ? Math.max(1, Math.round(totalFiles / 28)) : 1;
+
+  if (totalFiles === 0) {
+    statFiles.textContent = '0';
+    statTime.textContent = '00s';
+    statCategories.textContent = '0';
+    renderFolderList([]);
+    return;
+  }
+
+  const averageSeconds = Math.max(1, Math.round(totalFiles / 28));
 
   statFiles.textContent = totalFiles.toLocaleString('pt-BR');
   statTime.textContent = formatSeconds(averageSeconds);
-  statCategories.textContent = String(totalCategories || 1);
+  statCategories.textContent = String(totalCategories);
 
   const orderedStats = Object.entries(projectCategories).map(([name]) => ({
     name,
@@ -71,7 +86,7 @@ const updateStats = (stats) => {
   renderFolderList(orderedStats.filter((item) => item.count > 0));
 };
 
-const readFolderFiles = (files) => {
+const analyzeFolderEntries = (files) => {
   const categoryCounts = Object.keys(projectCategories).map((name) => ({ name, count: 0 }));
 
   files.forEach((file) => {
@@ -90,20 +105,55 @@ const readFolderFiles = (files) => {
   updateStats(categoryCounts);
 };
 
-const handleFolderSelection = (event) => {
-  const files = Array.from(event.target.files || []);
+const organizeDirectoryHandle = async (directoryHandle) => {
+  const fileEntries = [];
 
-  if (!files.length) {
+  for await (const [name, handle] of directoryHandle.entries()) {
+    if (handle.kind === 'file') {
+      fileEntries.push({ name, handle });
+    }
+  }
+
+  const categoryCounts = Object.keys(projectCategories).map((name) => ({ name, count: 0 }));
+
+  for (const entry of fileEntries) {
+    const categoryName = getFileCategory(entry.name);
+    const categoryFound = categoryCounts.find((item) => item.name === categoryName);
+
+    if (!categoryFound) {
+      continue;
+    }
+
+    const categoryFolder = await directoryHandle.getDirectoryHandle(categoryName, { create: true });
+    const destinationFile = await categoryFolder.getFileHandle(entry.name, { create: true });
+    const fileData = await entry.handle.getFile();
+    const writable = await destinationFile.createWritable();
+    await writable.write(await fileData.arrayBuffer());
+    await writable.close();
+    await directoryHandle.removeEntry(entry.name);
+    categoryFound.count += 1;
+  }
+
+  updateStats(categoryCounts);
+};
+
+const handleDirectorySelection = async () => {
+  if (!('showDirectoryPicker' in window)) {
+    alert('Seu navegador não suporta a seleção direta de pastas. Use o Chrome/Edge mais recente.');
     return;
   }
 
-  readFolderFiles(files);
+  try {
+    const directoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    await organizeDirectoryHandle(directoryHandle);
+  } catch (error) {
+    console.error('Erro ao acessar a pasta:', error);
+  }
 };
 
 const applyTheme = (theme) => {
   const resolvedTheme = theme === 'light' ? 'light' : 'dark';
   body.setAttribute('data-theme', resolvedTheme);
-  toggleLabel.textContent = resolvedTheme === 'dark' ? 'Dark' : 'Light';
   localStorage.setItem('theme', resolvedTheme);
 };
 
@@ -120,11 +170,7 @@ toggleButton.addEventListener('click', () => {
   applyTheme(nextTheme);
 });
 
-addFolderButton.addEventListener('click', () => {
-  folderInput.click();
-});
-
-folderInput.addEventListener('change', handleFolderSelection);
+addFolderButton.addEventListener('click', handleDirectorySelection);
 
 const defaultStats = Object.entries(projectCategories).map(([name]) => ({ name, count: 0 }));
 updateStats(defaultStats);
