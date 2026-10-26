@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CaosZero</title>
+    <meta
+      name="description"
+      content="Interface minimalista, responsiva e com tema claro e escuro para o projeto CaosZero."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-theme="dark">
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="Logo da marca">
+          <span class="brand-mark">C</span>
+          <span>CaosZero</span>
+        </div>
+
+        <nav class="nav" aria-label="Navegação principal">
+          <a href="#sobre">Sobre</a>
+          <a href="#funcionalidades">Funcionalidades</a>
+          <a href="#impacto">Impacto</a>
+        </nav>
+
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema">
+          <span class="toggle-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <span class="toggle-label">Dark</span>
+        </button>
+      </header>
+
+      <main class="main-content">
+        <section class="hero" id="sobre">
+          <div class="hero-copy">
+            <span class="eyebrow">Automação inteligente</span>
+            <h1>
+              Organize sua pasta com
+              <span class="gradient-text">clareza</span>
+              e controle.
+            </h1>
+            <p>
+              O <strong>CaosZero</strong> transforma diretórios desorganizados em espaços
+              produtivos, separando arquivos por categoria com rapidez e precisão.
+            </p>
+
+            <div class="actions">
+              <button class="primary-button" type="button">Acessar demo</button>
+              <button class="secondary-button" type="button">Ver workflow</button>
+            </div>
+
+            <ul class="feature-pills" aria-label="Principais recursos">
+              <li>Classificação por extensão</li>
+              <li>Log de auditoria</li>
+              <li>Organização automática</li>
+            </ul>
+          </div>
+
+          <div class="hero-visual" aria-label="Painel visual do projeto">
+            <div class="panel glass-panel">
+              <div class="panel-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+
+              <div class="stats-grid">
+                <article class="mini-card accent-a">
+                  <span class="label">Arquivos</span>
+                  <strong>2.480</strong>
+                  <small>organizados</small>
+                </article>
+                <article class="mini-card accent-b">
+                  <span class="label">Tempo</span>
+                  <strong>03s</strong>
+                  <small>média</small>
+                </article>
+                <article class="mini-card accent-c">
+                  <span class="label">Categorias</span>
+                  <strong>07</strong>
+                  <small>grupos</small>
+                </article>
+              </div>
+
+              <div class="folder-list" aria-label="Lista de categorias">
+                <div class="folder-item">
+                  <span class="folder-name">Documentos</span>
+                  <span class="folder-count">148</span>
+                </div>
+                <div class="folder-item">
+                  <span class="folder-name">Imagens</span>
+                  <span class="folder-count">642</span>
+                </div>
+                <div class="folder-item">
+                  <span class="folder-name">Vídeos</span>
+                  <span class="folder-count">214</span>
+                </div>
+                <div class="folder-item">
+                  <span class="folder-name">Compactados</span>
+                  <span class="folder-count">89</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="info-grid" id="funcionalidades">
+          <article class="info-card">
+            <span class="card-badge badge-turquoise">IA</span>
+            <h2>Fluxo simples</h2>
+            <p>Uma rotina prática para perceber, classificar e mover arquivos com poucos passos.</p>
+          </article>
+
+          <article class="info-card">
+            <span class="card-badge badge-purple">IA</span>
+            <h2>Visual claro</h2>
+            <p>Interface pensada para reduzir ruído visual e priorizar leitura e ação imediata.</p>
+          </article>
+
+          <article class="info-card">
+            <span class="card-badge badge-gold">IA</span>
+            <h2>Escala suave</h2>
+            <p>Uma experiência que continua bonita em desktop, tablet e celular sem perder consistência.</p>
+          </article>
+        </section>
+
+        <section class="bottom-panel" id="impacto">
+          <div>
+            <span class="eyebrow">Resultado</span>
+            <h2>Mais ordem, menos distração.</h2>
+          </div>
+          <p>
+            O objetivo é tornar a rotina de organização mais eficiente, com foco em
+            produtividade, clareza visual e uma experiência agradável em qualquer contexto.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
