@@ -71,14 +71,21 @@ button {
 }
 
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 20px 0 28px;
+  padding: 40px 0 28px;
 }
 
 .brand {
+  position: fixed;
+  top: 22px;
+  left: 24px;
+  z-index: 30;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -99,8 +106,13 @@ button {
 }
 
 .nav {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 22px;
 }
 
@@ -116,42 +128,48 @@ button {
 }
 
 .theme-toggle {
+  position: fixed;
+  top: 22px;
+  right: 24px;
+  z-index: 50;
   appearance: none;
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--text-strong);
   border-radius: 999px;
-  padding: 8px 12px;
+  padding: 6px 10px;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   box-shadow: 0 12px 30px var(--shadow);
 }
 
 .toggle-track {
   position: relative;
-  width: 54px;
-  height: 30px;
+  width: 42px;
+  height: 24px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border);
   display: inline-block;
+  overflow: hidden;
 }
 
 .toggle-thumb {
   position: absolute;
-  top: 3px;
-  left: 4px;
-  width: 20px;
-  height: 20px;
+  top: 50%;
+  left: 3px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
   box-shadow: 0 8px 20px rgba(122, 130, 255, 0.35);
+  transform: translateY(-50%);
   transition: transform 0.2s ease;
 }
 
 body[data-theme="light"] .toggle-thumb {
-  transform: translateX(24px);
+  transform: translate(18px, -50%);
 }
 
 .toggle-label {
@@ -380,6 +398,29 @@ h1 {
   border: 1px solid var(--border);
   background: var(--panel);
   box-shadow: 0 20px 40px var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+}
+
+.info-card:nth-child(1):hover,
+.info-card:nth-child(1):focus-within {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(126, 231, 217, 0.35);
+  box-shadow: 0 20px 36px rgba(126, 231, 217, 0.18), 0 0 0 1px rgba(126, 231, 217, 0.08);
+}
+
+.info-card:nth-child(2):hover,
+.info-card:nth-child(2):focus-within {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(138, 165, 255, 0.35);
+  box-shadow: 0 20px 36px rgba(138, 165, 255, 0.18), 0 0 0 1px rgba(138, 165, 255, 0.08);
+}
+
+.info-card:nth-child(3):hover,
+.info-card:nth-child(3):focus-within {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(247, 201, 122, 0.35);
+  box-shadow: 0 20px 36px rgba(247, 201, 122, 0.18), 0 0 0 1px rgba(247, 201, 122, 0.08);
 }
 
 .card-badge {
