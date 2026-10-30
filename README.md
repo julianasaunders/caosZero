@@ -77,12 +77,39 @@ python caoszero.py .
 ## 📂 7. Estrutura do Repositório
 
 ```text
-caos-zero/
-├── src/
-│   └── caoszero.py          # Código-fonte principal da aplicação
-├── scripts/
-│   └── automacao.sh         # Script Bash para execução automatizada
-├── tests/
-│   └── test_ambiente.sh     # Script para criar um ambiente de testes simulado
-├── .gitignore               # Arquivos ignorados pelo Git
-└── README.md                # Documentação oficial do projeto
+caosZero/
+├── caoszero.py            # Código-fonte principal da aplicação (CLI)
+├── automacao.sh           # Script Bash para execução automatizada
+├── automacao.ps1          # Equivalente em PowerShell para Windows
+├── test_ambiente.sh       # Cria um ambiente de testes simulado (Linux)
+├── test_ambiente.ps1      # Cria um ambiente de testes simulado (Windows)
+├── index.html             # Página de apresentação do projeto
+├── styles.css             # Estilos da página
+├── script.js              # Interações da página
+├── .gitignore             # Arquivos ignorados pelo Git
+└── README.md              # Documentação oficial do projeto
+```
+
+---
+
+## 📂 Materiais do repositório
+
+| Arquivo | O que apresenta |
+|---|---|
+| [🐍 caoszero.py](caoszero.py) | Aplicação CLI que organiza arquivos por categoria e grava o log de auditoria. |
+| [🐚 automacao.sh](automacao.sh) · [🪟 automacao.ps1](automacao.ps1) | Scripts de execução automatizada no Linux e no Windows. |
+| [🧪 test_ambiente.sh](test_ambiente.sh) · [🧪 test_ambiente.ps1](test_ambiente.ps1) | Geram um ambiente de testes com arquivos simulados. |
+| [🌐 index.html](index.html) · [🎨 styles.css](styles.css) · [⚡ script.js](script.js) | Página de apresentação do projeto. |
+
+---
+
+## 🔗 Projeto relacionado
+
+Desenvolvido para a disciplina de **Sistemas Operacionais**:
+
+- [📚 Repositório da disciplina](https://github.com/julianasaunders/sistemas-operacionais)
+- [💻 Perfil de Juliana Saunders](https://github.com/julianasaunders)
+
+---
+
+*Projeto Integrador — Fatec Itapetininga · 2026*
