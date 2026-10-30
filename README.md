@@ -108,7 +108,6 @@ caosZero/
 Desenvolvido para a disciplina de **Sistemas Operacionais**:
 
 - [📚 Repositório da disciplina](https://github.com/julianasaunders/sistemas-operacionais)
-- [💻 Perfil de Juliana Saunders](https://github.com/julianasaunders)
 
 ---
 
