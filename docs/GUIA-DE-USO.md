@@ -207,21 +207,6 @@ chmod +x scripts/*.sh
 
 ---
 
-## Cenário 8 — Apresentação
-
-```bash
-python caoszero.py demo
-python caoszero.py organize sandbox_teste
-python caoszero.py organize sandbox_teste --apply --report
-python caoszero.py undo --latest
-python caoszero.py doctor
-python caoszero.py interactive
-```
-
-O modo interativo evita digitar comandos longos durante a demonstração.
-
----
-
 ## Configuração personalizada
 
 Crie um arquivo:

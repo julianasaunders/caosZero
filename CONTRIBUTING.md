@@ -205,7 +205,7 @@ dependa de arquivos do usuário.
 ## Documentação
 
 - README: visão geral e primeiros passos.
-- `docs/`: planejamento, arquitetura, conceitos, guia, testes e apresentação.
+- `docs/`: planejamento, arquitetura, conceitos, guia, testes.
 - Wiki: material de apoio e perguntas frequentes.
 - CHANGELOG: mudanças relevantes por versão.
 

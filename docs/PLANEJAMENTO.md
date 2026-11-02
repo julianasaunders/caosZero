@@ -129,7 +129,7 @@ para mover, renomear ou arquivar. Essa separação permite simular com seguranç
 | 11 | README e documentação | Juliana | `docs/11-documentacao` |
 | 12 | Wiki | Jaquelline | `docs/12-wiki` |
 | 13 | Página web | Juliana | `feat/13-pagina-web` |
-| 14 | Release e apresentação | Ambas | `release/v2.0.0` |
+| 14 | Release | Ambas | `release/v2.0.0` |
 
 ## 10. Divisão de trabalho
 
@@ -140,7 +140,7 @@ consiga trabalhar de forma autônoma, com revisões cruzadas nos pontos crítico
   página web e release.
 - **Jaquelline:** fundação, executor/undo, diagnóstico, automação, testes de
   integração e wiki.
-- **Conjunto:** definição do escopo, revisão de PRs e apresentação final.
+- **Conjunto:** definição do escopo, revisão de PRs.
 
 O detalhamento está em [`DIVISAO-DE-TAREFAS.md`](DIVISAO-DE-TAREFAS.md).
 
@@ -152,7 +152,7 @@ O detalhamento está em [`DIVISAO-DE-TAREFAS.md`](DIVISAO-DE-TAREFAS.md).
 | Semana 2 | Núcleo | Issues 3–4 |
 | Semana 3 | Recursos e interface | Issues 5–8 |
 | Semana 4 | Qualidade e documentação | Issues 9–12 |
-| Semana 5 | Site, release e ensaio | Issues 13–14 |
+| Semana 5 | Site, release | Issues 13–14 |
 
 ## 12. Riscos e mitigação
 
@@ -171,7 +171,6 @@ O detalhamento está em [`DIVISAO-DE-TAREFAS.md`](DIVISAO-DE-TAREFAS.md).
 - Todos os testes passam em Windows e Linux.
 - O `undo` restaura os arquivos de uma execução real.
 - A documentação permite que uma pessoa externa reproduza o projeto.
-- A apresentação cabe em 15 minutos e demonstra os conceitos de SO.
 
 ## 14. Premissas
 
