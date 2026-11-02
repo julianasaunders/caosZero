@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Galeria de interfaces (11 layouts)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0b1020;color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:32px 28px}
+header{margin-bottom:32px}
+.brand{font-weight:800;font-size:22px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c5cff,#b06cff);display:grid;place-items:center;color:#fff}
+h1{margin:0 0 6px;font-size:30px;font-weight:800}
+.lead{color:#8a93b0;margin:0 0 28px;font-size:15px;max-width:760px}
+.section-title{font-size:20px;font-weight:800;margin:32px 0 6px}
+.section-sub{color:#8a93b0;margin:0 0 16px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:12px}
+.card{background:#161d33;border:1px solid #263056;border-radius:18px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.preview{height:170px;display:flex;align-items:center;justify-content:center;font-size:46px;background:linear-gradient(135deg,#1c2440,#0b1020);position:relative;overflow:hidden}
+.preview::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(124,92,255,.22),transparent 60%)}
+.preview span{position:relative;z-index:1}
+.card-body{padding:16px 18px}
+.card h2{margin:0 0 6px;font-size:16px;font-weight:700}
+.card p{margin:0 0 12px;color:#8a93b0;font-size:13px;line-height:1.5}
+.card a.open{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;background:#7c5cff;color:#fff;font-weight:600;font-size:12px}
+.card a.open:hover{background:#6a4de0}
+.tag{display:inline-block;padding:3px 9px;border-radius:6px;background:#263056;color:#8a93b0;font-size:11px;font-weight:600;margin-bottom:8px}
+.note{background:#161d33;border:1px solid #263056;border-radius:14px;padding:18px 20px;margin-top:24px;color:#8a93b0;font-size:13px;line-height:1.6}
+.note strong{color:#e8ecf4}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><div class="brand-mark">C0</div> CaosZero · UI Gallery</div>
+    <h1>Onze interfaces para escolher</h1>
+    <p class="lead">A mesma aplicação (CaosZero 2.0), em onze estilos distintos, inspirados na estética do CleanMyMac. Cada layout é um arquivo HTML autocontido, com simulação em JavaScript, sem backend.</p>
+  </header>
+
+  <h2 class="section-title">Primeira rodada</h2>
+  <p class="section-sub">Estilos variados, inspirados no CleanMyMac.</p>
+  <div class="grid">
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#7418a9,#5a1285)"><span>🧹</span></div><div class="card-body"><span class="tag">Layout 1</span><h2>CleanMyMac Classic</h2><p>Hero roxo, cards, passos, conceitos de SO. O mais próximo do CleanMyMac. Tema claro.</p><a class="open" href="layout-1-cleanmymac.html">Abrir layout 1 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#0b1020,#1c2440)"><span>🖥️</span></div><div class="card-body"><span class="tag">Layout 2</span><h2>Dark Dashboard</h2><p>Painel com sidebar, dropzone, log ao vivo, tiles. Tema escuro.</p><a class="open" href="layout-2-dark-dashboard.html">Abrir layout 2 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#f5f5f7,#e8e8ed)"><span style="color:#0071e3">◯</span></div><div class="card-body"><span class="tag">Layout 3</span><h2>Minimal Card</h2><p>Um cartão central, anel de progresso, chips de modo. Estilo Apple. Tema claro.</p><a class="open" href="layout-3-minimal-card.html">Abrir layout 3 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#4a0e78,#2456d8)"><span>✨</span></div><div class="card-body"><span class="tag">Layout 4</span><h2>Gradient Glass</h2><p>Gradiente roxo→azul, cartões de vidro. Visual moderno.</p><a class="open" href="layout-4-gradient-glass.html">Abrir layout 4 →</a></div></div>
+    <div class="card"><div class="preview" style="background:#0a0e14"><span style="color:#3fb950;font-family:monospace">$</span></div><div class="card-body"><span class="tag">Layout 5</span><h2>Terminal Modern</h2><p>Estética de terminal com acentos verdes, log ao vivo.</p><a class="open" href="layout-5-terminal-modern.html">Abrir layout 5 →</a></div></div>
+  </div>
+
+  <h2 class="section-title">Segunda rodada — terminal + minimal + glass</h2>
+  <p class="section-sub">Cores do Dark Dashboard, base do Terminal Modern, toques do Minimal Card e do Gradient Glass.</p>
+  <div class="grid">
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#0b1020,#161d33)"><span style="color:#3fd16f;font-family:monospace">$</span></div><div class="card-body"><span class="tag">Layout 6</span><h2>Terminal Minimal</h2><p>Cartão central escuro, anel de progresso, chips de modo, log compacto.</p><a class="open" href="layout-6-terminal-minimal.html">Abrir layout 6 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#1a1040,#0b1020)"><span style="color:#3fd16f">◯</span></div><div class="card-body"><span class="tag">Layout 7</span><h2>Glass Terminal</h2><p>Painéis de vidro sobre gradiente, log ao vivo, conceitos de SO.</p><a class="open" href="layout-7-glass-terminal.html">Abrir layout 7 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#0d1117,#161d33)"><span style="color:#58a6ff">⌘</span></div><div class="card-body"><span class="tag">Layout 8</span><h2>Command Palette</h2><p>Paleta estilo Spotlight, lista de ações e atalhos.</p><a class="open" href="layout-8-command-palette.html">Abrir layout 8 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#0b1020,#1c2440)"><span style="color:#3fd16f">┤├</span></div><div class="card-body"><span class="tag">Layout 9</span><h2>Split Terminal</h2><p>Terminal/log à esquerda, modos e conceitos à direita.</p><a class="open" href="layout-9-split-terminal.html">Abrir layout 9 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#05080f,#1a1040)"><span style="color:#3fd16f;text-shadow:0 0 12px #3fd16f">$</span></div><div class="card-body"><span class="tag">Layout 10</span><h2>Neon Terminal</h2><p>Brilho neon verde/roxo, cartões de vidro com glow.</p><a class="open" href="layout-10-neon-terminal.html">Abrir layout 10 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#0b1020,#161d33)"><span style="color:#3fd16f"> </span></div><div class="card-body"><span class="tag">Layout 11</span><h2>Centered Terminal</h2><p>Variante do Split Terminal: painel único centralizado, sem coluna lateral.</p><a class="open" href="layout-11-centered-terminal.html">Abrir layout 11 →</a></div></div>
+  </div>
+
+  <h2 class="section-title">Terceira rodada — drag-and-drop com árvore dupla</h2>
+  <p class="section-sub">Cinco variações do componente de arrastar e soltar, com árvore dos arquivos enviados e árvore de comparação lado a lado (antes/depois).</p>
+  <div class="grid">
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#0b1020,#161d33)"><span style="color:#3fd16f">📁</span></div><div class="card-body"><span class="tag">Layout 12</span><h2>Dual Tree Classic</h2><p>Dropzone + duas árvores lado a lado (antes/depois), log e stats. Base limpa.</p><a class="open" href="layout-12-dualtree-classic.html">Abrir layout 12 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#0b1020,#0d1117)"><span style="color:#3fd16f;font-size:28px">≡</span></div><div class="card-body"><span class="tag">Layout 13</span><h2>Dual Tree Compact</h2><p>Versão densa e compacta, fonte pequena, árvores lado a lado. Para muitos arquivos.</p><a class="open" href="layout-13-dualtree-compact.html">Abrir layout 13 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#05080f,#1a1040)"><span style="color:#3fd16f;text-shadow:0 0 12px #3fd16f">✦</span></div><div class="card-body"><span class="tag">Layout 14</span><h2>Dual Tree Neon</h2><p>Brilho neon verde/roxo, cartões de vidro com glow, árvores duplas.</p><a class="open" href="layout-14-dualtree-neon.html">Abrir layout 14 →</a></div></div>
+    <div class="card"><div class="preview" style="background:linear-gradient(135deg,#0b1020,#1c2440)"><span style="color:#3fd16f">⇄</span></div><div class="card-body"><span class="tag">Layout 15</span><h2>Dual Tree Split Panels</h2><p>Painel esquerdo: dropzone + árvore antes. Painel direito: árvore depois + modos + stats + log.</p><a class="open" href="layout-15-dualtree-splitpanels.html">Abrir layout 15 →</a></div></div>
+    <div class="card"><div class="preview" style="background:#0a0e14"><span style="color:#3fb950;font-family:monospace">$</span></div><div class="card-body"><span class="tag">Layout 16</span><h2>Dual Tree Terminal Log</h2><p>Estética de terminal, árvores como blocos de código, log ao vivo.</p><a class="open" href="layout-16-dualtree-terminallog.html">Abrir layout 16 →</a></div></div>
+  </div>
+
+  <div class="note">
+    <strong>Como testar:</strong> abra cada arquivo HTML no navegador (duplo clique) ou use o botão "Abrir". A simulação é local (JavaScript), sem backend. Para conectar de verdade ao CaosZero, basta substituir a função de simulação por chamadas à CLI ou a um pequeno servidor Python (FastAPI/Flask) que invoque <code>caoszero.py</code>.<br><br>
+    <strong>Escolha um layout</strong> (ou peça ajustes) — eu então adapto o escolhido para a aplicação real (integração com o backend, persistência de configuração e empacotamento).
+  </div>
+</div>
+</body>
+</html>

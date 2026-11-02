@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 2: Dark Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1020; --bg-2:#12182b; --panel:#161d33; --panel-2:#1c2440;
+  --border:#263056; --text:#e8ecf4; --muted:#8a93b0; --accent:#7c5cff; --accent-2:#5b3fe0;
+  --green:#3fd16f; --amber:#ffb347; --red:#ff6b6b; --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;height:100%}
+a{color:inherit;text-decoration:none}
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.sidebar{background:var(--bg-2);border-right:1px solid var(--border);padding:24px 18px;display:flex;flex-direction:column;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.brand-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#b06cff);display:grid;place-items:center;color:#fff}
+.nav-group{display:flex;flex-direction:column;gap:4px}
+.nav-label{font-size:11px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);font-weight:700;margin:0 0 6px 10px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;color:var(--muted);font-weight:500;cursor:pointer;transition:background .15s,color .15s}
+.nav-item:hover{background:var(--panel);color:var(--text)}
+.nav-item.active{background:var(--panel-2);color:#fff;box-shadow:inset 0 0 0 1px var(--border)}
+.nav-item .ico{width:20px;text-align:center}
+.sidebar-foot{margin-top:auto;padding:14px;background:var(--panel);border-radius:12px;font-size:12px;color:var(--muted)}
+.sidebar-foot strong{color:var(--text)}
+.main{padding:28px 32px;display:flex;flex-direction:column;gap:24px}
+.topbar{display:flex;justify-content:space-between;align-items:center}
+.topbar h1{margin:0;font-size:22px;font-weight:700}
+.topbar .sub{color:var(--muted);font-size:13px;margin-top:2px}
+.top-actions{display:flex;gap:10px}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:600;font-size:14px;cursor:pointer;transition:transform .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:var(--panel);color:var(--text);border:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+.card h3{margin:0 0 14px;font-size:15px;font-weight:700;color:var(--text)}
+.dropzone{border:2px dashed var(--border);border-radius:14px;padding:36px;text-align:center;background:var(--bg-2);transition:border-color .2s,background .2s}
+.dropzone:hover{border-color:var(--accent);background:rgba(124,92,255,.06)}
+.dropzone .ico{font-size:40px;margin-bottom:8px}
+.dropzone p{color:var(--muted);margin:0 0 14px}
+.path-input{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;margin-bottom:12px}
+.scan-btn{width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#b06cff);color:#fff;font-weight:700;font-size:15px;border:0;cursor:pointer}
+.scan-btn:hover{filter:brightness(1.08)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.stat-tile{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:14px}
+.stat-tile .num{font-size:26px;font-weight:800;color:var(--accent)}
+.stat-tile .lbl{font-size:12px;color:var(--muted);margin-top:2px}
+.stat-tile.green .num{color:var(--green)}
+.stat-tile.amber .num{color:var(--amber)}
+.log{background:#06091a;border:1px solid var(--border);border-radius:12px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:12.5px;height:220px;overflow:auto;color:#cdd4e8}
+.log .ok{color:var(--green)} .log .warn{color:var(--amber)} .log .dim{color:#6b7394}
+.progress{height:8px;background:var(--bg-2);border-radius:99px;overflow:hidden;margin:12px 0}
+.progress > div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#b06cff);transition:width .4s}
+.result{display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(63,209,111,.08);border:1px solid rgba(63,209,111,.3);border-radius:12px;margin-top:12px}
+.result .ico{width:32px;height:32px;border-radius:50%;background:var(--green);color:#0b1020;display:grid;place-items:center;font-weight:800}
+.result strong{color:var(--green)}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}
+.mode{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;transition:border-color .15s}
+.mode:hover{border-color:var(--accent)}
+.mode h4{margin:0 0 4px;font-size:14px;font-weight:600}
+.mode p{margin:0;font-size:12px;color:var(--muted)}
+.mode.active{border-color:var(--accent);background:rgba(124,92,255,.1)}
+@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{display:none}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">C0</div> Caos<span style="color:var(--accent)">Zero</span></div>
+    <div>
+      <p class="nav-label">Organização</p>
+      <div class="nav-group">
+        <div class="nav-item active"><span class="ico">📁</span> Organizar</div>
+        <div class="nav-item"><span class="ico">↩</span> Desfazer</div>
+        <div class="nav-item"><span class="ico">📊</span> Relatórios</div>
+      </div>
+    </div>
+    <div>
+      <p class="nav-label">Sistema</p>
+      <div class="nav-group">
+        <div class="nav-item"><span class="ico">🩺</span> Diagnóstico</div>
+        <div class="nav-item"><span class="ico">⚙</span> Configuração</div>
+        <div class="nav-item"><span class="ico">🕐</span> Agendamento</div>
+      </div>
+    </div>
+    <div class="sidebar-foot">
+      <strong>v2.0.0</strong> · 77 testes · 0 deps<br>Python 3.10+ · MIT
+    </div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1>Organizar arquivos</h1><div class="sub">Planeje, confirme e execute com segurança</div></div>
+      <div class="top-actions">
+        <button class="btn btn-ghost">🩺 Doctor</button>
+        <button class="btn btn-primary">+ Nova execução</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Pasta alvo</h3>
+        <div class="dropzone" id="dz">
+          <div class="ico">📂</div>
+          <p>Arraste uma pasta ou informe o caminho</p>
+          <input class="path-input" id="path" value="C:\Users\voce\Downloads" />
+          <button class="scan-btn" onclick="runScan()">🔍 Analisar pasta</button>
+        </div>
+        <div class="progress"><div id="bar"></div></div>
+        <div id="result"></div>
+      </div>
+
+      <div class="card">
+        <h3>Modo de operação</h3>
+        <div class="modes">
+          <div class="mode active" onclick="setMode(this)"><h4>Simular</h4><p>Padrão. Nada é alterado.</p></div>
+          <div class="mode" onclick="setMode(this)"><h4>Executar</h4><p>Aplica com --apply.</p></div>
+          <div class="mode" onclick="setMode(this)"><h4>Agendar</h4><p>Cron / Task Scheduler.</p></div>
+        </div>
+        <h3 style="margin-top:18px">Estatísticas da pasta</h3>
+        <div class="stats">
+          <div class="stat-tile"><div class="num" id="n1">—</div><div class="lbl">arquivos analisados</div></div>
+          <div class="stat-tile green"><div class="num" id="n2">—</div><div class="lbl">operações planejadas</div></div>
+          <div class="stat-tile amber"><div class="num" id="n3">—</div><div class="lbl">ignorados (ocultos)</div></div>
+          <div class="stat-tile"><div class="num" id="n4">—</div><div class="lbl">tamanho total</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Log de execução</h3>
+      <div class="log" id="log">
+        <div class="dim">$ caoszero organize ~/Downloads</div>
+        <div class="dim">Aguardando análise…</div>
+      </div>
+    </div>
+  </main>
+<div style="text-align:center;margin-top:24px;padding-top:16px;border-top:1px solid var(--border);color:var(--muted);font-size:12px">caoszero 2.0</div>
+</div>
+
+<script>
+function log(html){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=html;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+function setMode(el){document.querySelectorAll('.mode').forEach(m=>m.classList.remove('active'));el.classList.add('active');}
+function runScan(){
+  const bar=document.getElementById('bar');const logEl=document.getElementById('log');
+  logEl.innerHTML='';
+  log('<span class="dim">$ caoszero organize ' + document.getElementById('path').value + '</span>');
+  const steps=[['12%','Arquivos analisados: 15'],['40%','Operações planejadas: 13 (379 B)'],['68%','[MOVER] backup_projeto.zip → Compactados/'],['85%','[MOVER] foto_ferias.jpg → Imagens/'],['100%','SIMULAÇÃO concluída: 13 operações. Nenhum arquivo alterado.']];
+  let i=0;
+  const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);finish();return;}bar.style.width=steps[i][0];log(steps[i][1].replace('[MOVER]','<span class="ok">[MOVER]</span>'));i++;},420);
+}
+function finish(){
+  document.getElementById('n1').textContent='15';
+  document.getElementById('n2').textContent='13';
+  document.getElementById('n3').textContent='1';
+  document.getElementById('n4').textContent='379 B';
+  const r=document.getElementById('result');
+  r.innerHTML='<div class="result"><div class="ico">✓</div><div><strong>13 operações planejadas</strong><br><span style="color:var(--muted);font-size:13px">Nenhum arquivo foi alterado. Use Executar para aplicar.</span></div></div>';
+}
+</script>
+</body>
+</html>

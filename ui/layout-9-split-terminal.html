@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 9: Split Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0b1020;color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1280px;margin:0 auto;padding:24px 28px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1f2630;padding-bottom:16px}
+.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.brand-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:13px}
+.status{font-size:12px;color:#3fd16f;display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:#3fd16f;box-shadow:0 0 8px #3fd16f}
+.split{display:grid;grid-template-columns:1.15fr 1fr;gap:20px}
+.panel{background:#161d33;border:1px solid #263056;border-radius:16px;padding:20px}
+.panel h3{margin:0 0 14px;font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:#8a93b0;font-weight:600}
+.left-hero h1{font-size:30px;font-weight:800;margin:0 0 8px;letter-spacing:-.4px}
+.left-hero h1 .accent{color:#3fd16f}
+.left-hero p{color:#8a93b0;margin:0 0 18px;font-size:14px;line-height:1.6;max-width:460px}
+.cmdline{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cmdline .prompt{color:#3fd16f;font-weight:700;font-family:'JetBrains Mono',monospace}
+.cmdline input{flex:1;background:transparent;border:0;color:#e8ecf4;font-family:'JetBrains Mono',monospace;font-size:13px;outline:none}
+.cmdline button{background:#3fd16f;color:#0b1020;border:0;padding:7px 14px;border-radius:8px;font-weight:700;font-family:inherit;cursor:pointer;font-size:13px}
+.log{background:#06091a;border:1px solid #263056;border-radius:10px;padding:12px;height:300px;overflow:auto;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.65}
+.log .ok{color:#3fd16f}.log .dim{color:#6e7681}.log .cmd{color:#58a6ff}.log .warn{color:#ffb347}
+.progress{height:5px;background:#263056;border-radius:99px;overflow:hidden;margin:12px 0}
+.progress > div{height:100%;width:0%;background:linear-gradient(90deg,#7c5cff,#3fd16f);transition:width .3s}
+.result{margin-top:12px;padding:12px 14px;border-radius:10px;background:rgba(63,209,111,.08);border:1px solid rgba(63,209,111,.3);display:none;font-size:13px}
+.result.show{display:block}
+.result strong{color:#3fd16f}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:7px 13px;border-radius:8px;border:1px solid #263056;background:#0d1117;font-size:12px;cursor:pointer;color:#8a93b0;font-family:inherit}
+.chip.active{background:rgba(63,209,111,.12);color:#3fd16f;border-color:#3fd16f}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.stat{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px}
+.stat .num{font-size:20px;font-weight:700;color:#3fd16f}
+.stat .lbl{font-size:10px;color:#8a93b0;margin-top:2px;text-transform:uppercase;letter-spacing:.8px}
+.modes{display:flex;flex-direction:column;gap:8px}
+.mode{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color .15s}
+.mode:hover{border-color:#3fd16f}
+.mode.active{border-color:#3fd16f;background:rgba(63,209,111,.06)}
+.mode h4{margin:0;font-size:13px;font-weight:600;color:#e8ecf4}
+.mode p{margin:2px 0 0;font-size:11px;color:#8a93b0}
+.mode .tag{font-size:10px;padding:3px 8px;border-radius:6px;background:#263056;color:#8a93b0}
+.mode.active .tag{background:#3fd16f;color:#0b1020;font-weight:700}
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.feat{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px 14px}
+.feat h4{margin:0 0 2px;font-size:13px;color:#e8ecf4}
+.feat p{margin:0;font-size:11px;color:#8a93b0}
+.path{width:100%;padding:10px 12px;border:1px solid #263056;border-radius:8px;font-size:13px;margin-bottom:10px;background:#0d1117;color:#e8ecf4;font-family:'JetBrains Mono',monospace}
+.btn{width:100%;padding:11px;border-radius:8px;border:0;background:#3fd16f;color:#0b1020;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
+.btn:hover{filter:brightness(1.1)}
+.dropzone{border:2px dashed #263056;border-radius:12px;padding:18px;text-align:center;margin-bottom:12px}
+.dropzone p{color:#8a93b0;margin:0 0 10px;font-size:13px}
+.right-col{display:flex;flex-direction:column;gap:16px}
+.footer{margin-top:24px;padding-top:16px;border-top:1px solid #1f2630;font-size:11px;color:#6e7681;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand-mark">C0</div> caoszero / split</div>
+    <div class="status">online · v2.0.0</div>
+  </div>
+
+  <div class="split">
+    <div class="panel">
+      <div class="left-hero">
+        <h1>caoszero <span class="accent">organize</span></h1>
+        <p>Planeje, confirme, execute e desfaça. </p>
+      </div>
+      <div class="cmdline">
+        <span class="prompt">$</span>
+        <input id="path" value="caoszero organize ~/Downloads --apply --report" />
+        <button onclick="runScan()">run</button>
+      </div>
+      <div class="chips">
+        <button class="chip active" onclick="setMode(this,'simular')">simular</button>
+        <button class="chip" onclick="setMode(this,'aplicar')">aplicar</button>
+        <button class="chip" onclick="setMode(this,'agendar')">agendar</button>
+      </div>
+      <div class="progress"><div id="bar"></div></div>
+      <div class="result" id="result"><strong id="rtitle">13 operações planejadas</strong> — Nenhum arquivo alterado.</div>
+      <div class="log" id="log"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
+      <div class="stats">
+        <div class="stat"><div class="num">15</div><div class="lbl">arquivos</div></div>
+        <div class="stat"><div class="num">13</div><div class="lbl">operações</div></div>
+        <div class="stat"><div class="num">1</div><div class="lbl">ignorados</div></div>
+        <div class="stat"><div class="num">379B</div><div class="lbl">tamanho</div></div>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <div class="panel">
+        <h3>Modo de operação</h3>
+        <div class="modes">
+          <div class="mode active" onclick="setMode2(this)"><div><h4>Simular</h4><p>Padrão. Nada é alterado.</p></div><span class="tag">default</span></div>
+          <div class="mode" onclick="setMode2(this)"><div><h4>Executar</h4><p>Aplica com --apply.</p></div><span class="tag">write</span></div>
+          <div class="mode" onclick="setMode2(this)"><div><h4>Agendar</h4><p>Cron / Task Scheduler.</p></div><span class="tag">auto</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Pasta alvo</h3>
+        <div class="dropzone"><p>Arraste ou informe o caminho</p><input class="path" id="path2" value="C:\Users\voce\Downloads" /><button class="btn" onclick="runScan()">Executar</button></div>
+      </div>
+      <div class="panel">
+        <h3>Conceitos de SO</h3>
+        <div class="features">
+          <div class="feat"><h4>Sistema de arquivos</h4><p>varredura, categorias</p></div>
+          <div class="feat"><h4>Chamadas de sistema</h4><p>stat, mkdir, rename</p></div>
+          <div class="feat"><h4>Processos</h4><p>PID, PPID, threads</p></div>
+          <div class="feat"><h4>CPU / cgroups</h4><p>núcleos, load, limites</p></div>
+          <div class="feat"><h4>Memória</h4><p>total, disponível</p></div>
+          <div class="feat"><h4>Disco</h4><p>espaço livre, uso %</p></div>
+          <div class="feat"><h4>Permissões</h4><p>octal + simbólico</p></div>
+          <div class="feat"><h4>Journaling</h4><p>undo reversível</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer"><div style="text-align:center;width:100%">caoszero 2.0</div></div>
+</div>
+
+<script>
+let mode='simular';
+function setMode(el,m){mode=m;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');}
+function setMode2(el){document.querySelectorAll('.mode').forEach(m=>m.classList.remove('active'));el.classList.add('active');}
+function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+function runScan(){
+  const bar=document.getElementById('bar');const logEl=document.getElementById('log');
+  logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize ' + document.getElementById('path').value + '</span>');
+  const steps=[['15%','Arquivos analisados: 15'],['40%','Operações planejadas: 13 (379 B)'],['65%','<span class="ok">[MOVER]</span> backup_projeto.zip → Compactados/'],['82%','<span class="ok">[MOVER]</span> foto_ferias.jpg → Imagens/'],['100%','<span class="ok">SIMULAÇÃO concluída: 13 operações. Nenhum arquivo alterado.</span>']];
+  let i=0;const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);finish();return;}bar.style.width=steps[i][0];log(steps[i][1]);i++;},380);
+}
+function finish(){document.getElementById('result').classList.add('show');document.getElementById('rtitle').textContent=mode==='aplicar'?'13 arquivos organizados':'13 operações planejadas';}
+</script>
+</body>
+</html>

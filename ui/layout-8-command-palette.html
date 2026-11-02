@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 8: Command Palette</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0b1020;color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:920px;margin:0 auto;padding:40px 24px}
+.brand{font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;margin-bottom:24px;color:#8a93b0}
+.brand-mark{width:26px;height:26px;border-radius:7px;background:#3fd16f;color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:13px}
+.hero{text-align:center;margin-bottom:28px}
+.hero h1{font-size:34px;font-weight:800;margin:0 0 8px;letter-spacing:-.5px}
+.hero h1 .accent{color:#3fd16f}
+.hero p{color:#8a93b0;margin:0;font-size:14px}
+.palette{background:#161d33;border:1px solid #263056;border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.palette-input{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #263056}
+.palette-input .ico{color:#6e7681;font-size:18px}
+.palette-input input{flex:1;background:transparent;border:0;color:#e8ecf4;font-size:15px;font-family:inherit;outline:none}
+.palette-input .hint{font-size:11px;color:#6e7681;background:#0d1117;padding:4px 8px;border-radius:6px;font-family:'JetBrains Mono',monospace}
+.cmds{padding:8px}
+.cmd{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:10px;cursor:pointer;transition:background .12s}
+.cmd:hover,.cmd.active{background:rgba(63,209,111,.08)}
+.cmd .ico{width:32px;height:32px;border-radius:8px;background:#0d1117;border:1px solid #263056;display:grid;place-items:center;font-size:15px}
+.cmd .meta{flex:1}
+.cmd .meta h4{margin:0;font-size:14px;font-weight:600;color:#e8ecf4}
+.cmd .meta p{margin:2px 0 0;font-size:12px;color:#8a93b0}
+.cmd .kbd{font-size:11px;color:#6e7681;font-family:'JetBrains Mono',monospace;background:#0d1117;padding:3px 7px;border-radius:5px;border:1px solid #263056}
+.statusbar{display:flex;justify-content:space-between;align-items:center;padding:10px 20px;border-top:1px solid #263056;font-size:11px;color:#6e7681}
+.statusbar .dot{width:7px;height:7px;border-radius:50%;background:#3fd16f;display:inline-block;margin-right:6px;box-shadow:0 0 6px #3fd16f}
+.card{background:#161d33;border:1px solid #263056;border-radius:16px;padding:20px;margin-top:20px}
+.card h3{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:#8a93b0;font-weight:600}
+.dropzone{border:2px dashed #263056;border-radius:12px;padding:20px;text-align:center}
+.dropzone p{color:#8a93b0;margin:0 0 10px;font-size:13px}
+.path{width:100%;padding:10px 12px;border:1px solid #263056;border-radius:8px;font-size:13px;margin-bottom:10px;background:#0d1117;color:#e8ecf4;font-family:'JetBrains Mono',monospace}
+.btn{width:100%;padding:11px;border-radius:8px;border:0;background:#3fd16f;color:#0b1020;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
+.btn:hover{filter:brightness(1.1)}
+.log{background:#06091a;border:1px solid #263056;border-radius:10px;padding:12px;height:150px;overflow:auto;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;margin-top:12px}
+.log .ok{color:#3fd16f}.log .dim{color:#6e7681}.log .cmd{color:#58a6ff}
+.progress{height:4px;background:#263056;border-radius:99px;overflow:hidden;margin:12px 0}
+.progress > div{height:100%;width:0%;background:#3fd16f;transition:width .3s}
+.result{margin-top:10px;padding:10px 12px;border-radius:8px;background:rgba(63,209,111,.08);border:1px solid rgba(63,209,111,.3);display:none;font-size:12px}
+.result.show{display:block}
+.result strong{color:#3fd16f}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.stat{background:#161d33;border:1px solid #263056;border-radius:10px;padding:12px;text-align:center}
+.stat .num{font-size:20px;font-weight:700;color:#3fd16f}
+.stat .lbl{font-size:10px;color:#8a93b0;margin-top:2px;text-transform:uppercase;letter-spacing:.8px}
+.footer{margin-top:28px;font-size:11px;color:#6e7681;text-align:center}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><div class="brand-mark">C0</div> caoszero / command palette</div>
+  <div class="hero">
+    <h1>caoszero <span class="accent">organize</span></h1>
+    <p>Digite um comando ou escolha uma ação abaixo. Simulação por padrão.</p>
+  </div>
+
+  <div class="palette">
+    <div class="palette-input">
+      <span class="ico">⌘</span>
+      <input placeholder="Buscar comando… (organize, undo, doctor, config, demo)" />
+      <span class="hint">Ctrl+K</span>
+    </div>
+    <div class="cmds">
+      <div class="cmd active" onclick="selectCmd(this,'organize')">
+        <div class="ico">📂</div>
+        <div class="meta"><h4>organize</h4><p>Planeja ou executa a organização da pasta</p></div>
+        <span class="kbd">Enter</span>
+      </div>
+      <div class="cmd" onclick="selectCmd(this,'undo')">
+        <div class="ico">↩</div>
+        <div class="meta"><h4>undo</h4><p>Desfaz a última execução registrada</p></div>
+        <span class="kbd">u</span>
+      </div>
+      <div class="cmd" onclick="selectCmd(this,'doctor')">
+        <div class="ico">🩺</div>
+        <div class="meta"><h4>doctor</h4><p>Diagnóstico de CPU, memória, disco e permissões</p></div>
+        <span class="kbd">d</span>
+      </div>
+      <div class="cmd" onclick="selectCmd(this,'config')">
+        <div class="ico">⚙</div>
+        <div class="meta"><h4>config</h4><p>Mostra ou cria a configuração JSON</p></div>
+        <span class="kbd">c</span>
+      </div>
+      <div class="cmd" onclick="selectCmd(this,'demo')">
+        <div class="ico">🧪</div>
+        <div class="meta"><h4>demo</h4><p>Cria uma pasta de demonstração</p></div>
+        <span class="kbd">m</span>
+      </div>
+    </div>
+    <div class="statusbar"><span><span class="dot"></span>caoszero v2.0.0 · 77 testes · 0 deps</span><span>Python 3.10+</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Pasta alvo</h3>
+    <div class="dropzone">
+      <p>Informe o caminho e execute o comando selecionado</p>
+      <input class="path" id="path" value="C:\Users\voce\Downloads" />
+      <button class="btn" onclick="runScan()">Executar comando</button>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="result" id="result"><strong id="rtitle">13 operações planejadas</strong> — Nenhum arquivo alterado.</div>
+    <div class="log" id="log"><div class="dim"># aguardando comando…</div></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="num">77</div><div class="lbl">testes</div></div>
+    <div class="stat"><div class="num">0</div><div class="lbl">dependências</div></div>
+    <div class="stat"><div class="num">9</div><div class="lbl">categorias</div></div>
+    <div class="stat"><div class="num">100%</div><div class="lbl">reversível</div></div>
+  </div>
+
+  <div class="footer"><div style="text-align:center;width:100%">caoszero 2.0</div></div>
+</div>
+
+<script>
+let cmd='organize';
+function selectCmd(el,name){document.querySelectorAll('.cmd').forEach(c=>c.classList.remove('active'));el.classList.add('active');cmd=name;}
+function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+function runScan(){
+  const bar=document.getElementById('bar');const logEl=document.getElementById('log');
+  logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero ' + cmd + ' ' + document.getElementById('path').value + '</span>');
+  const steps=[['20%','Arquivos analisados: 15'],['50%','Operações planejadas: 13 (379 B)'],['75%','<span class="ok">[MOVER]</span> backup_projeto.zip → Compactados/'],['90%','<span class="ok">[MOVER]</span> foto_ferias.jpg → Imagens/'],['100%','<span class="ok">Concluído. Nenhum arquivo alterado (simulação).</span>']];
+  let i=0;const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);finish();return;}bar.style.width=steps[i][0];log(steps[i][1]);i++;},360);
+}
+function finish(){document.getElementById('result').classList.add('show');}
+</script>
+</body>
+</html>

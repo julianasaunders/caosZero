@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 10: Neon Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#05080f;color:#e8ecf4;font-family:'JetBrains Mono',monospace;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 10% 10%,rgba(63,185,80,.18),transparent 40%),radial-gradient(circle at 90% 90%,rgba(124,92,255,.22),transparent 45%);pointer-events:none}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px;position:relative}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:rgba(63,185,80,.12);border:1px solid #3fd16f;color:#3fd16f;display:grid;place-items:center;font-weight:800;font-size:13px;box-shadow:0 0 18px rgba(63,185,80,.35)}
+.status{font-size:12px;color:#3fd16f;display:flex;align-items:center;gap:6px;text-shadow:0 0 8px rgba(63,185,80,.5)}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:#3fd16f;box-shadow:0 0 10px #3fd16f}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;margin-bottom:24px}
+.hero h1{font-size:34px;font-weight:800;margin:0 0 10px;letter-spacing:-.5px;line-height:1.1;text-shadow:0 0 24px rgba(63,185,80,.25)}
+.hero h1 .accent{color:#3fd16f;text-shadow:0 0 18px rgba(63,185,80,.6)}
+.hero p{color:#8a93b0;margin:0 0 20px;font-size:14px;line-height:1.6;max-width:480px}
+.btn{padding:12px 22px;border-radius:999px;font-weight:700;font-size:14px;border:0;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:#3fd16f;color:#05080f;box-shadow:0 0 24px rgba(63,185,80,.45)}
+.btn-glass{background:rgba(255,255,255,.05);color:#e8ecf4;border:1px solid rgba(124,92,255,.4);backdrop-filter:blur(6px)}
+.glass{background:rgba(22,29,51,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(124,92,255,.25);border-radius:18px;padding:22px;box-shadow:0 0 40px rgba(124,92,255,.12)}
+.glass h3{margin:0 0 12px;font-size:15px;font-weight:700;color:#e8ecf4}
+.dropzone{border:2px dashed rgba(63,185,80,.4);border-radius:14px;padding:22px;text-align:center;box-shadow:inset 0 0 30px rgba(63,185,80,.05)}
+.dropzone p{color:#8a93b0;margin:0 0 10px;font-size:13px}
+.path{width:100%;padding:11px 13px;border:1px solid rgba(63,185,80,.3);border-radius:10px;font-size:13px;margin-bottom:10px;background:rgba(0,0,0,.4);color:#e8ecf4;font-family:'JetBrains Mono',monospace;box-shadow:inset 0 0 12px rgba(63,185,80,.06)}
+.scan-btn{width:100%;padding:12px;border-radius:10px;background:linear-gradient(135deg,#3fd16f,#2f8a31);color:#05080f;font-weight:700;font-size:14px;border:0;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 0 20px rgba(63,185,80,.35)}
+.scan-btn:hover{filter:brightness(1.1)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.25);border-radius:16px;padding:16px;text-align:center;box-shadow:0 0 24px rgba(124,92,255,.08)}
+.stat strong{display:block;font-size:26px;font-weight:800;color:#3fd16f;text-shadow:0 0 12px rgba(63,185,80,.4)}
+.stat span{font-size:11px;color:#8a93b0;margin-top:2px}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.mode{background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.25);border-radius:14px;padding:14px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
+.mode:hover{border-color:#3fd16f;transform:translateY(-2px);box-shadow:0 0 20px rgba(63,185,80,.15)}
+.mode.active{border-color:#3fd16f;background:rgba(63,209,111,.08);box-shadow:0 0 24px rgba(63,185,80,.2)}
+.mode h4{margin:0 0 3px;font-size:13px;font-weight:600;color:#e8ecf4}
+.mode p{margin:0;font-size:11px;color:#8a93b0}
+.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:20px}
+.log{background:rgba(6,9,26,.75);border:1px solid rgba(63,185,80,.25);border-radius:14px;padding:14px;height:230px;overflow:auto;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;box-shadow:inset 0 0 30px rgba(63,185,80,.05)}
+.log .ok{color:#3fd16f;text-shadow:0 0 6px rgba(63,185,80,.4)}.log .dim{color:#6e7681}.log .cmd{color:#58a6ff}
+.progress{height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:12px 0}
+.progress > div{height:100%;width:0%;background:linear-gradient(90deg,#7c5cff,#3fd16f);box-shadow:0 0 12px #3fd16f;transition:width .35s}
+.result{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(63,209,111,.1);border:1px solid rgba(63,209,111,.4);display:none;box-shadow:0 0 20px rgba(63,185,80,.15)}
+.result.show{display:block}
+.result strong{color:#3fd16f;text-shadow:0 0 8px rgba(63,185,80,.4)}
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.feat{background:rgba(22,29,51,.5);border:1px solid rgba(124,92,255,.2);border-radius:12px;padding:12px 14px;transition:border-color .15s}
+.feat:hover{border-color:#3fd16f}
+.feat h4{margin:0 0 2px;font-size:13px;color:#e8ecf4}
+.feat p{margin:0;font-size:11px;color:#8a93b0}
+.footer{margin-top:28px;padding-top:18px;border-top:1px solid rgba(124,92,255,.2);font-size:11px;color:#6e7681;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand-mark">C0</div> caoszero<span style="color:#6e7681">/neon</span></div>
+    <div class="status">online · v2.0.0</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <h1>caoszero <span class="accent">organize</span><br>— sem perdas.</h1>
+      <p>CLI em Python que planeja, confirma, executa e desfaz. Sem dependências. Cada operação registrada no journal.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="document.getElementById('path').focus()">Organizar agora</button>
+        <button class="btn btn-glass">Como funciona</button>
+      </div>
+    </div>
+    <div class="glass">
+      <h3>Organize sua pasta agora</h3>
+      <div class="dropzone">
+        <div style="font-size:34px;margin-bottom:6px">📁</div>
+        <p>Arraste uma pasta ou informe o caminho</p>
+        <input class="path" id="path" value="C:\Users\voce\Downloads" />
+        <button class="scan-btn" onclick="runScan()">🔍 Analisar pasta</button>
+      </div>
+      <div class="progress"><div id="bar"></div></div>
+      <div class="result" id="result"><strong id="rtitle">13 operações planejadas</strong><br><span style="font-size:12px;color:#8a93b0">Nenhum arquivo alterado. Use "Executar" para aplicar.</span></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><strong>77</strong><span>testes automatizados</span></div>
+    <div class="stat"><strong>0</strong><span>dependências externas</span></div>
+    <div class="stat"><strong>9</strong><span>categorias de arquivos</span></div>
+    <div class="stat"><strong>100%</strong><span>reversível com undo</span></div>
+  </div>
+
+  <div class="modes">
+    <div class="mode active" onclick="setMode(this)"><div><h4>Simular</h4><p>Padrão. Nada é alterado.</p></div></div>
+    <div class="mode" onclick="setMode(this)"><div><h4>Executar</h4><p>Aplica com --apply.</p></div></div>
+    <div class="mode" onclick="setMode(this)"><div><h4>Agendar</h4><p>Cron / Task Scheduler.</p></div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="glass">
+      <h3>Execution log</h3>
+      <div class="log" id="log"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
+    </div>
+    <div class="glass">
+      <h3>Conceitos de SO</h3>
+      <div class="features">
+        <div class="feat"><h4>Sistema de arquivos</h4><p>varredura, categorias</p></div>
+        <div class="feat"><h4>Chamadas de sistema</h4><p>stat, mkdir, rename</p></div>
+        <div class="feat"><h4>Processos</h4><p>PID, PPID, threads</p></div>
+        <div class="feat"><h4>CPU / cgroups</h4><p>núcleos, load, limites</p></div>
+        <div class="feat"><h4>Memória</h4><p>total, disponível</p></div>
+        <div class="feat"><h4>Disco</h4><p>espaço livre, uso %</p></div>
+        <div class="feat"><h4>Permissões</h4><p>octal + simbólico</p></div>
+        <div class="feat"><h4>Journaling</h4><p>undo reversível</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer"><div style="text-align:center;width:100%">caoszero 2.0</div></div>
+</div>
+
+<script>
+function setMode(el){document.querySelectorAll('.mode').forEach(m=>m.classList.remove('active'));el.classList.add('active');}
+function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+function runScan(){
+  const bar=document.getElementById('bar');const logEl=document.getElementById('log');
+  logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize ' + document.getElementById('path').value + '</span>');
+  const steps=[['15%','Arquivos analisados: 15'],['42%','Operações planejadas: 13 (379 B)'],['70%','<span class="ok">[MOVER]</span> backup_projeto.zip → Compactados/'],['88%','<span class="ok">[MOVER]</span> foto_ferias.jpg → Imagens/'],['100%','<span class="ok">SIMULAÇÃO concluída: 13 operações. Nenhum arquivo alterado.</span>']];
+  let i=0;const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);finish();return;}bar.style.width=steps[i][0];log(steps[i][1]);i++;},400);
+}
+function finish(){document.getElementById('result').classList.add('show');}
+</script>
+</body>
+</html>

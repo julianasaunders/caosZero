@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 14: Dual Tree Neon</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#05080f;color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 10% 10%,rgba(63,185,80,.18),transparent 40%),radial-gradient(circle at 90% 90%,rgba(124,92,255,.22),transparent 45%);pointer-events:none}
+.wrap{max-width:980px;margin:0 auto;padding:24px;position:relative}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:rgba(63,185,80,.12);border:1px solid #3fd16f;color:#3fd16f;display:grid;place-items:center;font-weight:800;font-size:13px;box-shadow:0 0 18px rgba(63,185,80,.35)}
+.status{font-size:12px;color:#3fd16f;display:flex;align-items:center;gap:6px;text-shadow:0 0 8px rgba(63,185,80,.5);font-family:'JetBrains Mono',monospace}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:#3fd16f;box-shadow:0 0 10px #3fd16f}
+.hero{text-align:center;margin-bottom:18px}
+.hero h1{font-size:30px;font-weight:800;margin:0 0 6px;letter-spacing:-.4px;text-shadow:0 0 24px rgba(63,185,80,.25)}
+.hero h1 .accent{color:#3fd16f;text-shadow:0 0 18px rgba(63,185,80,.6)}
+.hero p{color:#8a93b0;margin:0;font-size:13px}
+.dropzone{border:2px dashed rgba(63,185,80,.4);border-radius:16px;padding:20px;text-align:center;background:rgba(22,29,51,.5);backdrop-filter:blur(10px);cursor:pointer;transition:border-color .2s,box-shadow .2s;margin-bottom:16px;box-shadow:inset 0 0 30px rgba(63,185,80,.05)}
+.dropzone.dragover{border-color:#3fd16f;box-shadow:inset 0 0 40px rgba(63,185,80,.12),0 0 24px rgba(63,185,80,.2)}
+.dropzone .dz-icon{font-size:32px;margin-bottom:4px;color:#3fd16f;text-shadow:0 0 14px rgba(63,185,80,.5)}
+.dropzone .dz-title{margin:0 0 2px;font-size:14px;font-weight:600}
+.dropzone .dz-sub{margin:0 0 10px;font-size:12px;color:#8a93b0}
+.dropzone .dz-btn{background:linear-gradient(135deg,#3fd16f,#2f8a31);color:#05080f;border:0;padding:7px 14px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;box-shadow:0 0 16px rgba(63,185,80,.35)}
+.dropzone .dz-btn:hover{filter:brightness(1.1)}
+input[type=file]{display:none}
+.dz-count{margin:8px 0 0;font-size:12px;color:#3fd16f;font-weight:600;text-align:center;text-shadow:0 0 8px rgba(63,185,80,.4)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.col{background:rgba(22,29,51,.5);backdrop-filter:blur(12px);border:1px solid rgba(124,92,255,.25);border-radius:16px;padding:16px;min-height:140px;box-shadow:0 0 24px rgba(124,92,255,.08)}
+.col h4{margin:0 0 8px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.8px}
+.col.before h4{color:#ffb347;text-shadow:0 0 8px rgba(255,179,71,.3)}
+.col.after h4{color:#3fd16f;text-shadow:0 0 8px rgba(63,185,80,.3)}
+.col ul{list-style:none;margin:0;padding:0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6}
+.col li{padding:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.col .folder{color:#ffb347}
+.col .file{color:#8a93b0}
+.col ul ul{padding-left:16px;border-left:1px dashed rgba(63,185,80,.3);margin-left:4px}
+.progress{height:5px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:12px 0}
+.progress > div{height:100%;width:0%;background:linear-gradient(90deg,#7c5cff,#3fd16f);box-shadow:0 0 12px #3fd16f;transition:width .3s}
+.result{margin-top:12px;padding:10px 12px;border-radius:8px;background:rgba(63,209,111,.1);border:1px solid rgba(63,209,111,.4);display:none;font-size:12px;text-align:center;box-shadow:0 0 20px rgba(63,185,80,.15)}
+.result.show{display:block}
+.result strong{color:#3fd16f;text-shadow:0 0 8px rgba(63,185,80,.4)}
+.log{background:rgba(6,9,26,.75);border:1px solid rgba(63,185,80,.25);border-radius:12px;padding:12px;height:140px;overflow:auto;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.6;margin-top:12px;box-shadow:inset 0 0 30px rgba(63,185,80,.05)}
+.log .ok{color:#3fd16f;text-shadow:0 0 6px rgba(63,185,80,.4)}.log .dim{color:#6e7681}.log .cmd{color:#58a6ff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.stat{background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.25);border-radius:14px;padding:12px;text-align:center;box-shadow:0 0 20px rgba(124,92,255,.08)}
+.stat .num{font-size:20px;font-weight:800;color:#3fd16f;text-shadow:0 0 12px rgba(63,185,80,.4)}
+.stat .lbl{font-size:9px;color:#8a93b0;margin-top:2px;text-transform:uppercase;letter-spacing:.6px}
+.footer{margin-top:20px;padding-top:14px;border-top:1px solid rgba(124,92,255,.2);font-size:11px;color:#6e7681;text-align:center}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand-mark">C0</div> caoszero / neon-dual</div>
+    <div class="status">online · v2.0.0</div>
+  </div>
+  <div class="hero">
+    <h1>caoszero <span class="accent">organize</span></h1>
+    <p>Arraste arquivos ou uma pasta. Veja a árvore antes e depois da organização.</p>
+  </div>
+  <div class="dropzone" id="dropzone">
+    <div class="dz-icon"><ion-icon name="folder-open-outline"></ion-icon></div>
+    <p class="dz-title">Arraste arquivos ou uma pasta aqui</p>
+    <p class="dz-sub">ou clique para selecionar</p>
+    <input type="file" id="fileInput" multiple webkitdirectory />
+    <button class="dz-btn" onclick="triggerPick()" style="margin-top:6px">Selecionar arquivos</button>
+    <div class="dz-count" id="dzCount" style="display:none"></div>
+  </div>
+  <div class="grid2" id="treeGrid" style="display:none">
+    <div class="col before">
+      <h4><ion-icon name="folder-outline"></ion-icon> Antes (atual)</h4>
+      <ul id="beforeTree"></ul>
+    </div>
+    <div class="col after">
+      <h4><ion-icon name="checkmark-circle-outline"></ion-icon> Depois (planejado)</h4>
+      <ul id="afterTree"></ul>
+    </div>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+  <div class="result" id="result"><strong id="rtitle">13 operações planejadas</strong> — Nenhum arquivo alterado.</div>
+  <div class="log" id="log"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
+  <div class="stats">
+    <div class="stat"><div class="num">15</div><div class="lbl">arquivos</div></div>
+    <div class="stat"><div class="num">13</div><div class="lbl">operações</div></div>
+    <div class="stat"><div class="num">1</div><div class="lbl">ignorados</div></div>
+    <div class="stat"><div class="num">379B</div><div class="lbl">tamanho</div></div>
+  </div>
+  <div class="footer">caoszero 2.0</div>
+</div>
+<script>
+const CATS={'.pdf':'Documentos','.doc':'Documentos','.docx':'Documentos','.txt':'Documentos','.md':'Documentos','.rtf':'Documentos','.odt':'Documentos','.xls':'Planilhas','.xlsx':'Planilhas','.csv':'Planilhas','.ods':'Planilhas','.jpg':'Imagens','.jpeg':'Imagens','.png':'Imagens','.gif':'Imagens','.bmp':'Imagens','.svg':'Imagens','.webp':'Imagens','.heic':'Imagens','.tif':'Imagens','.tiff':'Imagens','.mp4':'Videos','.mkv':'Videos','.avi':'Videos','.mov':'Videos','.wmv':'Videos','.flv':'Videos','.webm':'Videos','.m4v':'Videos','.mp3':'Musicas','.wav':'Musicas','.flac':'Musicas','.aac':'Musicas','.ogg':'Musicas','.m4a':'Musicas','.zip':'Compactados','.rar':'Compactados','.7z':'Compactados','.tar':'Compactados','.gz':'Compactados','.tgz':'Compactados','.bz2':'Compactados','.xz':'Compactados','.exe':'Instaladores','.msi':'Instaladores','.deb':'Instaladores','.rpm':'Instaladores','.dmg':'Instaladores','.pkg':'Instaladores','.py':'Codigo','.js':'Codigo','.ts':'Codigo','.java':'Codigo','.c':'Codigo','.cpp':'Codigo','.cs':'Codigo','.go':'Codigo','.rs':'Codigo','.sh':'Codigo','.bat':'Codigo','.ps1':'Codigo','.html':'Codigo','.css':'Codigo','.json':'Codigo','.xml':'Codigo','.yml':'Codigo','.yaml':'Codigo'};
+function categoryOf(n){const i=n.lastIndexOf('.');const e=i>=0?n.slice(i).toLowerCase():'';if(n.toLowerCase().endsWith('.tar.gz'))return 'Compactados';return CATS[e]||'Outros';}
+const dz=document.getElementById('dropzone');const fi=document.getElementById('fileInput');
+dz.addEventListener('click',(e)=>{if(e.target!==fi)triggerPick();});
+dz.addEventListener('dragover',(e)=>{e.preventDefault();dz.classList.add('dragover');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('dragover'));
+dz.addEventListener('drop',(e)=>{e.preventDefault();dz.classList.remove('dragover');handleFiles(e.dataTransfer.files);});
+fi.addEventListener('change',(e)=>handleFiles(e.target.files));
+function triggerPick(){fi.click();}
+function buildTree(names){const root={};for(const rel of names){const parts=rel.split('/').filter(Boolean);let node=root;for(let i=0;i<parts.length;i++){const name=parts[i];const isFile=i===parts.length-1;if(!node[name])node[name]=isFile?{__file:true,name}:{__dir:true,name,children:{}};if(!isFile)node=node[name].children;}}return root;}
+function renderTree(root,ul,movedSet){ul.innerHTML='';const keys=Object.keys(root).sort((a,b)=>{const da=root[a].__dir?0:1,db=root[b].__dir?0:1;if(da!==db)return da-db;return a.localeCompare(b);});for(const k of keys){const n=root[k];const li=document.createElement('li');if(n.__dir){li.innerHTML='<span class="folder">📁 '+n.name+'/</span>';const sub=document.createElement('ul');li.appendChild(sub);renderTree(n.children,sub,movedSet);}else{const moved=movedSet&&movedSet.has(n.name);li.innerHTML='<span class="file">'+(moved?'→ ':'  ')+n.name+'</span>';if(moved)li.querySelector('.file').classList.add('moved');}ul.appendChild(li);}}
+function handleFiles(files){if(!files||!files.length)return;const count=document.getElementById('dzCount');count.style.display='block';count.textContent=files.length+' arquivo(s) selecionado(s)';const beforeNames=Array.from(files).map(f=>(f.webkitRelativePath&&f.webkitRelativePath.length)?f.webkitRelativePath:f.name);const beforeTree=buildTree(beforeNames);renderTree(beforeTree,document.getElementById('beforeTree'),null);const afterRoot={};for(const f of files){const name=f.name;const cat=categoryOf(name);if(!afterRoot[cat])afterRoot[cat]={__dir:true,name:cat,children:{}};afterRoot[cat].children[name]={__file:true,name};}renderTree(afterRoot,document.getElementById('afterTree'),new Set(Array.from(files).map(f=>f.name)));document.getElementById('treeGrid').style.display='grid';runScan(files.length);}
+function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+function runScan(n){const bar=document.getElementById('bar');const logEl=document.getElementById('log');logEl.innerHTML='';log('<span class="cmd">$ caoszero organize <arquivos></span>');const steps=[['20%','Arquivos analisados: '+(n||15)],['45%','Operações planejadas: 13 (379 B)'],['70%','<span class="ok">[MOVER]</span> backup_projeto.zip → Compactados/'],['88%','<span class="ok">[MOVER]</span> foto_ferias.jpg → Imagens/'],['100%','<span class="ok">SIMULAÇÃO concluída: 13 operações. Nenhum arquivo alterado.</span>']];let i=0;const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);finish();return;}bar.style.width=steps[i][0];log(steps[i][1]);i++;},380);}
+function finish(){document.getElementById('result').classList.add('show');document.getElementById('rtitle').textContent='13 operações planejadas';}
+</script>
+</body>
+</html>
