@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 12: Dual Tree Classic (melhorado)</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
+document.getElementById('btnApply').addEventListener('click',()=>{ document.getElementById('confirmModal').classList.add('show'); });
+document.getElementById('btnCancelApply').addEventListener('click',()=>{ document.getElementById('confirmModal').classList.remove('show'); });
+document.getElementById('btnConfirmApply').addEventListener('click',()=>{
+  document.getElementById('confirmModal').classList.remove('show');
+  const logEl=document.getElementById('log');
+  logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize <arquivos> --apply</span>');
+  const steps=[['20%','Aplicando 13 operações…'],['50%','<span class="ok">[OK]</span> backup_projeto.zip → Compactados/'],['75%','<span class="ok">[OK]</span> foto_ferias.jpg → Imagens/'],['100%','<span class="ok">Execução concluída: 13 movidas, 0 falhas.</span>']];
+  const bar=document.getElementById('bar');
+  let i=0;const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);finishApply();return;}bar.style.width=steps[i][0];log(steps[i][1]);i++;},380);
+});
+function finishApply(){
+  const r=document.getElementById('result');
+  r.classList.add('show');
+  document.getElementById('rtitle').textContent='13 arquivos organizados';
+  log('<span class="dim"># para desfazer: caoszero undo --latest</span>');
+}
+</script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+:root{
+  --bg:#0b1020;--bg2:#0d1117;--panel:#0d1117;--border:#263056;--border2:#1f2630;
+  --text:#e8ecf4;--muted:#8a93b0;--dim:#6e7681;
+  --green:#3fd16f;--purple:#7c5cff;--amber:#7c5cff;--blue:#58a6ff;--red:#ff6b6b;
+  --radius:14px;--radius-sm:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:880px;margin:0 auto;padding:24px;overflow:hidden}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;border-bottom:1px solid var(--border2);padding-bottom:14px;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--green));color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:13px}
+.status{font-size:12px;color:var(--green);display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.hero{text-align:center;margin-bottom:18px}
+.hero h1{font-size:30px;font-weight:800;margin:0 0 6px;letter-spacing:-.4px}
+.hero h1 .accent{color:var(--green)}
+.hero p{color:var(--muted);margin:0;font-size:13px}
+.dropzone{border:2px dashed var(--border);border-radius:var(--radius);padding:22px;text-align:center;background:var(--bg2);transition:border-color .2s,background .2s,transform .15s;cursor:pointer;margin-bottom:16px;max-width:100%;overflow:hidden}
+.dropzone.dragover{border-color:var(--green);background:rgba(63,209,111,.06);transform:scale(1.005)}
+.dropzone .dz-icon{font-size:34px;margin-bottom:4px;color:var(--green)}
+.dropzone .dz-title{margin:0 0 2px;font-size:15px;font-weight:600}
+.dropzone .dz-sub{margin:0 0 12px;font-size:12px;color:var(--muted)}
+.dropzone .dz-btn{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:8px 16px;border-radius:999px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;transition:filter .15s,transform .15s;box-shadow:0 0 18px rgba(124,92,255,.35)}
+.dropzone .dz-btn:hover{filter:brightness(1.08)}
+.dropzone .dz-count{margin:10px 0 0;font-size:12px;color:var(--green);font-weight:600}
+input[type=file]{display:none}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
+.toolbar input[type=search]{flex:1;min-width:180px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:999px;font-size:12px;font-family:inherit}
+.toolbar button{background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s}
+.toolbar button:hover{border-color:var(--green);background:rgba(63,209,111,.06)}
+.toolbar button.primary{background:var(--green);color:#0b1020;border-color:var(--green)}
+.toolbar button.primary:hover{filter:brightness(1.08)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;align-items:stretch;max-width:100%}
+.col{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px;min-height:220px;display:flex;flex-direction:column;overflow:hidden;max-width:100%}
+.col-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;min-height:22px}
+.col h4{margin:0;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.8px}
+.col.before h4{color:var(--purple)}
+.col.after h4{color:var(--green)}
+.col .count{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.col ul{list-style:none;margin:0;padding:0;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.7;overflow:hidden;max-width:100%}
+.col li{padding:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.col .folder{color:var(--purple);cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px}
+.col .folder:hover{color:var(--green)}
+.col .folder .caret{font-size:9px;transition:transform .15s;display:inline-block}
+.col .folder.collapsed .caret{transform:rotate(-90deg)}
+.col .file{color:var(--muted)}
+.col .moved{color:var(--green)}
+.col ul li{opacity:0;transform:translateY(6px);transition:opacity .28s ease,transform .28s ease}
+.col ul li.show{opacity:1;transform:translateY(0)}
+.col .size{color:var(--dim);margin-left:6px;font-size:10px}
+.col ul ul{padding-left:16px;border-left:1px dashed rgba(124,92,255,.35);margin-left:4px}
+.progress-wrap{margin:14px 0 4px}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'JetBrains Mono',monospace}
+.progress{height:6px;background:var(--border);border-radius:99px;overflow:hidden}
+.progress > div{height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--green));transition:width .35s ease}
+.result{margin-top:12px;padding:12px 14px;border-radius:var(--radius-sm);background:rgba(63,209,111,.08);border:1px solid rgba(63,209,111,.3);display:none;font-size:12px;text-align:center}
+.result.show{display:block}
+.result strong{color:var(--green)}
+.log-wrap{margin-top:12px}
+.log-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.log-head h5{margin:0;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+.log-head button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:999px;font-size:10px;cursor:pointer;font-family:inherit}
+.log-head button:hover{border-color:var(--green);color:var(--green)}
+.log{background:#06091a;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;min-height:60px;overflow:visible;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.6}
+.log .ok{color:var(--green)}.log .dim{color:var(--dim)}.log .cmd{color:var(--blue)}.log .warn{color:var(--purple)}.log .err{color:var(--red)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;transition:transform .15s}
+.stat:hover{transform:translateY(-2px)}
+.stat .num{font-size:20px;font-weight:800;color:var(--green)}
+.stat .lbl{font-size:9px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.6px}
+.footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--border2);font-size:11px;color:var(--dim);text-align:center}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.wrap{padding:16px}}
+@media(max-width:480px){.hero h1{font-size:24px}.stats{grid-template-columns:1fr 1fr}}
+
+.apply-wrap{margin-top:12px;text-align:center}
+.apply-btn{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:10px 22px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;transition:filter .15s,transform .15s;box-shadow:0 0 18px rgba(124,92,255,.35)}
+.apply-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.apply-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100}
+.modal-backdrop.show{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:90vw;width:90%;box-shadow:0 24px 60px rgba(0,0,0,.5);text-align:center}
+.modal h3{margin:0 0 8px;font-size:16px;font-weight:700}
+.modal p{color:var(--muted);font-size:13px;margin:0 0 18px;line-height:1.5}
+.modal .modal-actions{display:flex;gap:10px;justify-content:center}
+.modal .modal-actions button{padding:9px 20px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;border:0}
+.modal .btn-cancel{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+.modal .btn-confirm{background:var(--green);color:#0b1020}
+
+.fab-apply{position:fixed;bottom:24px;right:24px;z-index:50;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:14px 24px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 8px 28px rgba(124,92,255,.45);display:none;transition:transform .15s,filter .15s}
+.fab-apply:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.fab-apply.show{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand-mark">C0</div> caoszero</div>
+    <div class="status" id="status">online · v2.0.0</div>
+  </div>
+  <div class="hero">
+    <h1>caoszero <span class="accent">organize</span></h1>
+    <p>Planeje, confirme e execute com segurança.</p>
+  </div>
+
+  <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Selecionar arquivos ou pasta">
+    <div class="dz-icon"><ion-icon name="folder-open-outline"></ion-icon></div>
+    <p class="dz-title">Arraste arquivos ou uma pasta aqui</p>
+    <p class="dz-sub">ou clique para selecionar</p>
+    <input type="file" id="fileInput" multiple webkitdirectory aria-hidden="true" />
+    <button class="dz-btn" type="button" onclick="triggerPick()">Selecionar arquivos</button>
+    <div class="dz-count" id="dzCount" style="display:none"></div>
+  </div>
+
+  <div class="grid2" id="treeGrid" style="display:none">
+    <div class="col before">
+      <div class="col-head">
+        <h4><ion-icon name="folder-outline"></ion-icon> Antes (atual)</h4>
+        <span class="count" id="beforeCount">0 itens</span>
+      </div>
+      <ul id="beforeTree" aria-label="Árvore original"></ul>
+    </div>
+    <div class="col after">
+      <div class="col-head">
+        <h4><ion-icon name="checkmark-circle-outline"></ion-icon> Depois (planejado)</h4>
+        <span class="count" id="afterCount">0 itens</span>
+      </div>
+      <ul id="afterTree" aria-label="Árvore planejada"></ul>
+    </div>
+  </div>
+
+  <div class="progress-wrap" id="progressWrap" style="display:none">
+    <div class="progress-label"><span id="progressText">Aguardando…</span><span id="progressPct">0%</span></div>
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="bar"></div></div>
+  </div>
+
+  <div class="result" id="result"><span id="rtitle">0 operações planejadas</span> — Nenhum arquivo alterado.</div>
+
+  <div class="log-wrap" id="logWrap">
+    <div class="log" id="log" aria-live="polite"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><div class="num" id="stFiles">0</div><div class="lbl">arquivos</div></div>
+    <div class="stat"><div class="num" id="stOps">0</div><div class="lbl">operações</div></div>
+    <div class="stat"><div class="num" id="stIgnored">0</div><div class="lbl">ignorados</div></div>
+    <div class="stat"><div class="num" id="stSize">0 B</div><div class="lbl">tamanho</div></div>
+  </div>
+
+
+  <div class="footer">caoszero ©</div>
+</div>
+
+<script>
+const CATS = {'.pdf':'Documentos','.doc':'Documentos','.docx':'Documentos','.txt':'Documentos','.md':'Documentos','.rtf':'Documentos','.odt':'Documentos','.epub':'Documentos','.tex':'Documentos','.xls':'Planilhas','.xlsx':'Planilhas','.csv':'Planilhas','.ods':'Planilhas','.tsv':'Planilhas','.ppt':'Apresentacoes','.pptx':'Apresentacoes','.odp':'Apresentacoes','.key':'Apresentacoes','.jpg':'Imagens','.jpeg':'Imagens','.png':'Imagens','.gif':'Imagens','.bmp':'Imagens','.svg':'Imagens','.webp':'Imagens','.heic':'Imagens','.tif':'Imagens','.tiff':'Imagens','.mp4':'Videos','.mkv':'Videos','.avi':'Videos','.mov':'Videos','.wmv':'Videos','.flv':'Videos','.webm':'Videos','.m4v':'Videos','.mp3':'Musicas','.wav':'Musicas','.flac':'Musicas','.aac':'Musicas','.ogg':'Musicas','.m4a':'Musicas','.wma':'Musicas','.zip':'Compactados','.rar':'Compactados','.7z':'Compactados','.tar':'Compactados','.tgz':'Compactados','.bz2':'Compactados','.xz':'Compactados','.gz':'Compactados','.exe':'Instaladores','.msi':'Instaladores','.deb':'Instaladores','.rpm':'Instaladores','.dmg':'Instaladores','.pkg':'Instaladores','.appimage':'Instaladores','.apk':'Instaladores','.py':'Codigo','.js':'Codigo','.ts':'Codigo','.tsx':'Codigo','.jsx':'Codigo','.java':'Codigo','.c':'Codigo','.cpp':'Codigo','.h':'Codigo','.cs':'Codigo','.go':'Codigo','.rs':'Codigo','.rb':'Codigo','.php':'Codigo','.sh':'Codigo','.bat':'Codigo','.ps1':'Codigo','.html':'Codigo','.css':'Codigo','.json':'Codigo','.xml':'Codigo','.yml':'Codigo','.yaml':'Codigo','.toml':'Codigo','.sql':'Codigo'};
+function categoryOf(n){const i=n.lastIndexOf('.');const e=i>=0?n.slice(i).toLowerCase():'';if(n.toLowerCase().endsWith('.tar.gz'))return 'Compactados';return CATS[e]||'Outros';}
+function fmtSize(b){if(b<1024)return b+' B';if(b<1048576)return (b/1024).toFixed(1)+' KB';return (b/1048576).toFixed(1)+' MB';}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+const dz=document.getElementById('dropzone');
+const fi=document.getElementById('fileInput');
+dz.addEventListener('click',(e)=>{if(e.target!==fi && e.target.tagName!=='BUTTON')triggerPick();});
+dz.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' ')triggerPick();});
+dz.addEventListener('dragover',(e)=>{e.preventDefault();dz.classList.add('dragover');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('dragover'));
+dz.addEventListener('drop',(e)=>{e.preventDefault();dz.classList.remove('dragover');handleFiles(e.dataTransfer.files);});
+fi.addEventListener('change',(e)=>handleFiles(e.target.files));
+
+function triggerPick(){fi.click();}
+
+let state={files:[],plan:[],movedSet:new Set(),filter:''};
+
+function buildTreeWithSizes(files){
+  const root={};
+  for(const f of files){
+    const rel=(f.webkitRelativePath&&f.webkitRelativePath.length)?f.webkitRelativePath:f.name;
+    const parts=rel.split('/').filter(Boolean);
+    let node=root;
+    for(let i=0;i<parts.length;i++){
+      const name=parts[i];const isFile=i===parts.length-1;
+      if(!node[name])node[name]=isFile?{__file:true,name,size:f.size}:{__dir:true,name,children:{}};
+      if(isFile)node[name].size=f.size;
+      if(!isFile)node=node[name].children;
+    }
+  }
+  return root;
+}
+
+function hasMatch(node,term){
+  if(!term)return true;
+  const t=term.toLowerCase();
+  if(node.__file)return node.name.toLowerCase().includes(t);
+  if(node.name.toLowerCase().includes(t))return true;
+  return Object.values(node.children||{}).some(c=>hasMatch(c,t));
+}
+
+function renderTree(root,ul,movedSet,term){
+  ul.innerHTML='';
+  const keys=Object.keys(root).sort((a,b)=>{
+    const da=root[a].__dir?0:1,db=root[b].__dir?0:1;
+    if(da!==db)return da-db;
+    return a.localeCompare(b,'pt-BR',{sensitivity:'base'});
+  });
+  for(const k of keys){
+    const n=root[k];
+    if(term && !hasMatch(n,term))continue;
+    const li=document.createElement('li');
+    if(n.__dir){
+      const span=document.createElement('span');
+      span.className='folder';
+      span.innerHTML='<span class="caret">▾</span> <ion-icon name="folder-outline" style="vertical-align:middle;margin-right:2px;font-size:13px"></ion-icon> '+esc(n.name)+'/';
+      span.addEventListener('click',(e)=>{e.stopPropagation();const sub=li.querySelector('ul');const isCol=sub.style.display==='none';sub.style.display=isCol?'':'none';span.classList.toggle('collapsed',!isCol);});
+      li.appendChild(span);
+      const sub=document.createElement('ul');
+      renderTree(n.children,sub,movedSet,term);
+      li.appendChild(sub);
+    }else{
+      const moved=movedSet&&movedSet.has(n.name);
+      const span=document.createElement('span');
+      span.className='file'+(moved?' moved':'');
+      span.innerHTML=(moved?'→ ':'  ')+esc(n.name)+'<span class="size">'+fmtSize(n.size||0)+'</span>';
+      li.appendChild(span);
+    }
+    ul.appendChild(li);
+  }
+}
+
+function countItems(root){
+  let files=0;
+  for(const k in root){
+    if(root[k].__dir){const c=countItems(root[k].children);files+=c;}
+    else files++;
+  }
+  return files;
+}
+
+function handleFiles(files){
+  if(!files||!files.length)return;
+  const arr=Array.from(files);
+  state.files=arr;
+  const count=document.getElementById('dzCount');
+  count.style.display='block';
+  count.textContent=arr.length+' arquivo(s) selecionado(s)';
+  log('<span class="dim"># recebendo '+arr.length+' arquivo(s)…</span>');
+
+  state.plan=[];
+  state.movedSet=new Set();
+  for(const f of arr){
+    const src=(f.webkitRelativePath&&f.webkitRelativePath.length)?f.webkitRelativePath:f.name;
+    const cat=categoryOf(f.name);
+    const dest=cat+'/'+f.name;
+    const moved = src.replace(/\\/g,'/') !== dest;
+    const parent=src.split('/').slice(-2,-1)[0]||'';
+    const isIgnored = !moved || parent.toLowerCase()===cat.toLowerCase();
+    if(moved && !isIgnored) state.movedSet.add(f.name);
+    state.plan.push({file:f.name,source:src,destination:dest,category:cat,size:f.size,moved:moved&&!isIgnored,ignored:isIgnored});
+  }
+  const movedCount=state.plan.filter(p=>p.moved).length;
+  const ignoredCount=arr.length-movedCount;
+
+  const beforeTree=buildTreeWithSizes(arr);
+  renderTree(beforeTree,document.getElementById('beforeTree'),null,state.filter);
+  document.getElementById('beforeCount').textContent=countItems(beforeTree)+' arquivos';
+
+  const afterRoot={};
+  for(const p of state.plan){
+    if(!afterRoot[p.category])afterRoot[p.category]={__dir:true,name:p.category,children:{}};
+    afterRoot[p.category].children[p.file]={__file:true,name:p.file,size:p.size};
+  }
+  renderTree(afterRoot,document.getElementById('afterTree'),state.movedSet,state.filter);
+  document.getElementById('afterCount').textContent=countItems(afterRoot)+' arquivos';
+
+  document.getElementById('treeGrid').style.display='grid';
+  document.getElementById('progressWrap').style.display='block';
+  document.getElementById('logWrap').style.display='block';
+  document.getElementById('stats').style.display='grid';
+  // animação sequencial: itens entram um a um
+  // animação sequencial: antes e depois carregam juntos (mesmo atraso por índice)
+  const beforeItems = Array.from(document.querySelectorAll('#beforeTree li'));
+  const afterItems = Array.from(document.querySelectorAll('#afterTree li'));
+  const n = Math.max(beforeItems.length, afterItems.length);
+  for(let i=0;i<n;i++){
+    if(beforeItems[i]){ beforeItems[i].classList.remove('show'); setTimeout(()=>beforeItems[i].classList.add('show'), 60 + i*45); }
+    if(afterItems[i]){ afterItems[i].classList.remove('show'); setTimeout(()=>afterItems[i].classList.add('show'), 60 + i*45); }
+  }
+
+  const totalSize=arr.reduce((a,f)=>a+f.size,0);
+  document.getElementById('stFiles').textContent=arr.length;
+  document.getElementById('stOps').textContent=movedCount;
+  document.getElementById('stIgnored').textContent=ignoredCount;
+  document.getElementById('stSize').textContent=fmtSize(totalSize);
+
+  runScan(arr.length,movedCount,totalSize,ignoredCount);
+}
+
+function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+
+let scanTimer=null;
+function runScan(n,movedCount,totalSize,ignoredCount){
+  const bar=document.getElementById('bar');
+  const logEl=document.getElementById('log');
+  logEl.innerHTML='';
+  bar.style.width='0%';
+  document.getElementById('progressText').textContent='Iniciando…';
+  document.getElementById('progressPct').textContent='0%';
+  document.getElementById('result').classList.remove('show');
+  const fab=document.getElementById('btnApply'); if(fab) fab.classList.remove('show');
+
+  const movedOps=state.plan.filter(p=>p.moved).slice(0,6);
+  const steps=[
+    ['15%','Arquivos analisados: '+n+' ('+fmtSize(totalSize)+')'],
+    ['35%','Operações planejadas: '+movedCount+' · ignorados: '+ignoredCount],
+  ];
+  for(const op of movedOps){
+    steps.push([Math.min(85, 45 + steps.length*5)+'%','<span class="ok">[MOVER]</span> '+esc(op.source)+' → '+esc(op.destination)]);
+  }
+  if(movedOps.length<movedCount){
+    steps.push(['88%','<span class="dim">… e mais '+(movedCount-movedOps.length)+' operação(ões)</span>']);
+  }
+  steps.push(['100%','<span class="ok">SIMULAÇÃO concluída: '+movedCount+' operações. Nenhum arquivo alterado.</span>']);
+
+  let i=0;
+  if(scanTimer)clearInterval(scanTimer);
+  scanTimer=setInterval(()=>{
+    if(i>=steps.length){clearInterval(scanTimer);finish(movedCount);return;}
+    bar.style.width=steps[i][0];
+    document.getElementById('progressPct').textContent=steps[i][0];
+    document.getElementById('progressText').textContent=i===0?'Analisando…':(i<steps.length-1?'Planejando…':'Concluído');
+    log(steps[i][1]);
+    i++;
+  },320);
+}
+function finish(movedCount){
+  const r=document.getElementById('result');
+  r.classList.add('show');
+  document.getElementById('rtitle').textContent=movedCount+' operações planejadas';
+  document.getElementById('progressText').textContent='Concluído';
+  document.getElementById('progressPct').textContent='100%';
+  const fab=document.getElementById('btnApply'); if(fab) fab.classList.add('show');
+}
+
+function reset(){
+  state={files:[],plan:[],movedSet:new Set(),filter:''};
+  document.getElementById('fileInput').value='';
+  document.getElementById('dzCount').style.display='none';
+  document.getElementById('treeGrid').style.display='none';
+  document.getElementById('progressWrap').style.display='none';
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('beforeTree').innerHTML='';
+  document.getElementById('afterTree').innerHTML='';
+  document.getElementById('log').innerHTML='<div class="dim"># caoszero v2.0.0 — aguardando comando…</div>';
+  document.getElementById('bar').style.width='0%';
+}
+
+</script>
+
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal">
+    <h3>Aplicar organização?</h3>
+    <p>Esta ação moverá os arquivos de acordo com o plano simulado. Você poderá desfazer com <code>undo</code> depois.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" type="button" id="btnCancelApply">Cancelar</button>
+      <button class="btn-confirm" type="button" id="btnConfirmApply">Aplicar</button>
+    </div>
+  </div>
+</div>
+<button class="fab-apply" id="btnApply" type="button">✓ Aplicar organização</button>
+</body>
+</html>

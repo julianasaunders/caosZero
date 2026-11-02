@@ -20,6 +20,7 @@ from .planner import PlanOptions, build_plan, describe_plan
 from .reporter import write_report
 from .system_info import collect_system_info, render_text
 from .utils import human_size, parse_size, relative_label
+from .web import run_web
 
 DESCRIPTION = """\
 CaosZero — automatizador de tarefas com arquivos.
@@ -384,6 +385,16 @@ def cmd_interactive(args: argparse.Namespace) -> int:
             print("Opção inválida.")
 
 
+def cmd_web(args: argparse.Namespace) -> int:
+    from .web import run_web
+
+    return run_web(
+        host=args.host,
+        port=args.port,
+        open_browser=not args.no_browser,
+    )
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="caoszero",
@@ -466,6 +477,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     interactive.add_argument("--config", type=Path, help="arquivo de configuração JSON")
     interactive.set_defaults(handler=cmd_interactive)
+
+    web = subparsers.add_parser(
+        "web",
+        help="abre a interface web local",
+        description="Sobe um servidor HTTP local com a interface gráfica do CaosZero.",
+    )
+    web.add_argument("--host", default="127.0.0.1", help="endereço de escuta (padrão: 127.0.0.1)")
+    web.add_argument("--port", type=int, default=8765, help="porta (padrão: 8765)")
+    web.add_argument("--no-browser", action="store_true", help="não abre o navegador automaticamente")
+    web.set_defaults(handler=cmd_web)
 
     return parser
 
