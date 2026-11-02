@@ -84,7 +84,7 @@ Prévia das operações:
 - **Relatórios** em Markdown, CSV e JSON.
 - **Diagnóstico do SO** (`doctor`): processo, CPU, memória, disco, permissões,
   variáveis de ambiente e limites de cgroup.
-- **Modo interativo** para apresentações.
+- **Modo interativo** para uso guiado.
 - **Scripts** de automação para Bash e PowerShell.
 - **Sem dependências externas** para executar.
 
@@ -227,7 +227,7 @@ python caoszero.py demo ./minha-demo
 
 ### `interactive`
 
-Menu guiado, útil para apresentações.
+Menu guiado, útil para quem está começando.
 
 ```bash
 python caoszero.py interactive
@@ -411,7 +411,7 @@ caosZero/
 ├── tests/                      # testes automatizados
 ├── scripts/                    # automação, agendamento e hooks
 ├── config/                     # configuração de exemplo
-├── docs/                       # documentação e roteiro da apresentação
+├── docs/                       # documentação do projeto
 ├── .github/                    # CI, templates e CODEOWNERS
 ├── index.html                  # página do projeto (GitHub Pages)
 └── README.md
@@ -428,7 +428,6 @@ caosZero/
 | [Conceitos de SO](docs/CONCEITOS-SO.md) | Teoria aplicada ao código |
 | [Guia de uso](docs/GUIA-DE-USO.md) | Cenários passo a passo |
 | [Testes](docs/TESTES.md) | Estratégia, cobertura e como rodar |
-| [Apresentação](docs/APRESENTACAO.md) | Roteiro de 10 a 15 minutos |
 | [Divisão de tarefas](docs/DIVISAO-DE-TAREFAS.md) | Responsabilidades e histórico |
 | [Contribuição](CONTRIBUTING.md) | Branches, commits, PRs e revisão |
 | [Código de conduta](CODE_OF_CONDUCT.md) | Convivência e colaboração |

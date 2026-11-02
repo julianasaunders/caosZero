@@ -1,7 +1,7 @@
 # Conceitos de Sistemas Operacionais no CaosZero
 
 Este documento conecta a teoria da disciplina ao código do projeto. Cada seção
-indica onde o conceito aparece e como demonstrá-lo na apresentação.
+indica onde o conceito aparece e como demonstrá-lo.
 
 ---
 
@@ -282,7 +282,7 @@ ser usado por scripts.
 
 ---
 
-## 12. Resumo para a apresentação
+## 12. Resumo dos conceitos
 
 | Conceito | Comando | O que mostrar |
 | --- | --- | --- |
