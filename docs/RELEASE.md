@@ -47,7 +47,6 @@ Criar a release no GitHub com:
 - [ ] Confirmar GitHub Pages.
 - [ ] Confirmar links da wiki.
 - [ ] Conferir branch protection em `main`.
-- [ ] Ensaiar a apresentação com a versão tagueada.
 
 ## Sincronização
 

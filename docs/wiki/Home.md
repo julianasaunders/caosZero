@@ -27,7 +27,6 @@ Uma CLI em Python que:
 | [Conceitos de SO](Conceitos-de-SO) | Teoria aplicada ao código |
 | [Automação](Automacao) | Scripts, cron e Agendador de Tarefas |
 | [Perguntas frequentes](Perguntas-Frequentes) | Dúvidas comuns |
-| [Apresentação](Apresentacao) | Roteiro de 10 a 15 minutos |
 
 ## Links
 

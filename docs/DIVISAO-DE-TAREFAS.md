@@ -10,7 +10,7 @@ rastreadas nas issues do GitHub.
 | --- | --- | --- |
 | **Juliana Saunders** | 1, 3, 5, 7, 9, 11, 13 | Planejamento, núcleo de decisão, relatórios, CLI, qualidade, documentação, site |
 | **Jaquelline Feitoza** | 2, 4, 6, 8, 10, 12 | Fundação, execução/undo, diagnóstico do SO, automação, testes, wiki |
-| **Ambas** | 14 | Release, revisão final e apresentação |
+| **Ambas** | 14 | Release, revisão final |
 
 ## Detalhamento
 
@@ -25,7 +25,7 @@ rastreadas nas issues do GitHub.
 | 9 | CI, hooks e qualidade | `chore/9-ci-hooks` |
 | 11 | README e documentação técnica | `docs/11-documentacao` |
 | 13 | Página web e GitHub Pages | `feat/13-pagina-web` |
-| 14 | Release e apresentação (conjunta) | `release/v2.0.0` |
+| 14 | Release (conjunta) | `release/v2.0.0` |
 
 ### Jaquelline
 
@@ -37,7 +37,7 @@ rastreadas nas issues do GitHub.
 | 8 | Scripts de automação e agendamento | `feat/8-automacao` |
 | 10 | Testes de integração e QA | `test/10-integracao` |
 | 12 | Wiki do projeto | `docs/12-wiki` |
-| 14 | Release e apresentação (conjunta) | `release/v2.0.0` |
+| 14 | Release (conjunta) | `release/v2.0.0` |
 
 ## Revisões cruzadas
 
@@ -77,7 +77,7 @@ rastreadas nas issues do GitHub.
 | Interface | 7–8 | CLI e automação |
 | Qualidade | 9–10 | CI, hooks e integração |
 | Documentação | 11–12 | README, docs e wiki |
-| Entrega | 13–14 | Site, release e apresentação |
+| Entrega | 13–14 | Site, release |
 
 ## Acordos de trabalho
 
