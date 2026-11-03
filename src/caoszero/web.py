@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import sys
 import threading
 import webbrowser
 from http import HTTPStatus
@@ -31,7 +32,9 @@ LOGGER = logging.getLogger("caoszero.web")
 
 
 def _repo_root() -> Path:
-    # src/caoszero/web.py -> raiz do repositório
+    # Quando congelado (PyInstaller), os recursos ficam em sys._MEIPASS.
+    if getattr(sys, "frozen", False):
+        return Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[2]))
     return Path(__file__).resolve().parents[2]
 
 
