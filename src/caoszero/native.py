@@ -22,6 +22,21 @@ def _free_port(host: str = "127.0.0.1") -> int:
         return s.getsockname()[1]
 
 
+class _Api:
+    def pick_folder(self):
+        try:
+            import webview
+            window = webview.windows[0] if webview.windows else None
+            if window is None:
+                return None
+            result = window.create_file_dialog(webview.FOLDER_DIALOG)
+            if result and len(result) > 0:
+                return result[0]
+            return None
+        except Exception:  # noqa: BLE001
+            return None
+
+
 def run_native(host: str = "127.0.0.1", port: int | None = None) -> int:
     try:
         import webview
@@ -33,7 +48,6 @@ def run_native(host: str = "127.0.0.1", port: int | None = None) -> int:
     if port is None:
         port = _free_port(host)
 
-    # Sobe o servidor HTTP em uma thread separada.
     from .web import CaosZeroHandler
     from http.server import ThreadingHTTPServer
 
@@ -41,8 +55,7 @@ def run_native(host: str = "127.0.0.1", port: int | None = None) -> int:
     thread = threading.Thread(target=httpd.serve_forever, daemon=True)
     thread.start()
 
-    url = f"http://{host}:{port}/layout-12-dualtree-classic.html"
-    # aguarda o servidor responder
+    url = f"http://{host}:{port}/app.html"
     for _ in range(50):
         try:
             import urllib.request
@@ -58,6 +71,7 @@ def run_native(host: str = "127.0.0.1", port: int | None = None) -> int:
         height=820,
         resizable=True,
         min_size=(900, 600),
+        js_api=_Api(),
     )
 
     try:
