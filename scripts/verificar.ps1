@@ -17,9 +17,9 @@ try {
     New-Item -ItemType Directory -Path $Temp | Out-Null
     try {
         $env:CAOSZERO_HOME = Join-Path $Temp "estado"
-        & $Python caoszero.py demo (Join-Path $Temp "sandbox") | Out-Null
-        & $Python caoszero.py organize (Join-Path $Temp "sandbox") --apply --yes --report (Join-Path $Temp "relatorio.md") | Out-Null
-        & $Python caoszero.py doctor --json | Out-Null
+        & $Python -m caoszero.cli demo (Join-Path $Temp "sandbox") | Out-Null
+        & $Python -m caoszero.cli organize (Join-Path $Temp "sandbox") --apply --yes --report (Join-Path $Temp "relatorio.md") | Out-Null
+        & $Python -m caoszero.cli doctor --json | Out-Null
         if (-not (Test-Path (Join-Path $Temp "relatorio.md"))) {
             throw "Relatório não foi gerado."
         }
@@ -31,3 +31,4 @@ try {
 } finally {
     Pop-Location
 }
+
