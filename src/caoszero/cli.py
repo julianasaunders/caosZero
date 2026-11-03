@@ -395,6 +395,12 @@ def cmd_web(args: argparse.Namespace) -> int:
     )
 
 
+def cmd_native(args: argparse.Namespace) -> int:
+    from .native import run_native
+
+    return run_native(host=args.host, port=args.port)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="caoszero",
@@ -487,6 +493,15 @@ def build_parser() -> argparse.ArgumentParser:
     web.add_argument("--port", type=int, default=8765, help="porta (padrão: 8765)")
     web.add_argument("--no-browser", action="store_true", help="não abre o navegador automaticamente")
     web.set_defaults(handler=cmd_web)
+
+    native = subparsers.add_parser(
+        "native",
+        help="abre a interface nativa (janela desktop)",
+        description="Janela desktop nativa com a interface web do CaosZero (WebView2).",
+    )
+    native.add_argument("--host", default="127.0.0.1", help="endereço de escuta (padrão: 127.0.0.1)")
+    native.add_argument("--port", type=int, default=None, help="porta (padrão: automática)")
+    native.set_defaults(handler=cmd_native)
 
     return parser
 
