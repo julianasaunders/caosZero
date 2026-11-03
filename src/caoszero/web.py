@@ -242,7 +242,12 @@ class CaosZeroHandler(SimpleHTTPRequestHandler):
             if run_id:
                 run = journal.load(run_id)
             else:
-                run = runs[-1] if latest else runs[-1]
+                run = journal.latest(undoable_only=True)
+                if run is None and runs:
+                    run = runs[0]
+            if run is None:
+                self._error("Nenhuma execução registrada.")
+                return
             if run.dry_run:
                 self._error("Uma simulação não pode ser desfeita.")
                 return
@@ -279,7 +284,7 @@ def run_web(host: str = "127.0.0.1", port: int = 8765, open_browser: bool = True
     print("Pressione Ctrl+C para encerrar.")
 
     if open_browser:
-        threading.Timer(0.6, lambda: webbrowser.open(url + "layout-12-dualtree-classic.html")).start()
+        threading.Timer(0.6, lambda: webbrowser.open(url + "app.html")).start()
 
     try:
         httpd.serve_forever()
