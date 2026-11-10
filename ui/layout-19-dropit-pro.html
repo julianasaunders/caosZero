@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 19: DropIt Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0a0e14;color:#c9d1d9;font-family:'JetBrains Mono',monospace;font-size:13px;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:20px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;border-bottom:1px solid #1f2630;padding-bottom:12px}
+.brand{font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px}
+.brand-mark{width:26px;height:26px;border-radius:6px;background:#3fb950;color:#0a0e14;display:grid;place-items:center;font-weight:800;font-size:12px}
+.status{font-size:11px;color:#3fb950;display:flex;align-items:center;gap:6px}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:#3fb950;box-shadow:0 0 8px #3fb950}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:14px}
+.sidebar{background:#0d1117;border:1px solid #1f2630;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:14px}
+.sidebar h3{margin:0 0 6px;font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:#8b949e;font-weight:600}
+.profile-tabs{display:flex;flex-direction:column;gap:4px}
+.profile-tab{background:#161d33;border:1px solid #1f2630;border-radius:6px;padding:8px 10px;cursor:pointer;font-size:11px;display:flex;align-items:center;gap:6px;transition:border-color .15s}
+.profile-tab:hover{border-color:#3fb950}
+.profile-tab.active{border-color:#3fb950;background:rgba(63,185,80,.08);color:#3fb950}
+.assoc-list{display:flex;flex-direction:column;gap:6px}
+.assoc{background:#161d33;border:1px solid #1f2630;border-radius:6px;padding:8px 10px;font-size:11px}
+.assoc .rule{color:#58a6ff;margin-bottom:2px}
+.assoc .action{color:#3fb950;font-weight:600}
+.assoc .prio{font-size:9px;color:#8b949e;margin-top:2px}
+.main{display:flex;flex-direction:column;gap:12px}
+.panel{background:#0d1117;border:1px solid #1f2630;border-radius:8px;padding:14px}
+.panel h3{margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#8b949e;font-weight:600;display:flex;align-items:center;gap:6px}
+.pathbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.pathbar input{flex:1;min-width:180px;background:#0a0e14;border:1px solid #1f2630;color:#c9d1d9;padding:8px 12px;border-radius:6px;font-size:11px;font-family:inherit}
+.pathbar button{background:#161d33;border:1px solid #1f2630;color:#c9d1d9;padding:8px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+.pathbar button:hover{border-color:#3fb950}
+.pathbar button.primary{background:#3fb950;color:#0a0e14;border-color:#3fb950}
+.dropzone{border:1px dashed #2a3340;border-radius:6px;padding:12px;text-align:center;background:#0a0e14;cursor:pointer;margin-bottom:10px}
+.dropzone.dragover{border-color:#3fb950;background:rgba(63,185,80,.06)}
+.dropzone .dz-icon{font-size:20px;margin-bottom:2px;color:#3fb950}
+.dropzone .dz-title{margin:0 0 2px;font-size:12px;font-weight:600}
+.dropzone .dz-sub{margin:0 0 8px;font-size:10px;color:#8b949e}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.col{background:#0a0e14;border:1px solid #1f2630;border-radius:6px;padding:10px;min-height:140px}
+.col h4{margin:0 0 6px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:4px}
+.col.before h4{color:#ffb347}
+.col.after h4{color:#3fb950}
+.col ul{list-style:none;margin:0;padding:0;font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.5}
+.col li{padding:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.col .folder{color:#ffb347}
+.col .file{color:#8b949e}
+.col ul ul{padding-left:12px;border-left:1px dashed #2a3340;margin-left:2px}
+.progress{height:4px;background:#1f2630;border-radius:99px;overflow:hidden;margin:8px 0}
+.progress > div{height:100%;width:0%;background:#3fb950;transition:width .2s}
+.result{margin-top:8px;padding:6px 8px;border-radius:5px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.3);display:none;font-size:11px;text-align:center}
+.result.show{display:block}
+.result strong{color:#3fb950}
+.log{background:#06091a;border:1px solid #1f2630;border-radius:6px;padding:8px;height:110px;overflow:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.5;margin-top:8px}
+.log .ok{color:#3fb950}.log .dim{color:#6e7681}.log .cmd{color:#58a6ff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.stat{background:#0a0e14;border:1px solid #1f2630;border-radius:5px;padding:6px;text-align:center}
+.stat .num{font-size:14px;font-weight:700;color:#3fb950}
+.stat .lbl{font-size:8px;color:#8b949e;margin-top:1px;text-transform:uppercase}
+.filter-builder{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.filter-builder select,.filter-builder input{background:#0a0e14;border:1px solid #1f2630;color:#c9d1d9;padding:5px 8px;border-radius:4px;font-size:10px;font-family:inherit}
+.action-picker{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.action-picker button{background:#0a0e14;border:1px solid #1f2630;color:#c9d1d9;padding:5px 10px;border-radius:4px;font-size:10px;cursor:pointer;font-family:inherit}
+.action-picker button.active{border-color:#3fb950;color:#3fb950;background:rgba(63,185,80,.08)}
+.fab{position:fixed;bottom:18px;right:18px;z-index:50;background:#3fb950;color:#0a0e14;border:0;padding:10px 18px;border-radius:999px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(63,185,80,.4);display:none}
+.fab.show{display:block}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100}
+.modal-backdrop.show{display:flex}
+.modal{background:#0d1117;border:1px solid #1f2630;border-radius:8px;padding:20px;max-width:90vw;width:380px;text-align:center}
+.modal h3{margin:0 0 8px;font-size:14px;font-weight:700}
+.modal p{color:#8b949e;font-size:12px;margin:0 0 14px;line-height:1.5}
+.modal .modal-actions{display:flex;gap:8px;justify-content:center}
+.modal .modal-actions button{padding:7px 16px;border-radius:6px;font-weight:700;font-size:11px;cursor:pointer;font-family:inherit;border:0}
+.modal .btn-cancel{background:#0a0e14;color:#c9d1d9;border:1px solid #1f2630}
+.modal .btn-confirm{background:#3fb950;color:#0a0e14}
+.footer{margin-top:16px;padding-top:10px;border-top:1px solid #1f2630;font-size:10px;color:#6e7681;text-align:center}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand-mark">C0</div> caoszero / dropit-pro</div>
+    <div class="status">online · v2.0.0</div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div>
+        <h3>Perfis (DropIt)</h3>
+        <div class="profile-tabs">
+          <div class="profile-tab active" onclick="setProfile(this)">📁 Downloads</div>
+          <div class="profile-tab" onclick="setProfile(this)">📸 Fotos</div>
+          <div class="profile-tab" onclick="setProfile(this)">📄 Documentos</div>
+          <div class="profile-tab" onclick="setProfile(this)">🎵 Música</div>
+          <div class="profile-tab" onclick="setProfile(this)">+ Novo perfil</div>
+        </div>
+      </div>
+      <div>
+        <h3>Associações (regras → ação)</h3>
+        <div class="assoc-list">
+          <div class="assoc">
+            <div class="rule">Nome: *.jpg, *.png</div>
+            <div class="action">→ Mover para Imagens/</div>
+            <div class="prio">prioridade: alta</div>
+          </div>
+          <div class="assoc">
+            <div class="rule">Nome: *.pdf, *.docx</div>
+            <div class="action">→ Mover para Documentos/</div>
+            <div class="prio">prioridade: alta</div>
+          </div>
+          <div class="assoc">
+            <div class="rule">Tamanho: > 100MB</div>
+            <div class="action">→ Mover para Compactados/</div>
+            <div class="prio">prioridade: média</div>
+          </div>
+          <div class="assoc">
+            <div class="rule">Data: > 180 dias</div>
+            <div class="action">→ Arquivar em Arquivo/AAAA/</div>
+            <div class="prio">prioridade: baixa</div>
+          </div>
+          <button style="background:#0a0e14;border:1px dashed #1f2630;color:#8b949e;padding:6px;border-radius:4px;font-size:10px;cursor:pointer;font-family:inherit">+ Nova associação</button>
+        </div>
+      </div>
+      <div>
+        <h3>Ação padrão</h3>
+        <div class="action-picker">
+          <button class="active">Mover</button>
+          <button>Copiar</button>
+          <button>Renomear</button>
+          <button>Comprimir</button>
+          <button>Extrair</button>
+          <button>Excluir</button>
+          <button>Abrir com</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="panel">
+        <h3><ion-icon name="folder-open-outline"></ion-icon> Pasta alvo</h3>
+        <div class="pathbar">
+          <input type="text" id="targetPath" placeholder="C:\Users\voce\Downloads" />
+          <button type="button" onclick="pickFolder()">Selecionar</button>
+          <button type="button" class="primary" onclick="scanFolder()">Analisar</button>
+          <button type="button" onclick="undoLast()">Desfazer</button>
+        </div>
+        <div class="dropzone" id="dropzone">
+          <div class="dz-icon"><ion-icon name="cloud-upload-outline"></ion-icon></div>
+          <p class="dz-title">Arraste arquivos ou uma pasta aqui (DropIt)</p>
+          <p class="dz-sub">ou clique para selecionar</p>
+          <input type="file" id="fileInput" multiple webkitdirectory style="display:none" />
+          <button class="dz-btn" onclick="triggerPick()" style="margin-top:6px;background:#3fb950;color:#0a0e14;border:0;padding:6px 12px;border-radius:5px;font-weight:700;font-size:10px;cursor:pointer;font-family:inherit">Selecionar</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3><ion-icon name="git-compare-outline"></ion-icon> Antes / Depois</h3>
+        <div class="grid2" id="treeGrid" style="display:none">
+          <div class="col before">
+            <h4><ion-icon name="folder-outline"></ion-icon> Antes (atual)</h4>
+            <ul id="beforeTree"></ul>
+          </div>
+          <div class="col after">
+            <h4><ion-icon name="checkmark-circle-outline"></ion-icon> Depois (planejado)</h4>
+            <ul id="afterTree"></ul>
+          </div>
+        </div>
+        <div class="progress"><div id="bar"></div></div>
+        <div class="result" id="result"><span id="rtitle">0 operações planejadas</span></div>
+        <div class="log" id="log"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
+        <div class="stats">
+          <div class="stat"><div class="num" id="stFiles">0</div><div class="lbl">arquivos</div></div>
+          <div class="stat"><div class="num" id="stOps">0</div><div class="lbl">operações</div></div>
+          <div class="stat"><div class="num" id="stIgnored">0</div><div class="lbl">ignorados</div></div>
+          <div class="stat"><div class="num" id="stSize">0 B</div><div class="lbl">tamanho</div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3><ion-icon name="options-outline"></ion-icon> Filtros avançados (DropIt)</h3>
+        <div class="filter-builder">
+          <select><option>Filtrar por nome</option><option>Filtrar por tamanho</option><option>Filtrar por data</option><option>Filtrar por tipo</option><option>Filtrar por conteúdo</option></select>
+          <input placeholder="*.jpg, >10MB, >30d…" />
+          <select><option>AND</option><option>OR</option></select>
+          <select><option>Prioridade: alta</option><option>Prioridade: média</option><option>Prioridade: baixa</option></select>
+        </div>
+        <div style="margin-top:8px;font-size:10px;color:#8b949e">Regras combinadas com AND/OR. Prioridade define a ordem de aplicação.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">caoszero ©</div>
+</div>
+
+<button class="fab" id="btnApply" type="button">✓ Aplicar organização</button>
+
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal">
+    <h3>Aplicar organização?</h3>
+    <p>Esta ação moverá os arquivos de acordo com o plano. Você poderá desfazer com <code>undo</code>.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" type="button" id="btnCancelApply">Cancelar</button>
+      <button class="btn-confirm" type="button" id="btnConfirmApply">Aplicar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CATS={'.pdf':'Documentos','.doc':'Documentos','.docx':'Documentos','.txt':'Documentos','.md':'Documentos','.rtf':'Documentos','.odt':'Documentos','.xls':'Planilhas','.xlsx':'Planilhas','.csv':'Planilhas','.ods':'Planilhas','.jpg':'Imagens','.jpeg':'Imagens','.png':'Imagens','.gif':'Imagens','.bmp':'Imagens','.svg':'Imagens','.webp':'Imagens','.mp4':'Videos','.mkv':'Videos','.avi':'Videos','.mov':'Videos','.wmv':'Videos','.flv':'Videos','.webm':'Videos','.m4v':'Videos','.mp3':'Musicas','.wav':'Musicas','.flac':'Musicas','.aac':'Musicas','.ogg':'Musicas','.m4a':'Musicas','.zip':'Compactados','.rar':'Compactados','.7z':'Compactados','.tar':'Compactados','.gz':'Compactados','.tgz':'Compactados','.bz2':'Compactados','.xz':'Compactados','.exe':'Instaladores','.msi':'Instaladores','.deb':'Instaladores','.rpm':'Instaladores','.dmg':'Instaladores','.pkg':'Instaladores','.py':'Codigo','.js':'Codigo','.ts':'Codigo','.java':'Codigo','.c':'Codigo','.cpp':'Codigo','.cs':'Codigo','.go':'Codigo','.rs':'Codigo','.sh':'Codigo','.bat':'Codigo','.ps1':'Codigo','.html':'Codigo','.css':'Codigo','.json':'Codigo','.xml':'Codigo','.yml':'Codigo','.yaml':'Codigo'};
+function categoryOf(n){const i=n.lastIndexOf('.');const e=i>=0?n.slice(i).toLowerCase():'';if(n.toLowerCase().endsWith('.tar.gz'))return 'Compactados';return CATS[e]||'Outros';}
+function fmtSize(b){if(b<1024)return b+' B';if(b<1048576)return (b/1024).toFixed(1)+' KB';return (b/1048576).toFixed(1)+' MB';}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+let state={target:'',plan:[],movedSet:new Set()};
+
+async function pickFolder(){
+  let path=null;
+  if (window.pywebview && window.pywebview.api && window.pywebview.api.pick_folder) { try { path = await window.pywebview.api.pick_folder(); } catch(e){ console.error(e); } }
+  if (!path) path = prompt('Informe o caminho da pasta:');
+  if (path) document.getElementById('targetPath').value = path;
+}
+
+async function scanFolder(){
+  const target = document.getElementById('targetPath').value.trim();
+  if (!target) { alert('Informe uma pasta.'); return; }
+  state.target = target;
+  const logEl=document.getElementById('log'); logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize "'+esc(target)+'"</span>');
+  log('<span class="dim"># analisando…</span>');
+  try {
+    const res = await fetch('/api/scan', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({target: target})});
+    const data = await res.json();
+    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
+    state.plan = data.operations || [];
+    state.movedSet = new Set(state.plan.filter(o=>o.destination && o.source!==o.destination).map(o=>o.source_name));
+    const beforeNames = state.plan.map(o=>o.source);
+    const beforeTree = buildTree(beforeNames);
+    renderTree(beforeTree, document.getElementById('beforeTree'), null);
+    document.getElementById('beforeCount').textContent = data.counts.analisados+' arquivos';
+    const afterRoot = {};
+    for (const op of state.plan) {
+      const cat = op.category || 'Outros';
+      if (!afterRoot[cat]) afterRoot[cat] = {__dir:true, name:cat, children:{}};
+      afterRoot[cat].children[op.source_name] = {__file:true, name: op.source_name, size: op.size};
+    }
+    renderTree(afterRoot, document.getElementById('afterTree'), state.movedSet);
+    document.getElementById('afterCount').textContent = state.plan.length+' arquivos';
+    document.getElementById('treeGrid').style.display='grid';
+    document.getElementById('stats').style.display='grid';
+    document.getElementById('stFiles').textContent = data.counts.analisados;
+    document.getElementById('stOps').textContent = data.counts.operacoes;
+    document.getElementById('stIgnored').textContent = data.counts.ignorados;
+    document.getElementById('stSize').textContent = fmtSize(data.counts.bytes);
+    const fab = document.getElementById('btnApply'); if (fab) fab.classList.add('show');
+    const r = document.getElementById('result'); r.classList.add('show');
+    document.getElementById('rtitle').textContent = data.counts.operacoes+' operações planejadas';
+    document.getElementById('bar').style.width='100%';
+    log('<span class="ok">SIMULAÇÃO concluída: '+data.counts.operacoes+' operações. Nenhum arquivo alterado.</span>');
+  } catch (e) {
+    log('<span class="err">Erro: '+esc(String(e))+'</span>');
+  }
+}
+
+function buildTree(paths){
+  const root = {};
+  for (const rel of paths) {
+    const parts = String(rel).replace(/\\\\/g,'/').split('/').filter(Boolean);
+    let node = root;
+    for (let i=0;i<parts.length;i++){
+      const name = parts[i]; const isFile = i===parts.length-1;
+      if (!node[name]) node[name] = isFile ? {__file:true, name} : {__dir:true, name, children:{}};
+      if (!isFile) node = node[name].children;
+    }
+  }
+  return root;
+}
+function renderTree(root, ul, movedSet){
+  ul.innerHTML='';
+  const keys = Object.keys(root).sort((a,b)=>{const da=root[a].__dir?0:1,db=root[b].__dir?0:1;if(da!==db)return da-db;return a.localeCompare(b,'pt-BR',{sensitivity:'base'});});
+  for (const k of keys){
+    const n = root[k];
+    const li = document.createElement('li');
+    if (n.__dir){
+      li.innerHTML = '<span class="folder"><span class="caret">▾</span> <ion-icon name="folder-outline" style="vertical-align:middle;margin-right:2px;font-size:11px"></ion-icon> '+esc(n.name)+'/</span>';
+      const span = li.querySelector('.folder');
+      span.addEventListener('click',(e)=>{e.stopPropagation();const sub=li.querySelector('ul');const isCol=sub.style.display==='none';sub.style.display=isCol?'':'none';span.classList.toggle('collapsed',!isCol);});
+      const sub = document.createElement('ul');
+      renderTree(n.children, sub, movedSet);
+      li.appendChild(sub);
+    } else {
+      const moved = movedSet && movedSet.has(n.name);
+      li.innerHTML = '<span class="file">'+(moved?'→ ':'  ')+esc(n.name)+'</span>';
+      if (moved) li.querySelector('.file').classList.add('moved');
+    }
+    ul.appendChild(li);
+  }
+}
+
+async function applyOrg(){
+  const target = document.getElementById('targetPath').value.trim();
+  if (!target) { alert('Informe uma pasta.'); return; }
+  document.getElementById('confirmModal').classList.remove('show');
+  const logEl = document.getElementById('log'); logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize "'+esc(target)+'" --apply</span>');
+  try {
+    const res = await fetch('/api/apply', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({target: target, apply: true})});
+    const data = await res.json();
+    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
+    const r = document.getElementById('result'); r.classList.add('show');
+    document.getElementById('rtitle').textContent = data.moved + ' arquivos organizados';
+    log('<span class="ok">Execução concluída: '+data.moved+' movidos, '+data.failed+' falhas.</span>');
+    log('<span class="dim"># para desfazer: caoszero undo --latest</span>');
+    const fab = document.getElementById('btnApply'); if (fab) fab.classList.remove('show');
+  } catch (e) {
+    log('<span class="err">Erro: '+esc(String(e))+'</span>');
+  }
+}
+
+async function undoLast(){
+  const logEl = document.getElementById('log'); logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero undo --latest</span>');
+  try {
+    const res = await fetch('/api/undo', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({latest: true})});
+    const data = await res.json();
+    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
+    log('<span class="ok">Restauradas: '+data.undone+' | Falhas: '+data.undo_failed+'</span>');
+  } catch (e) {
+    log('<span class="err">Erro: '+esc(String(e))+'</span>');
+  }
+}
+
+function pickFolder(){
+  let path = null;
+  if (window.pywebview && window.pywebview.api && window.pywebview.api.pick_folder) {
+    window.pywebview.api.pick_folder().then(p => { if (p) document.getElementById('targetPath').value = p; }).catch(()=>{});
+  } else {
+    const p = prompt('Informe o caminho da pasta:');
+    if (p) document.getElementById('targetPath').value = p;
+  }
+}
+
+const dz = document.getElementById('dropzone');
+const fi = document.getElementById('fileInput');
+if (dz && fi) {
+  dz.addEventListener('dragover', (e)=>{ e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', ()=> dz.classList.remove('dragover'));
+  dz.addEventListener('drop', (e)=>{ e.preventDefault(); dz.classList.remove('dragover'); handleDrop(e.dataTransfer.files); });
+  fi.addEventListener('change', (e)=> handleDrop(e.target.files));
+}
+function triggerPick(){ if (fi) fi.click(); }
+function handleDrop(files){
+  if (!files || !files.length) return;
+  const f = files[0];
+  const rel = f.webkitRelativePath || f.name;
+  const parts = rel.split('/');
+  if (parts.length > 1) document.getElementById('targetPath').value = parts.slice(0,-1).join('/');
+  else document.getElementById('targetPath').value = '.';
+  scanFolder();
+}
+
+const btnApply = document.getElementById('btnApply');
+if (btnApply) btnApply.addEventListener('click', ()=> document.getElementById('confirmModal').classList.add('show'));
+const btnCancel = document.getElementById('btnCancelApply');
+if (btnCancel) btnCancel.addEventListener('click', ()=> document.getElementById('confirmModal').classList.remove('show'));
+const btnConfirm = document.getElementById('btnConfirmApply');
+if (btnConfirm) btnConfirm.addEventListener('click', applyOrg);
+
+window.addEventListener('pywebviewready', ()=>{ console.log('pywebview ready'); });
+</script>
+</body>
+</html>

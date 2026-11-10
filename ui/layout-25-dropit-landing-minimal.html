@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 25: DropIt Landing Minimal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0b1020;color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:40px 24px}
+.hero{text-align:center;margin-bottom:48px}
+.brand{font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:24px}
+.brand-mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:14px}
+.hero h1{font-size:36px;font-weight:800;margin:0 0 12px;letter-spacing:-1px}
+.hero h1 .accent{background:linear-gradient(90deg,#7c5cff,#3fd16f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#8a93b0;margin:0 0 24px;font-size:15px;line-height:1.6}
+.hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{padding:12px 24px;border-radius:999px;font-weight:700;font-size:14px;border:0;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020}
+.btn-ghost{background:transparent;color:#e8ecf4;border:1px solid #263056}
+.floating-target{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#3fd16f);display:grid;place-items:center;margin:24px auto;box-shadow:0 8px 28px rgba(124,92,255,.4);cursor:pointer}
+.floating-target .ico{font-size:28px;color:#0b1020}
+.section{margin-bottom:40px}
+.section h2{font-size:20px;font-weight:800;margin:0 0 16px;padding-bottom:8px;border-bottom:1px solid #1f2630}
+.feature-list{display:flex;flex-direction:column;gap:2px}
+.feature-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #1f2630}
+.feature-item:last-child{border-bottom:0}
+.feature-item .ico{width:32px;height:32px;border-radius:8px;background:rgba(124,92,255,.12);color:#7c5cff;display:grid;place-items:center;font-size:16px;flex-shrink:0;margin-top:2px}
+.feature-item .meta h3{margin:0 0 2px;font-size:13px;font-weight:700;color:#e8ecf4}
+.feature-item .meta p{margin:0;font-size:12px;color:#8a93b0;line-height:1.5}
+.steps{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.step{display:flex;align-items:flex-start;gap:12px;padding:10px 0}
+.step .num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:12px;flex-shrink:0}
+.step .meta h4{margin:0 0 2px;font-size:13px;font-weight:700}
+.step .meta p{margin:0;font-size:12px;color:#8a93b0;line-height:1.5}
+.download{background:rgba(22,29,51,.5);border:1px solid #263056;border-radius:16px;padding:32px;text-align:center;margin-top:8px}
+.download h3{font-size:18px;font-weight:700;margin:0 0 8px}
+.download p{color:#8a93b0;margin:0 0 18px;font-size:13px}
+.download .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid #1f2630;font-size:11px;color:#6e7681;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="brand"><div class="brand-mark">C0</div> CaosZero</div>
+    <h1>CaosZero<br><span class="accent">Organize seus arquivos.</span></h1>
+    <p>A ferramenta mais simples para manter suas pastas funcionando perfeitamente. Classifique, renomeie, arquive e desfaça com um clique. Sem exclusões, sem perdas.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="#download">Baixar agora</a>
+      <a class="btn btn-ghost" href="#recursos">Ver recursos</a>
+    </div>
+    <div class="floating-target" title="Arraste arquivos aqui">
+      <span class="ico">📁</span>
+    </div>
+  </div>
+
+  <section class="section" id="recursos">
+    <h2>Características</h2>
+    <div class="feature-list">
+      <div class="feature-item"><div class="ico"><ion-icon name="move-outline"></ion-icon></div><div class="meta"><h3>Arrastar e Soltar</h3><p>Processe arquivos e pastas simplesmente soltando-os na interface do CaosZero.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="funnel-outline"></ion-icon></div><div class="meta"><h3>Filtrar Arquivos &amp; Pastas</h3><p>Por nome, diretório, tamanho, datas, propriedades ou expressões regulares.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="eye-outline"></ion-icon></div><div class="meta"><h3>Monitoramento de Pastas</h3><p>Processa automaticamente arquivos monitorando os diretórios especificados.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="flash-outline"></ion-icon></div><div class="meta"><h3>21 Ações</h3><p>Executa automaticamente uma ação nos arquivos e pastas correspondentes.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="person-outline"></ion-icon></div><div class="meta"><h3>Perfis</h3><p>Coleta associações em perfis para diferentes usos.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="git-branch-outline"></ion-icon></div><div class="meta"><h3>Suporte Integral a Caminhos</h3><p>Caminhos absolutos, relativos e UNC para pastas compartilhadas.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="text-outline"></ion-icon></div><div class="meta"><h3>Abreviações</h3><p>Variáveis de ambiente internas, personalizadas e de sistema.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="refresh-outline"></ion-icon></div><div class="meta"><h3>Usos Alternativos</h3><p>Processamento via interface e por linha de comando.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="globe-outline"></ion-icon></div><div class="meta"><h3>Multilíngue</h3><p>Interface disponível em vários idiomas.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="lock-closed-outline"></ion-icon></div><div class="meta"><h3>Criptografia do Perfil</h3><p>Protege seus perfis com uma senha.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="arrow-up-circle-outline"></ion-icon></div><div class="meta"><h3>Atualização Automática</h3><p>Suporte a atualização automática do programa.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="list-outline"></ion-icon></div><div class="meta"><h3>Registro de Atividade</h3><p>Criação de arquivo de registro para verificar as operações.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="code-slash-outline"></ion-icon></div><div class="meta"><h3>Unicode</h3><p>Suporte a codificação Unicode.</p></div></div>
+      <div class="feature-item"><div class="ico"><ion-icon name="cube-outline"></ion-icon></div><div class="meta"><h3>Versões Otimizadas</h3><p>Disponível para Windows, nas versões de instalação e portátil.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Como Usar o CaosZero?</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div class="meta"><h4>Escolher pasta</h4><p>Selecione a pasta que deseja organizar.</p></div></div>
+      <div class="step"><div class="num">2</div><div class="meta"><h4>Definir regras</h4><p>Crie associações: regra → ação.</p></div></div>
+      <div class="step"><div class="num">3</div><div class="meta"><h4>Revisar plano</h4><p>Veja a árvore antes/depois e aprove.</p></div></div>
+      <div class="step"><div class="num">4</div><div class="meta"><h4>Executar</h4><p>Aplica e registra no journal. Desfaça se precisar.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="download">
+    <h2>Download</h2>
+    <div class="download">
+      <h3>Baixar CaosZero</h3>
+      <p>Última versão: CaosZero 2.0 — disponível em pacote de instalação e portátil.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#">Baixar Instalador (exe)</a>
+        <a class="btn btn-ghost" href="#">Baixar Portátil (zip)</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    CaosZero 2.0 · Projeto integrador de Sistemas Operacionais · Tema 4.5 · 2026 · Licença MIT
+  </div>
+</div>
+</body>
+</html>

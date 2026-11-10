@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 11: Centered Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0b1020;color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:24px 24px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1f2630;padding-bottom:16px}
+.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.brand-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:13px}
+.status{font-size:12px;color:#3fd16f;display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:#3fd16f;box-shadow:0 0 8px #3fd16f}
+.panel{background:#161d33;border:1px solid #263056;border-radius:16px;padding:24px}
+.panel h3{margin:0 0 14px;font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:#8a93b0;font-weight:600}
+.left-hero{text-align:center;margin-bottom:20px}
+.left-hero h1{font-size:32px;font-weight:800;margin:0 0 8px;letter-spacing:-.4px}
+.left-hero h1 .accent{color:#3fd16f}
+.left-hero p{color:#8a93b0;margin:0;font-size:14px;line-height:1.6}
+.cmdline{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cmdline .prompt{color:#3fd16f;font-weight:700;font-family:'JetBrains Mono',monospace}
+.cmdline input{flex:1;background:transparent;border:0;color:#e8ecf4;font-family:'JetBrains Mono',monospace;font-size:13px;outline:none}
+.cmdline button{background:#3fd16f;color:#0b1020;border:0;padding:7px 14px;border-radius:8px;font-weight:700;font-family:inherit;cursor:pointer;font-size:13px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:7px 13px;border-radius:8px;border:1px solid #263056;background:#0d1117;font-size:12px;cursor:pointer;color:#8a93b0;font-family:inherit}
+.chip.active{background:rgba(63,209,111,.12);color:#3fd16f;border-color:#3fd16f}
+.progress{height:5px;background:#263056;border-radius:99px;overflow:hidden;margin:12px 0}
+.progress > div{height:100%;width:0%;background:linear-gradient(90deg,#7c5cff,#3fd16f);transition:width .3s}
+.result{margin-top:12px;padding:12px 14px;border-radius:10px;background:rgba(63,209,111,.08);border:1px solid rgba(63,209,111,.3);display:none;font-size:13px;text-align:center}
+.result.show{display:block}
+.result strong{color:#3fd16f}
+.log{background:#06091a;border:1px solid #263056;border-radius:10px;padding:12px;min-height:60px;overflow:visible;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.65;margin-top:12px}
+.log .ok{color:#3fd16f}.log .dim{color:#6e7681}.log .cmd{color:#58a6ff}.log .warn{color:#ffb347}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.stat{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px;text-align:center}
+.stat .num{font-size:20px;font-weight:700;color:#3fd16f}
+.stat .lbl{font-size:10px;color:#8a93b0;margin-top:2px;text-transform:uppercase;letter-spacing:.8px}
+.footer{margin-top:24px;padding-top:16px;border-top:1px solid #1f2630;font-size:11px;color:#6e7681;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+.dropzone{border:2px dashed #263056;border-radius:12px;padding:22px;text-align:center;margin-bottom:14px;background:#0d1117;transition:border-color .2s,background .2s;cursor:pointer}
+.dropzone.dragover{border-color:#3fd16f;background:rgba(63,209,111,.06)}
+.dropzone .dz-icon{font-size:34px;margin-bottom:6px;display:flex;justify-content:center}
+.dropzone .dz-title{margin:0 0 4px;font-size:14px;font-weight:600;color:#e8ecf4}
+.dropzone .dz-sub{margin:0 0 12px;font-size:12px;color:#8a93b0}
+.dropzone .dz-btn{background:#3fd16f;color:#0b1020;border:0;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit}
+.dropzone .dz-btn:hover{filter:brightness(1.1)}
+.dropzone .dz-files{margin:12px 0 0;font-size:12px;color:#8a93b0;font-family:'JetBrains Mono',monospace;text-align:left}
+.dropzone .dz-count{margin:8px 0 0;font-size:12px;color:#3fd16f;font-weight:600;text-align:center}
+.tree-grid{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tree-col{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px;min-height:120px}
+.tree-col h4{margin:0 0 8px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:4px}
+.tree-col.before h4{color:#ffb347}
+.tree-col.after h4{color:#3fd16f}
+.tree-col ul{list-style:none;margin:0;padding:0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6}
+.tree-col li{padding:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree-col .folder{color:#ffb347}
+.tree-col .file{color:#8a93b0}
+.tree-col ul ul{padding-left:14px;border-left:1px dashed #263056;margin-left:3px}
+.tree-col .moved{color:#3fd16f}
+@media(max-width:640px){.tree-grid{grid-template-columns:1fr}}
+.dropzone .dz-preview{margin-top:10px}
+.dropzone .tree{list-style:none;margin:0;padding:0}
+.dropzone .tree li{margin:0;padding:0}
+.dropzone .tree .row{display:flex;align-items:center;gap:6px;padding:3px 4px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dropzone .tree .row:hover{background:rgba(255,255,255,.04)}
+.dropzone .tree .row ion-icon{font-size:14px;flex-shrink:0}
+.dropzone .tree .folder > .row ion-icon{color:#ffb347}
+.dropzone .tree .file > .row ion-icon{color:#58a6ff}
+.dropzone .tree ul{list-style:none;margin:0;padding:0 0 0 18px;border-left:1px dashed #263056}
+.dropzone .tree .name{flex:1;overflow:hidden;text-overflow:ellipsis}
+.dropzone .tree .cat{font-size:10px;color:#6e7681;padding:1px 6px;border-radius:4px;background:#0d1117;border:1px solid #263056;margin-left:6px}
+.preview-wrap{margin-top:16px}
+.preview-head{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:#8a93b0;font-weight:600;margin:0 0 8px;display:flex;justify-content:space-between;align-items:center}
+.preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.preview-col{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px;min-height:120px}
+.preview-col h4{margin:0 0 8px;font-size:12px;color:#e8ecf4;display:flex;align-items:center;gap:6px}
+.preview-col.before h4{color:#ffb347}
+.preview-col.after h4{color:#3fd16f}
+.preview-col ul{list-style:none;margin:0;padding:0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7}
+.preview-col li{padding:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preview-col .folder{color:#ffb347}
+.preview-col .file{color:#8a93b0}
+.preview-col .arrow{color:#6e7681;margin:0 6px}
+.preview-col .moved{color:#3fd16f}
+@media(max-width:640px){.preview-grid{grid-template-columns:1fr}}
+</style>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand-mark">C0</div> caoszero</div>
+    <div class="status">online · v2.0.0</div>
+  </div>
+
+  <div class="panel">
+    <div class="left-hero">
+      <h1>caoszero <span class="accent">organize</span></h1>
+      <p>Planeje, confirme, execute e desfaça. </p>
+    </div>
+    <div class="dropzone" id="dropzone">
+      <div class="dz-icon" style="font-size:30px;color:#3fd16f"><ion-icon name="folder-open-outline"></ion-icon></div>
+      <p class="dz-title">Arraste arquivos ou uma pasta aqui</p>
+      <p class="dz-sub">ou clique para selecionar</p>
+      <input type="file" id="fileInput" multiple webkitdirectory style="display:none" />
+      <div class="dz-files" id="dzFiles"></div>
+      <div class="tree-grid" id="treeGrid">
+        <div class="tree-col before">
+          <h4><ion-icon name="folder-outline"></ion-icon> Antes (atual)</h4>
+          <ul id="beforeTree"></ul>
+        </div>
+        <div class="tree-col after">
+          <h4><ion-icon name="checkmark-circle-outline"></ion-icon> Depois (planejado)</h4>
+          <ul id="afterTree"></ul>
+        </div>
+      </div>
+      <button class="dz-btn" onclick="triggerPick()" style="margin-top:10px">Selecionar arquivos</button>
+    </div>
+    <div class="chips">
+      <button class="chip active" onclick="setMode(this,'simular')">simular</button>
+      <button class="chip" onclick="setMode(this,'aplicar')">aplicar</button>
+      <button class="chip" onclick="setMode(this,'agendar')">agendar</button>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="result" id="result"><strong id="rtitle">13 operações planejadas</strong> — Nenhum arquivo alterado.</div>
+    <div class="log" id="log"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
+    <div class="stats">
+      <div class="stat"><div class="num">15</div><div class="lbl">arquivos</div></div>
+      <div class="stat"><div class="num">13</div><div class="lbl">operações</div></div>
+      <div class="stat"><div class="num">1</div><div class="lbl">ignorados</div></div>
+      <div class="stat"><div class="num">379B</div><div class="lbl">tamanho</div></div>
+    </div>
+  </div>
+
+  <div class="footer"><div style="text-align:center;width:100%">caoszero 2.0</div></div>
+</div>
+
+<script>
+let mode='simular';
+let selectedFiles=[];
+function setMode(el,m){mode=m;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');}
+function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+const dz=document.getElementById('dropzone');
+const fi=document.getElementById('fileInput');
+dz.addEventListener('click', (e)=>{ if(e.target!==fi) triggerPick(); });
+dz.addEventListener('dragover', (e)=>{ e.preventDefault(); dz.classList.add('dragover'); });
+dz.addEventListener('dragleave', ()=> dz.classList.remove('dragover'));
+dz.addEventListener('drop', (e)=>{ e.preventDefault(); dz.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+fi.addEventListener('change', (e)=> handleFiles(e.target.files));
+function triggerPick(){ fi.click(); }
+const CATS = {
+  '.pdf': 'Documentos', '.doc': 'Documentos', '.docx': 'Documentos', '.txt': 'Documentos', '.md': 'Documentos', '.rtf': 'Documentos', '.odt': 'Documentos',
+  '.xls': 'Planilhas', '.xlsx': 'Planilhas', '.csv': 'Planilhas', '.ods': 'Planilhas',
+  '.jpg': 'Imagens', '.jpeg': 'Imagens', '.png': 'Imagens', '.gif': 'Imagens', '.bmp': 'Imagens', '.svg': 'Imagens', '.webp': 'Imagens', '.heic': 'Imagens', '.tif': 'Imagens', '.tiff': 'Imagens',
+  '.mp4': 'Videos', '.mkv': 'Videos', '.avi': 'Videos', '.mov': 'Videos', '.wmv': 'Videos', '.flv': 'Videos', '.webm': 'Videos', '.m4v': 'Videos',
+  '.mp3': 'Musicas', '.wav': 'Musicas', '.flac': 'Musicas', '.aac': 'Musicas', '.ogg': 'Musicas', '.m4a': 'Musicas',
+  '.zip': 'Compactados', '.rar': 'Compactados', '.7z': 'Compactados', '.tar': 'Compactados', '.gz': 'Compactados', '.tgz': 'Compactados', '.bz2': 'Compactados', '.xz': 'Compactados',
+  '.exe': 'Instaladores', '.msi': 'Instaladores', '.deb': 'Instaladores', '.rpm': 'Instaladores', '.dmg': 'Instaladores', '.pkg': 'Instaladores',
+  '.py': 'Codigo', '.js': 'Codigo', '.ts': 'Codigo', '.java': 'Codigo', '.c': 'Codigo', '.cpp': 'Codigo', '.cs': 'Codigo', '.go': 'Codigo', '.rs': 'Codigo', '.sh': 'Codigo', '.bat': 'Codigo', '.ps1': 'Codigo', '.html': 'Codigo', '.css': 'Codigo', '.json': 'Codigo', '.xml': 'Codigo', '.yml': 'Codigo', '.yaml': 'Codigo',
+};
+const ICONS = { Documentos:'document-text-outline', Imagens:'image-outline', Videos:'videocam-outline', Musicas:'musical-notes-outline', Planilhas:'grid-outline', Compactados:'archive-outline', Instaladores:'download-outline', Codigo:'code-slash-outline', Outros:'document-outline' };
+function categoryOf(name){
+  const i = name.lastIndexOf('.');
+  const ext = i>=0 ? name.slice(i).toLowerCase() : '';
+  // handle compound .tar.gz
+  if (name.toLowerCase().endsWith('.tar.gz')) return 'Compactados';
+  return CATS[ext] || 'Outros';
+}
+function handleFiles(files){
+  if(!files || !files.length) return;
+  selectedFiles = Array.from(files);
+  const list=document.getElementById('dzFiles');
+  list.innerHTML='';
+  const count=document.createElement('div');
+  count.className='dz-count';
+  count.textContent=files.length+' arquivo(s) selecionado(s)';
+  list.appendChild(count);
+  log('<span class="dim"># recebendo '+files.length+' arquivo(s)…</span>');
+  // árvore dupla: antes (diretório) e depois (categorias)
+  const beforeNames = files.map(f => (f.webkitRelativePath && f.webkitRelativePath.length)? f.webkitRelativePath : f.name);
+  const beforeTree = buildTree(beforeNames);
+  renderTree(beforeTree, document.getElementById('beforeTree'), null);
+  const afterRoot = {};
+  for(const f of files){
+    const name = f.name;
+    const cat = categoryOf(name);
+    if(!afterRoot[cat]) afterRoot[cat] = {__dir:true, name: cat, children:{}};
+    afterRoot[cat].children[name] = {__file:true, name};
+  }
+  renderTree(afterRoot, document.getElementById('afterTree'), new Set(files.map(f=>f.name)));
+  document.getElementById('treeGrid').style.display = 'grid';
+  runScan(files.length);
+}
+function buildTree(names){
+  const root = {};
+  for(const rel of names){
+    const parts = rel.split('/').filter(Boolean);
+    let node = root;
+    for(let i=0;i<parts.length;i++){
+      const name = parts[i];
+      const isFile = i === parts.length-1;
+      if(!node[name]) node[name] = isFile ? {__file:true, name} : {__dir:true, name, children:{}};
+      if(!isFile) node = node[name].children;
+    }
+  }
+  return root;
+}
+function renderTree(root, ul, movedSet){
+  ul.innerHTML='';
+  const keys = Object.keys(root).sort((a,b)=>{const da=root[a].__dir?0:1,db=root[b].__dir?0:1;if(da!==db)return da-db;return a.localeCompare(b);});
+  for(const k of keys){
+    const n = root[k];
+    const li = document.createElement('li');
+    if(n.__dir){
+      li.innerHTML = '<span class="folder">📁 '+n.name+'/</span>';
+      const sub = document.createElement('ul');
+      li.appendChild(sub);
+      renderTree(n.children, sub, movedSet);
+    } else {
+      const moved = movedSet && movedSet.has(n.name);
+      const cat = categoryOf(n.name);
+      li.innerHTML = '<span class="file">'+(moved?'→ ':'  ')+n.name+'</span> <span class="cat">'+cat+'</span>';
+      if(moved) li.querySelector('.file').classList.add('moved');
+    }
+    ul.appendChild(li);
+  }
+}
+function runScan(count){
+  const bar=document.getElementById('bar');const logEl=document.getElementById('log');
+  logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize <arquivos arrastados></span>');
+  const n = count || 15;
+  const steps=[['15%','Arquivos analisados: '+n],['40%','Operações planejadas: 13 (379 B)'],['65%','<span class="ok">[MOVER]</span> backup_projeto.zip → Compactados/'],['82%','<span class="ok">[MOVER]</span> foto_ferias.jpg → Imagens/'],['100%','<span class="ok">SIMULAÇÃO concluída: 13 operações. Nenhum arquivo alterado.</span>']];
+  let i=0;const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);finish();return;}bar.style.width=steps[i][0];log(steps[i][1]);i++;},380);
+}
+function finish(){document.getElementById('result').classList.add('show');document.getElementById('rtitle').textContent=mode==='aplicar'?'13 arquivos organizados':'13 operações planejadas';}
+</script>
+</body>
+</html>
