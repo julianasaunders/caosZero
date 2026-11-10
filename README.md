@@ -22,35 +22,34 @@ pasta, analisa e aplica a organização diretamente no seu computador.
 
 ## Interface gráfica (principal)
 
-O CaosZero é, antes de tudo, um **aplicativo com interface gráfica**.
-Basta abrir o executável `CaosZero.exe` (Windows) e operar tudo pela
-interface.
+> O CaosZero é, antes de tudo, um **aplicativo com interface gráfica**.
+> Você não precisa saber programar — basta abrir e clicar.
 
-### Como usar
+### 🚀 Como usar (em 5 passos)
 
-1. Abra `CaosZero.exe`.
-2. Clique em **Selecionar pasta** e escolha a pasta que deseja organizar.
-3. Clique em **Analisar** — o CaosZero planeja as operações e mostra a
-   árvore **Antes/Depois**, o log e as estatísticas. Nada é alterado.
-4. Revise o plano e clique no botão flutuante **Aplicar organização**
-   (com confirmação antes de mover).
-5. Use **Desfazer** para restaurar a última execução.
+| Passo | Ação | O que acontece |
+| :---: | --- | --- |
+| 1️⃣ | **Abrir** `CaosZero.exe` | A janela do app aparece |
+| 2️⃣ | **Selecionar pasta** | Escolha a pasta que deseja organizar |
+| 3️⃣ | **Analisar** | O CaosZero planeja tudo e mostra a árvore **Antes/Depois** + log + estatísticas. **Nada é alterado.** |
+| 4️⃣ | **Aplicar organização** | Botão flutuante com confirmação antes de mover qualquer arquivo |
+| 5️⃣ | **Desfazer** | Restaura a última execução com um clique |
 
-Recursos da interface:
+### ✨ Recursos da interface
 
-- **Selecionar pasta** — seletor nativo de pastas do Windows.
-- **Analisar** — planeja as operações e mostra a árvore "Antes/Depois".
-- **Aplicar organização** — botão flutuante com confirmação antes de mover.
-- **Desfazer** — restaura a última execução.
-- **Modo claro/escuro** — alternável pelo ícone de sol/lua no cabeçalho.
-- **Perfis e associações** (estilo DropIt) — regras de organização.
-- **Prompt em linguagem natural** (estilo Kimi) — "organize por projeto…".
-- **Agendamento** — execução automática (cron / Agendador de Tarefas).
-- **Relatórios** em Markdown, CSV e JSON.
-- **Diagnóstico** do sistema operacional (CPU, memória, disco, permissões).
+| Recurso | Descrição |
+| --- | --- |
+| 📂 **Selecionar pasta** | Seletor nativo de pastas do Windows |
+| 🔍 **Analisar** | Planeja as operações e exibe a árvore "Antes/Depois" |
+| ✅ **Aplicar organização** | Botão flutuante com confirmação antes de mover |
+| ↩️ **Desfazer** | Restaura a última execução |
+| 🌙/☀️ **Modo claro/escuro** | Alternável pelo ícone de sol/lua no cabeçalho |
+| 📋 **Plano de revisão** | Revise antes de aplicar |
+| 🩺 **Diagnóstico** | CPU, memória, disco, permissões |
 
-O executável está em `dist/CaosZero.exe` (ou `Downloads/CaosZero.exe`).
-Também disponível como página web em `ui/app.html`.
+> **O executável está em** `dist/CaosZero.exe` (ou `Downloads/CaosZero.exe`).
+
+> **Também disponível** como página web em `ui/app.html`.
 
 ---
 
