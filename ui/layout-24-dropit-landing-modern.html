@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 24: DropIt Landing Modern</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(135deg,#0b1020 0%,#1a0b2e 50%,#0a1628 100%);color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:24px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.brand{font-weight:800;font-size:20px;display:flex;align-items:center;gap:10px}
+.brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:15px}
+nav a{margin-left:18px;font-size:13px;color:#8a93b0;font-weight:600}
+nav a:hover{color:#e8ecf4}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:40px 0}
+.hero h1{font-size:48px;line-height:1.05;font-weight:800;margin:0 0 16px;letter-spacing:-1.5px}
+.hero h1 .accent{background:linear-gradient(90deg,#7c5cff,#3fd16f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#8a93b0;margin:0 0 24px;font-size:16px;line-height:1.6;max-width:520px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{padding:14px 26px;border-radius:999px;font-weight:700;font-size:14px;border:0;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;box-shadow:0 8px 28px rgba(124,92,255,.4)}
+.btn-ghost{background:rgba(255,255,255,.06);color:#e8ecf4;border:1px solid #263056}
+.hero-card{background:rgba(22,29,51,.6);backdrop-filter:blur(14px);border:1px solid rgba(124,92,255,.25);border-radius:24px;padding:28px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.hero-card h3{margin:0 0 14px;font-size:16px;font-weight:700}
+.hero-card .feat-list{display:flex;flex-direction:column;gap:10px}
+.hero-card .feat-item{display:flex;align-items:center;gap:10px;font-size:13px;color:#8a93b0}
+.hero-card .feat-item .ico{width:30px;height:30px;border-radius:8px;background:rgba(124,92,255,.12);color:#7c5cff;display:grid;place-items:center;flex-shrink:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0}
+.stat{background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.2);border-radius:16px;padding:20px;text-align:center}
+.stat strong{display:block;font-size:30px;font-weight:800;background:linear-gradient(90deg,#7c5cff,#3fd16f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:12px;color:#8a93b0;margin-top:4px}
+.section{padding:60px 0}
+.section-head{text-align:center;max-width:720px;margin:0 auto 40px}
+.section-head h2{font-size:30px;font-weight:800;margin:0 0 10px}
+.section-head p{color:#8a93b0;margin:0;font-size:15px;line-height:1.6}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feature{background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.2);border-radius:16px;padding:22px;transition:transform .2s,border-color .2s}
+.feature:hover{transform:translateY(-4px);border-color:#7c5cff}
+.feature .ico{width:40px;height:40px;border-radius:12px;background:rgba(124,92,255,.12);color:#7c5cff;display:grid;place-items:center;font-size:20px;margin-bottom:12px}
+.feature h3{margin:0 0 6px;font-size:15px;font-weight:700;color:#e8ecf4}
+.feature p{margin:0;font-size:12px;color:#8a93b0;line-height:1.5}
+.floating-target{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#3fd16f);display:grid;place-items:center;margin:0 auto 20px;box-shadow:0 12px 40px rgba(124,92,255,.45);cursor:pointer;transition:transform .2s}
+.floating-target:hover{transform:scale(1.06)}
+.floating-target .ico{font-size:32px;color:#0b1020}
+.download{background:linear-gradient(135deg,rgba(124,92,255,.15),rgba(63,209,111,.1));border:1px solid rgba(124,92,255,.3);border-radius:24px;padding:56px 40px;text-align:center}
+.download h2{font-size:32px;font-weight:800;margin:0 0 10px}
+.download p{color:#8a93b0;margin:0 0 28px;font-size:15px;max-width:600px;margin-left:auto;margin-right:auto}
+.download .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.download .note{margin-top:20px;font-size:12px;color:#6e7681}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid #1f2630;font-size:11px;color:#6e7681;text-align:center}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.feature-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.hero h1{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand-mark">C0</div> CaosZero</div>
+    <nav>
+      <a href="#recursos">Recursos</a>
+      <a href="#como-usar">Como usar</a>
+      <a href="#download">Download</a>
+    </nav>
+  </div>
+
+  <section class="hero">
+    <div>
+      <p style="font-size:13px;font-weight:600;color:#7c5cff;letter-spacing:1.4px;text-transform:uppercase;margin:0 0 12px">Projeto integrador · Sistemas Operacionais · Tema 4.5</p>
+      <h1>CaosZero<br><span class="accent">Um app que organiza arquivos?</span><br>Um app que salva o dia.</h1>
+      <p>A ferramenta mais simples para manter suas pastas funcionando perfeitamente. Classifique, renomeie, arquive e desfaça com um clique. Sem exclusões, sem perdas.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#download">Baixar agora</a>
+        <a class="btn btn-ghost" href="#recursos">Ver recursos</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Organize sua pasta agora</h3>
+      <div class="floating-target" title="Arraste arquivos aqui">
+        <span class="ico">📁</span>
+      </div>
+      <p style="text-align:center;color:#8a93b0;font-size:12px;margin:12px 0 0">Arraste arquivos ou uma pasta para o ícone flutuante</p>
+      <div style="margin-top:16px">
+        <div style="background:rgba(13,17,30,.7);border:1px solid rgba(124,92,255,.2);border-radius:10px;padding:10px 12px;font-size:12px;color:#8a93b0;display:flex;align-items:center;gap:8px">
+          <ion-icon name="checkmark-circle-outline" style="color:#3fd16f;font-size:16px"></ion-icon>
+          77 testes · 0 dependências · Windows/Linux/macOS
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><strong>77</strong><span>testes automatizados</span></div>
+    <div class="stat"><strong>0</strong><span>dependências externas</span></div>
+    <div class="stat"><strong>9</strong><span>categorias de arquivos</span></div>
+    <div class="stat"><strong>100%</strong><span>reversível com undo</span></div>
+  </div>
+
+  <section class="section" id="recursos">
+    <div class="section-head">
+      <h2>Características</h2>
+      <p>Explore as capacidades do CaosZero e veja como ele pode ajudá-lo a economizar o seu tempo.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature"><div class="ico"><ion-icon name="move-outline"></ion-icon></div><h3>Arrastar e Soltar</h3><p>Processe arquivos e pastas simplesmente soltando-os na interface do CaosZero.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="funnel-outline"></ion-icon></div><h3>Filtrar Arquivos &amp; Pastas</h3><p>Por nome, diretório, tamanho, datas, propriedades ou expressões regulares.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="eye-outline"></ion-icon></div><h3>Monitoramento de Pastas</h3><p>Processa automaticamente arquivos monitorando os diretórios especificados.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="flash-outline"></ion-icon></div><h3>21 Ações</h3><p>Executa automaticamente uma ação nos arquivos correspondentes.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="person-outline"></ion-icon></div><h3>Perfis</h3><p>Coleta associações em perfis para diferentes usos.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="git-branch-outline"></ion-icon></div><h3>Suporte Integral a Caminhos</h3><p>Caminhos absolutos, relativos e UNC para pastas compartilhadas.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="text-outline"></ion-icon></div><h3>Abreviações</h3><p>Variáveis de ambiente internas, personalizadas e de sistema.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="refresh-outline"></ion-icon></div><h3>Usos Alternativos</h3><p>Processamento via interface e por linha de comando.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="globe-outline"></ion-icon></div><h3>Multilíngue</h3><p>Interface disponível em vários idiomas.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="lock-closed-outline"></ion-icon></div><h3>Criptografia do Perfil</h3><p>Protege seus perfis com uma senha.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="arrow-up-circle-outline"></ion-icon></div><h3>Atualização Automática</h3><p>Suporte a atualização automática do programa.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="list-outline"></ion-icon></div><h3>Registro de Atividade</h3><p>Criação de arquivo de registro para verificar as operações.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="code-slash-outline"></ion-icon></div><h3>Unicode</h3><p>Suporte a codificação Unicode.</p></div>
+      <div class="feature"><div class="ico"><ion-icon name="cube-outline"></ion-icon></div><h3>Versões Otimizadas</h3><p>Disponível para Windows, nas versões de instalação e portátil.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Como Usar o CaosZero?</h2>
+      <p>Quatro passos para começar.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+      <div style="background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.2);border-radius:16px;padding:20px;text-align:center">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;margin:0 auto 10px">1</div>
+        <h4 style="margin:0 0 4px;font-size:13px;font-weight:700">Escolher pasta</h4>
+        <p style="margin:0;font-size:11px;color:#8a93b0;line-height:1.5">Selecione a pasta que deseja organizar.</p>
+      </div>
+      <div style="background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.2);border-radius:16px;padding:20px;text-align:center">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;margin:0 auto 10px">2</div>
+        <h4 style="margin:0 0 4px;font-size:13px;font-weight:700">Definir regras</h4>
+        <p style="margin:0;font-size:11px;color:#8a93b0;line-height:1.5">Crie associações: regra → ação.</p>
+      </div>
+      <div style="background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.2);border-radius:16px;padding:20px;text-align:center">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;margin:0 auto 10px">3</div>
+        <h4 style="margin:0 0 4px;font-size:13px;font-weight:700">Revisar plano</h4>
+        <p style="margin:0;font-size:11px;color:#8a93b0;line-height:1.5">Veja a árvore antes/depois e aprove.</p>
+      </div>
+      <div style="background:rgba(22,29,51,.5);backdrop-filter:blur(10px);border:1px solid rgba(124,92,255,.2);border-radius:16px;padding:20px;text-align:center">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;margin:0 auto 10px">4</div>
+        <h4 style="margin:0 0 4px;font-size:13px;font-weight:700">Executar</h4>
+        <p style="margin:0;font-size:11px;color:#8a93b0;line-height:1.5">Aplica e registra no journal. Desfaça se precisar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="download">
+      <h2>Baixar</h2>
+      <p>Última versão: CaosZero 2.0 — disponível em pacote de instalação e portátil.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#">Baixar Instalador (exe)</a>
+        <a class="btn btn-ghost" href="#">Baixar Portátil (zip)</a>
+      </div>
+      <p class="note">CaosZero é de código aberto. Contribua no GitHub.</p>
+    </div>
+  </section>
+
+  <div class="footer">
+    CaosZero 2.0 · Projeto integrador de Sistemas Operacionais · Tema 4.5 · 2026 · Licença MIT
+  </div>
+</div>
+</body>
+</html>

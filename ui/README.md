@@ -1,6 +1,6 @@
 # Interfaces do CaosZero (protótipos)
 
-Vinte e dois layouts alternativos para a interface gráfica do CaosZero, inspirados
+Vinte e cinco layouts alternativos para a interface gráfica do CaosZero, inspirados
 na estética do CleanMyMac (hero roxo, botões em pílula, cartões arredondados,
 tipografia limpa), nas cores do Dark Dashboard e nos recursos do DropIt e do
 Kimi Work (perfis, associações, filtros, ações, prompt em linguagem natural,
@@ -53,6 +53,14 @@ simulação em JavaScript, sem backend.
 | `layout-20-dropit-explained.html` | DropIt Explained — passo a passo numerado, associações explicadas, ícone flutuante |
 | `layout-21-dropit-wizard.html` | DropIt Wizard — assistente em 4 passos: pasta → regras → revisar → executar |
 | `layout-22-dropit-dashboard.html` | DropIt Dashboard — dashboard explicativo: perfis, associações, filtros, funcionalidades, IA, agendamento |
+
+## Sexta rodada — landing page estilo DropIt
+
+| Arquivo | Estilo |
+| --- | --- |
+| `layout-23-dropit-landing-classic.html` | DropIt Landing Classic — hero com ícone flutuante, 14 recursos, passos, download |
+| `layout-24-dropit-landing-modern.html` | DropIt Landing Modern — visual Kimi: gradientes, glass, hero dividido, stats |
+| `layout-25-dropit-landing-minimal.html` | DropIt Landing Minimal — minimalista, coluna única, lista de recursos, passos |
 
 Abra `index.html` para ver a galeria e escolher um layout. Após a escolha, o
 layout selecionado será integrado à aplicação (backend Python, persistência de
