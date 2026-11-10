@@ -25,27 +25,27 @@ pasta, analisa e aplica a organização diretamente no seu computador.
 > O CaosZero é, antes de tudo, um **aplicativo com interface gráfica**.
 > Você não precisa saber programar — basta abrir e clicar.
 
-### 🚀 Como usar (em 5 passos)
+### Como usar (em 5 passos)
 
 | Passo | Ação | O que acontece |
 | :---: | --- | --- |
-| 1️⃣ | **Abrir** `CaosZero.exe` | A janela do app aparece |
-| 2️⃣ | **Selecionar pasta** | Escolha a pasta que deseja organizar |
-| 3️⃣ | **Analisar** | O CaosZero planeja tudo e mostra a árvore **Antes/Depois** + log + estatísticas. **Nada é alterado.** |
-| 4️⃣ | **Aplicar organização** | Botão flutuante com confirmação antes de mover qualquer arquivo |
-| 5️⃣ | **Desfazer** | Restaura a última execução com um clique |
+| 1 | **Abrir** `CaosZero.exe` | A janela do app aparece |
+| 2 | **Selecionar pasta** | Escolha a pasta que deseja organizar |
+| 3 | **Analisar** | O CaosZero planeja tudo e mostra a árvore **Antes/Depois** + log + estatísticas. **Nada é alterado.** |
+| 4 | **Aplicar organização** | Botão flutuante com confirmação antes de mover qualquer arquivo |
+| 5 | **Desfazer** | Restaura a última execução com um clique |
 
-### ✨ Recursos da interface
+### Recursos da interface
 
 | Recurso | Descrição |
 | --- | --- |
-| 📂 **Selecionar pasta** | Seletor nativo de pastas do Windows |
-| 🔍 **Analisar** | Planeja as operações e exibe a árvore "Antes/Depois" |
-| ✅ **Aplicar organização** | Botão flutuante com confirmação antes de mover |
-| ↩️ **Desfazer** | Restaura a última execução |
-| 🌙/☀️ **Modo claro/escuro** | Alternável pelo ícone de sol/lua no cabeçalho |
-| 📋 **Plano de revisão** | Revise antes de aplicar |
-| 🩺 **Diagnóstico** | CPU, memória, disco, permissões |
+| **Selecionar pasta** | Seletor nativo de pastas do Windows |
+| **Analisar** | Planeja as operações e exibe a árvore "Antes/Depois" |
+| **Aplicar organização** | Botão flutuante com confirmação antes de mover |
+| **Desfazer** | Restaura a última execução |
+| **Modo claro/escuro** | Alternável pelo ícone de sol/lua no cabeçalho |
+| **Plano de revisão** | Revise antes de aplicar |
+| **Diagnóstico** | CPU, memória, disco, permissões |
 
 > **O executável está em** `dist/CaosZero.exe` (ou `Downloads/CaosZero.exe`).
 
@@ -91,7 +91,7 @@ organização e os conceitos de Sistemas Operacionais aplicados.
 - **Undo** da última execução (ou de um ID específico).
 - **Relatórios** em Markdown, CSV e JSON.
 - **Diagnóstico do SO** (`doctor`): processo, CPU, memória, disco, permissões,
-  variáveis de ambiente e limites de cgroup.
+ variáveis de ambiente e limites de cgroup.
 - **Modo interativo** para uso guiado.
 - **Scripts** de automação para Bash e PowerShell.
 - **Sem dependências externas** para executar.
@@ -134,13 +134,13 @@ python -m pip install -e .
 O CaosZero separa **planejamento** e **execução**:
 
 1. **Planejar** — lê metadados, aplica filtros e calcula destinos sem tocar
-   no disco. (`planner.py`)
+  no disco. (`planner.py`)
 2. **Confirmar** — mostra a prévia, avisos e pede confirmação antes de
-   executar. (interface web)
+  executar. (interface web)
 3. **Executar** — move, renomeia ou arquiva e grava cada passo no journal.
-   (`executor.py`)
+  (`executor.py`)
 4. **Relatar e desfazer** — gera MD/CSV/JSON e permite restaurar a execução
-   anterior. (`reporter.py` · `journal.py`)
+  anterior. (`reporter.py` · `journal.py`)
 
 Nenhum arquivo é sobrescrito: se o destino já existir, o CaosZero gera um
 nome único (`foto.jpg` → `foto (1).jpg`).
@@ -202,15 +202,15 @@ Exemplo de configuração:
 
 ```json
 {
-  "categories": {
-    "Documentos": [".pdf", ".docx", ".txt", ".md"],
-    "Imagens": [".jpg", ".jpeg", ".png", ".gif", ".svg"],
-    "Videos": [".mp4", ".mkv", ".avi", ".mov"],
-    "Compactados": [".zip", ".tar.gz", ".rar", ".7z"]
-  },
-  "ignore_dirs": [".git", "node_modules", "__pycache__"],
-  "max_depth": 5,
-  "follow_symlinks": false
+ "categories": {
+  "Documentos": [".pdf", ".docx", ".txt", ".md"],
+  "Imagens": [".jpg", ".jpeg", ".png", ".gif", ".svg"],
+  "Videos": [".mp4", ".mkv", ".avi", ".mov"],
+  "Compactados": [".zip", ".tar.gz", ".rar", ".7z"]
+ },
+ "ignore_dirs": [".git", "node_modules", "__pycache__"],
+ "max_depth": 5,
+ "follow_symlinks": false
 }
 ```
 
@@ -237,29 +237,29 @@ python -m unittest tests.test_planner -v
 
 ```text
 caosZero/
-├── src/                        # código-fonte
-│   └── caoszero/
-│       ├── cli.py                  # interface do aplicativo
-│       ├── web.py                  # servidor web local + API JSON
-│       ├── native.py               # aplicação nativa (pywebview)
-│       ├── config.py               # configuração e diretórios padrão
-│       ├── planner.py              # planejamento (sem efeitos colaterais)
-│       ├── executor.py             # execução e undo
-│       ├── journal.py              # persistência das execuções
-│       ├── reporter.py             # relatórios MD/CSV/JSON
-│       ├── system_info.py          # diagnóstico do SO
-│       ├── models.py               # modelos de domínio
-│       ├── utils.py                # utilitários
-│       └── demo.py                 # sandbox de demonstração
-├── ui/                         # interfaces web (galeria + app.html)
-├── tests/                      # testes automatizados
-├── scripts/                    # automação, agendamento e hooks
-├── config/                     # configuração de exemplo
-├── docs/                       # documentação do projeto
-├── .github/                    # CI, templates e CODEOWNERS
-├── index.html                  # página do projeto (GitHub Pages)
-├── caoszero.py                 # atalho para executar sem instalar
-├── pyproject.toml              # metadados e entrypoint
+├── src/            # código-fonte
+│  └── caoszero/
+│    ├── cli.py         # interface do aplicativo
+│    ├── web.py         # servidor web local + API JSON
+│    ├── native.py        # aplicação nativa (pywebview)
+│    ├── config.py        # configuração e diretórios padrão
+│    ├── planner.py       # planejamento (sem efeitos colaterais)
+│    ├── executor.py       # execução e undo
+│    ├── journal.py       # persistência das execuções
+│    ├── reporter.py       # relatórios MD/CSV/JSON
+│    ├── system_info.py     # diagnóstico do SO
+│    ├── models.py        # modelos de domínio
+│    ├── utils.py        # utilitários
+│    └── demo.py         # sandbox de demonstração
+├── ui/             # interfaces web (galeria + app.html)
+├── tests/           # testes automatizados
+├── scripts/          # automação, agendamento e hooks
+├── config/           # configuração de exemplo
+├── docs/            # documentação do projeto
+├── .github/          # CI, templates e CODEOWNERS
+├── index.html         # página do projeto (GitHub Pages)
+├── caoszero.py         # atalho para executar sem instalar
+├── pyproject.toml       # metadados e entrypoint
 ├── LICENSE
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
