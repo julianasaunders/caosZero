@@ -1,5 +1,7 @@
 # CaosZero 2.0
 
+![CaosZero Logo](ui/logo.png)
+
 **Automatizador de tarefas com arquivos** — projeto integrador da disciplina de
 **Sistemas Operacionais**.
 
@@ -58,8 +60,14 @@ pasta, analisa e aplica a organização diretamente no seu computador.
 > **Acesse a demonstração online:**
 > https://julianasaunders.github.io/caosZero/
 
+![CaosZero](ui/logo.png)
+
 A demonstração apresenta o CaosZero 2.0, seus recursos, o fluxo de
 organização e os conceitos de Sistemas Operacionais aplicados.
+
+A interface inclui: seleção de pasta, análise com árvore Antes/Depois,
+log de operações, estatísticas, modo claro/escuro e botão de aplicar
+com confirmação.
 
 ## Sumário
 
