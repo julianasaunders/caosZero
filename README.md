@@ -4,37 +4,58 @@
 **Sistemas Operacionais**.
 
 O CaosZero organiza pastas por categoria, renomeia arquivos em massa, arquiva
-itens antigos, gera relatórios e permite **desfazer** a última execução. Possui
-interface gráfica nativa para Windows (sem terminal) e também funciona pela
-linha de comando, sem dependências externas obrigatórias.
+itens antigos, gera relatórios e permite **desfazer** a última execução. A
+interface principal é um aplicativo nativo para Windows (sem terminal), que
+seleciona a pasta, analisa e aplica a organização diretamente no seu
+computador. Também possui uma interface web e uma CLI para uso avançado.
+Sem dependências externas obrigatórias.
 
 [![CI](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml/badge.svg)](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-green.svg)](LICENSE)
 
 > **Segurança em primeiro lugar:** por padrão o CaosZero apenas **simula** a
-> organização. Nenhum arquivo é alterado sem a opção `--apply`.
+> organização. Nenhum arquivo é alterado sem sua confirmação explícita.
+> Nenhum arquivo é excluído ou sobrescrito.
 
 ---
 
-## Interface gráfica (Windows)
+## Interface gráfica (principal)
 
-Para usuários finais, o CaosZero possui um aplicativo nativo para Windows
-(`CaosZero.exe`) que não exige terminal. Basta abrir o executável, selecionar
-a pasta, analisar e aplicar — tudo pela interface gráfica.
+O CaosZero é, antes de tudo, um **aplicativo com interface gráfica**. O
+usuário final não precisa usar a linha de comando: basta abrir o executável
+`CaosZero.exe` (Windows) e operar tudo pela interface.
 
-- **Selecionar pasta** — abre o seletor nativo de pastas do Windows.
+### Como usar
+
+1. Abra `CaosZero.exe` (sem terminal).
+2. Clique em **Selecionar pasta** e escolha a pasta que deseja organizar.
+3. Clique em **Analisar** — o CaosZero planeja as operações e mostra a
+   árvore **Antes/Depois**, o log e as estatísticas. Nada é alterado.
+4. Revise o plano e clique no botão flutuante **Aplicar organização**
+   (com confirmação antes de mover).
+5. Use **Desfazer** para restaurar a última execução.
+
+Recursos da interface:
+
+- **Selecionar pasta** — seletor nativo de pastas do Windows.
 - **Analisar** — planeja as operações e mostra a árvore "Antes/Depois".
 - **Aplicar organização** — botão flutuante com confirmação antes de mover.
 - **Desfazer** — restaura a última execução.
 - **Modo claro/escuro** — alternável pelo ícone de sol/lua no cabeçalho.
+- **Perfis e associações** (estilo DropIt) — regras de organização.
+- **Prompt em linguagem natural** (estilo Kimi) — "organize por projeto…".
+- **Agendamento** — execução automática (cron / Agendador de Tarefas).
+- **Relatórios** em Markdown, CSV e JSON.
+- **Diagnóstico** do sistema operacional (CPU, memória, disco, permissões).
 
 O executável está em `dist/CaosZero.exe` (ou `Downloads/CaosZero.exe`).
-Para rodar pela linha de comando (avançado): `python caoszero.py web`.
+Também disponível como página web em `ui/app.html` e como CLI para uso
+avançado (`python caoszero.py`).
 
 ## Sumário
 
-- [Interface gráfica (Windows)](#interface-gráfica-windows)
+- [Interface gráfica (principal)](#interface-gráfica-principal)
 - [Demonstração rápida](#demonstração-rápida)
 - [Funcionalidades](#funcionalidades)
 - [Instalação](#instalação)
