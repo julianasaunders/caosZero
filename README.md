@@ -5,14 +5,15 @@
 
 O CaosZero organiza pastas por categoria, renomeia arquivos em massa, arquiva
 itens antigos, gera relatórios e permite **desfazer** a última execução. A
-interface principal é um aplicativo nativo para Windows (sem terminal), que
-seleciona a pasta, analisa e aplica a organização diretamente no seu
-computador. Também possui uma interface web e uma CLI para uso avançado, mas
-o usuário final não precisa usar a linha de comando.
+interface principal é um aplicativo nativo para Windows, que seleciona a
+pasta, analisa e aplica a organização diretamente no seu computador.
 
 [![CI](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml/badge.svg)](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-green.svg)](LICENSE)
+
+[![Demonstração](https://img.shields.io/badge/DEMO-online-blue.svg)](https://julianasaunders.github.io/caosZero/)
+> **Demonstração online:** https://julianasaunders.github.io/caosZero/
 
 > **Segurança em primeiro lugar:** por padrão o CaosZero apenas **simula** a
 > organização. Nenhum arquivo é alterado sem sua confirmação explícita.
@@ -22,13 +23,13 @@ o usuário final não precisa usar a linha de comando.
 
 ## Interface gráfica (principal)
 
-O CaosZero é, antes de tudo, um **aplicativo com interface gráfica**. O
-usuário final não precisa usar a linha de comando: basta abrir o executável
-`CaosZero.exe` (Windows) e operar tudo pela interface.
+O CaosZero é, antes de tudo, um **aplicativo com interface gráfica**.
+Basta abrir o executável `CaosZero.exe` (Windows) e operar tudo pela
+interface.
 
 ### Como usar
 
-1. Abra `CaosZero.exe` (sem terminal).
+1. Abra `CaosZero.exe`.
 2. Clique em **Selecionar pasta** e escolha a pasta que deseja organizar.
 3. Clique em **Analisar** — o CaosZero planeja as operações e mostra a
    árvore **Antes/Depois**, o log e as estatísticas. Nada é alterado.
@@ -54,9 +55,18 @@ Também disponível como página web em `ui/app.html`.
 
 ---
 
+## Demonstração
+
+> **Acesse a demonstração online:**
+> https://julianasaunders.github.io/caosZero/
+
+A demonstração apresenta o CaosZero 2.0, seus recursos, o fluxo de
+organização e os conceitos de Sistemas Operacionais aplicados.
+
 ## Sumário
 
 - [Interface gráfica (principal)](#interface-gráfica-principal)
+- [Demonstração](#demonstração)
 - [Funcionalidades](#funcionalidades)
 - [Instalação](#instalação)
 - [Como funciona](#como-funciona)
@@ -87,7 +97,7 @@ Também disponível como página web em `ui/app.html`.
 - **Modo interativo** para uso guiado.
 - **Scripts** de automação para Bash e PowerShell.
 - **Sem dependências externas** para executar.
-- **Interface nativa** para Windows (sem terminal).
+- **Interface nativa** para Windows.
 - **Modo claro/escuro** alternável.
 
 ---
@@ -109,21 +119,12 @@ Não é necessário instalar Python.
 ```bash
 git clone https://github.com/julianasaunders/caosZero.git
 cd caosZero
-python caoszero.py web          # abre a interface web local
-```
-
-### Instalar como pacote
-
-```bash
-python -m pip install .
 ```
 
 ### Ambiente virtual (recomendado para desenvolvimento)
 
 ```bash
 python -m venv .venv
-# .\.venv\Scripts\Activate.ps1  # Windows
-# source .venv/bin/activate     # Linux/macOS
 python -m pip install --upgrade pip
 python -m pip install -e .
 ```
@@ -137,7 +138,7 @@ O CaosZero separa **planejamento** e **execução**:
 1. **Planejar** — lê metadados, aplica filtros e calcula destinos sem tocar
    no disco. (`planner.py`)
 2. **Confirmar** — mostra a prévia, avisos e pede confirmação antes de
-   executar. (`cli.py` / interface web)
+   executar. (interface web)
 3. **Executar** — move, renomeia ou arquiva e grava cada passo no journal.
    (`executor.py`)
 4. **Relatar e desfazer** — gera MD/CSV/JSON e permite restaurar a execução
@@ -226,7 +227,7 @@ python -m unittest discover -s tests -v
 ```
 
 A suíte cobre configuração, utilitários, planejador, executor, journal, undo,
-relatórios, diagnóstico e a CLI ponta a ponta.
+relatórios, diagnóstico e a interface web.
 
 ```bash
 python -m unittest tests.test_planner -v
@@ -240,7 +241,7 @@ python -m unittest tests.test_planner -v
 caosZero/
 ├── src/                        # código-fonte
 │   └── caoszero/
-│       ├── cli.py                  # interface de linha de comando
+│       ├── cli.py                  # interface do aplicativo
 │       ├── web.py                  # servidor web local + API JSON
 │       ├── native.py               # aplicação nativa (pywebview)
 │       ├── config.py               # configuração e diretórios padrão
