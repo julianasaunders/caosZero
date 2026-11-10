@@ -7,8 +7,8 @@ O CaosZero organiza pastas por categoria, renomeia arquivos em massa, arquiva
 itens antigos, gera relatórios e permite **desfazer** a última execução. A
 interface principal é um aplicativo nativo para Windows (sem terminal), que
 seleciona a pasta, analisa e aplica a organização diretamente no seu
-computador. Também possui uma interface web e uma CLI para uso avançado.
-Sem dependências externas obrigatórias.
+computador. Também possui uma interface web e uma CLI para uso avançado, mas
+o usuário final não precisa usar a linha de comando.
 
 [![CI](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml/badge.svg)](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
@@ -50,16 +50,15 @@ Recursos da interface:
 - **Diagnóstico** do sistema operacional (CPU, memória, disco, permissões).
 
 O executável está em `dist/CaosZero.exe` (ou `Downloads/CaosZero.exe`).
-Também disponível como página web em `ui/app.html` e como CLI para uso
-avançado (`python caoszero.py`).
+Também disponível como página web em `ui/app.html`.
+
+---
 
 ## Sumário
 
 - [Interface gráfica (principal)](#interface-gráfica-principal)
-- [Demonstração rápida](#demonstração-rápida)
 - [Funcionalidades](#funcionalidades)
 - [Instalação](#instalação)
-- [Comandos](#comandos)
 - [Como funciona](#como-funciona)
 - [Conceitos de Sistemas Operacionais](#conceitos-de-sistemas-operacionais)
 - [Automação e agendamento](#automação-e-agendamento)
@@ -73,47 +72,10 @@ avançado (`python caoszero.py`).
 
 ---
 
-## Demonstração rápida
-
-```bash
-# 1. Crie uma pasta de demonstração com arquivos variados
-python caoszero.py demo
-
-# 2. Veja o que seria feito (simulação, nada é alterado)
-python caoszero.py organize sandbox_teste
-
-# 3. Organize de verdade e gere um relatório
-python caoszero.py organize sandbox_teste --apply --report
-
-# 4. Desfaça a última execução
-python caoszero.py undo --latest
-
-# 5. Veja o diagnóstico do sistema operacional
-python caoszero.py doctor
-```
-
-Exemplo de saída da simulação:
-
-```text
-Alvo: C:\Users\voce\sandbox_teste
-Arquivos analisados: 16
-Operações planejadas: 13 (1.2 KB)
-Ignorados: 5
-
-Prévia das operações:
-  [MOVER   ] backup_projeto.zip -> Compactados\backup_projeto.zip
-  [MOVER   ] captura_tela.png -> Imagens\captura_tela.png
-  [MOVER   ] dados.csv -> Planilhas\dados.csv
-  [MOVER   ] documento_antigo.pdf -> Documentos\documento_antigo.pdf
-  ...
-```
-
----
-
 ## Funcionalidades
 
 - **Organização por extensão** com categorias configuráveis.
-- **Simulação segura** (`dry-run`) por padrão.
+- **Simulação segura** por padrão — nada é alterado sem confirmação.
 - **Filtros**: glob, idade, tamanho, categoria, subdiretórios e ocultos.
 - **Renomeação em massa** com `{name}`, `{ext}`, `{seq}`, `{date}` e `{categoria}`.
 - **Arquivamento de antigos** em `Arquivo/AAAA/`.
@@ -125,6 +87,8 @@ Prévia das operações:
 - **Modo interativo** para uso guiado.
 - **Scripts** de automação para Bash e PowerShell.
 - **Sem dependências externas** para executar.
+- **Interface nativa** para Windows (sem terminal).
+- **Modo claro/escuro** alternável.
 
 ---
 
@@ -132,179 +96,55 @@ Prévia das operações:
 
 ### Requisitos
 
-- Python **3.10** ou superior.
+- Python **3.10** ou superior (para desenvolvimento).
 - Windows, Linux ou macOS.
 
-### Opção 1 — usar direto do repositório
+### Usar o aplicativo (usuário final)
+
+Baixe `CaosZero.exe` (em `dist/` ou `Downloads/`) e abra com duplo clique.
+Não é necessário instalar Python.
+
+### Usar do repositório (desenvolvimento)
 
 ```bash
 git clone https://github.com/julianasaunders/caosZero.git
 cd caosZero
-python caoszero.py --help
+python caoszero.py web          # abre a interface web local
 ```
 
-### Opção 2 — instalar como pacote
+### Instalar como pacote
 
 ```bash
 python -m pip install .
-caoszero --help
 ```
 
-### Opção 3 — ambiente virtual (recomendado)
-
-Linux/macOS:
+### Ambiente virtual (recomendado para desenvolvimento)
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+python -m venv .venv
+# .\.venv\Scripts\Activate.ps1  # Windows
+# source .venv/bin/activate     # Linux/macOS
 python -m pip install --upgrade pip
 python -m pip install -e .
 ```
-
-Windows (PowerShell):
-
-```powershell
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -e .
-```
-
-> Se `python` não estiver no PATH, use o caminho completo do interpretador ou o
-> launcher `py -3` no Windows.
-
----
-
-## Comandos
-
-### `organize`
-
-Planeja ou executa a organização de uma pasta.
-
-```bash
-python caoszero.py organize [ALVO] [opções]
-```
-
-| Opção | Descrição |
-| --- | --- |
-| `--apply` | Executa de verdade (sem isso, apenas simula) |
-| `-r`, `--recursive` | Inclui subdiretórios |
-| `--hidden` | Inclui arquivos ocultos |
-| `--pattern "*.pdf"` | Filtra por padrão glob |
-| `--older-than 30` | Somente arquivos com mais de 30 dias |
-| `--archive-old 180` | Move arquivos com 180+ dias para `Arquivo/AAAA` |
-| `--rename "arquivo-{seq:03d}{ext}"` | Renomeia durante a organização |
-| `--rename-only` | Renomeia no lugar, sem criar categorias |
-| `--category Imagens` | Restringe a uma categoria |
-| `--min-size 10KB` | Tamanho mínimo |
-| `--max-size 2GB` | Tamanho máximo |
-| `--report [ARQUIVO]` | Gera relatório (sem valor: automático em Markdown) |
-| `--json` | Saída JSON para automação |
-| `-y`, `--yes` | Não pede confirmação |
-| `-v`, `--verbose` | Log detalhado |
-| `--config ARQUIVO` | Configuração JSON alternativa |
-
-Exemplos:
-
-```bash
-# Simular organização de Downloads
-python caoszero.py organize ~/Downloads
-
-# Organizar somente PDFs com mais de 90 dias
-python caoszero.py organize . --pattern "*.pdf" --older-than 90 --apply
-
-# Arquivar arquivos antigos e organizar o restante
-python caoszero.py organize . --archive-old 180 --apply
-
-# Renomear fotos em massa, mantendo-as no lugar
-python caoszero.py organize ./fotos --rename "IMG-{seq:04d}{ext}" --rename-only --apply
-
-# Gerar relatório CSV
-python caoszero.py organize ./dados --apply --report relatorio.csv
-```
-
-### `undo`
-
-Desfaz uma execução registrada no journal.
-
-```bash
-python caoszero.py undo --list          # lista execuções
-python caoszero.py undo --latest        # desfaz a última
-python caoszero.py undo 20261102-101500-a1b2c3
-python caoszero.py undo --dry-run       # mostra o que seria restaurado
-```
-
-### `doctor`
-
-Mostra recursos do sistema operacional usados pela aplicação.
-
-```bash
-python caoszero.py doctor
-python caoszero.py doctor --json
-python caoszero.py doctor ~/Downloads
-```
-
-### `config`
-
-```bash
-python caoszero.py config --show        # configuração efetiva
-python caoszero.py config --path        # caminho do arquivo
-python caoszero.py config --init        # cria configuração de exemplo
-python caoszero.py config --init ./minha-config.json
-```
-
-### `demo`
-
-Cria uma pasta com arquivos variados (inclusive antigos, ocultos e com colisão
-de nomes) para testar sem risco.
-
-```bash
-python caoszero.py demo
-python caoszero.py demo ./minha-demo
-```
-
-### `interactive`
-
-Menu guiado, útil para quem está começando.
-
-```bash
-python caoszero.py interactive
-```
-
-### Códigos de saída
-
-| Código | Significado |
-| --- | --- |
-| `0` | Sucesso |
-| `1` | Erro de validação ou falha em operações |
-| `2` | Operação cancelada pelo usuário |
-| `130` | Interrompido com `Ctrl+C` |
 
 ---
 
 ## Como funciona
 
-O fluxo é dividido em quatro etapas:
+O CaosZero separa **planejamento** e **execução**:
 
-```text
-1. Planejar  →  lê metadados e calcula destinos (não altera nada)
-2. Confirmar →  mostra a prévia e pede confirmação (ou usa --yes)
-3. Executar  →  move/renomeia e grava cada passo no journal
-4. Relatar   →  gera MD/CSV/JSON e permite undo
-```
+1. **Planejar** — lê metadados, aplica filtros e calcula destinos sem tocar
+   no disco. (`planner.py`)
+2. **Confirmar** — mostra a prévia, avisos e pede confirmação antes de
+   executar. (`cli.py` / interface web)
+3. **Executar** — move, renomeia ou arquiva e grava cada passo no journal.
+   (`executor.py`)
+4. **Relatar e desfazer** — gera MD/CSV/JSON e permite restaurar a execução
+   anterior. (`reporter.py` · `journal.py`)
 
-O **planejador** nunca toca nos arquivos. O **executor** é a única camada que
-move, renomeia ou arquiva. Essa separação é o que torna a simulação confiável.
-
-Antes de mover, o CaosZero verifica:
-
-- se a origem ainda existe e não é um link simbólico;
-- se o destino já existe (nesse caso, gera um nome único);
-- se há espaço livre suficiente no disco;
-- se o diretório alvo permite escrita.
-
-Cada operação é registrada no journal **antes e depois** de ser executada, o
-que permite recuperar o histórico mesmo se o processo for interrompido.
+Nenhum arquivo é sobrescrito: se o destino já existir, o CaosZero gera um
+nome único (`foto.jpg` → `foto (1).jpg`).
 
 ---
 
@@ -312,20 +152,18 @@ que permite recuperar o histórico mesmo se o processo for interrompido.
 
 O projeto demonstra, de forma aplicada:
 
-| Conceito | Onde aparece |
-| --- | --- |
-| **Sistema de arquivos** | Varredura, categorias e movimentação de arquivos |
-| **Chamadas de sistema e I/O** | `open`, `stat`, `rename`, `mkdir`, journals e relatórios |
-| **Processos** | PID, PPID, threads, uptime e execução por agendador |
-| **Gerência de CPU** | Núcleos, load average e limites de cgroup |
-| **Gerência de memória** | Memória total/disponível e limites de cgroup |
-| **Gerência de disco** | Espaço livre, uso percentual e verificação antes da execução |
-| **Permissões** | Modo octal/simbólico e teste de leitura/escrita/execução |
-| **Concorrência** | Colisões de nomes e destinos únicos |
-| **Automação** | Scripts, cron e Agendador de Tarefas |
-| **Tolerância a falhas** | Journal, status por operação e undo |
-
-Detalhes em [`docs/CONCEITOS-SO.md`](docs/CONCEITOS-SO.md).
+| Conceito | Onde aparece | Como demonstrar |
+| --- | --- | --- |
+| **Sistema de arquivos** | `planner.py`, `executor.py` | Prévia com origem e destino |
+| **Chamadas de sistema** | `journal.py`, `reporter.py` | Journal JSON gerado |
+| **Processos** | `system_info.py` | PID, PPID, threads |
+| **CPU** | `system_info.py` | Núcleos, load, cgroup |
+| **Memória** | `system_info.py` | Total, disponível, cgroup |
+| **Disco** | `system_info.py`, `planner.py` | Total, usado, livre |
+| **Permissões** | `system_info.py`, `planner.py` | Modo octal e simbólico |
+| **Concorrência** | `utils.py`, `executor.py` | Colisão resolvida com `(1)` |
+| **Automação** | `scripts/` | Cron e Agendador |
+| **Tolerância a falhas** | `journal.py`, `undo` | Restauração da execução |
 
 ---
 
@@ -334,27 +172,16 @@ Detalhes em [`docs/CONCEITOS-SO.md`](docs/CONCEITOS-SO.md).
 ### Linux/macOS
 
 ```bash
-chmod +x scripts/*.sh
-./scripts/automacao.sh                                  # simula ~/Downloads
-./scripts/automacao.sh --apply --report                 # executa e relata
-./scripts/automacao.sh --target ~/Downloads --doctor    # diagnóstico
-
-# Agendar diariamente às 09:00
+./scripts/automacao.sh --target ~/Downloads --apply --report
 ./scripts/agendar_cron.sh --target ~/Downloads --time 09:00 --apply
 ```
 
 ### Windows (PowerShell)
 
 ```powershell
-.\scripts\automacao.ps1
-.\scripts\automacao.ps1 -Apply -Report
-.\scripts\automacao.ps1 -Target "$HOME\Downloads" -Doctor
-
-# Agendar diariamente às 09:00
+.\scripts\automacao.ps1 -Target "$HOME\Downloads" -Apply -Report
 .\scripts\agendar_tarefa.ps1 -Target "$HOME\Downloads" -Time "09:00" -Register
 ```
-
-Os scripts de agendamento **não registram nada** sem `--apply`/`-Register`.
 
 ---
 
@@ -365,24 +192,12 @@ A configuração é procurada nesta ordem:
 1. `--config CAMINHO`
 2. variável `CAOSZERO_CONFIG`
 3. `<CAOSZERO_HOME>/config.json`
-4. valores padrão embutidos
+4. `./config/caoszero.example.json`
 
-O diretório de estado (journal, logs e relatórios) segue o padrão do sistema:
+O diretório de estado segue o padrão XDG no Linux/macOS e `%LOCALAPPDATA%`
+no Windows. A variável `CAOSZERO_HOME` tem precedência em todos os casos.
 
-| Sistema | Caminho padrão |
-| --- | --- |
-| Linux/macOS | `~/.local/share/caoszero` |
-| Windows | `%LOCALAPPDATA%\CaosZero` |
-| Qualquer | `CAOSZERO_HOME` (tem precedência) |
-
-Variáveis de ambiente:
-
-| Variável | Efeito |
-| --- | --- |
-| `CAOSZERO_HOME` | Diretório de estado |
-| `CAOSZERO_CONFIG` | Arquivo de configuração |
-| `CAOSZERO_TARGET` | Diretório alvo padrão |
-| `CAOSZERO_PYTHON` | Interpretador usado pelos scripts |
+Variáveis de ambiente: `CAOSZERO_HOME`, `CAOSZERO_CONFIG`, `CAOSZERO_TARGET`.
 
 Exemplo de configuração:
 
@@ -390,15 +205,13 @@ Exemplo de configuração:
 {
   "categories": {
     "Documentos": [".pdf", ".docx", ".txt", ".md"],
-    "Imagens": [".jpg", ".png", ".gif"],
-    "Outros": []
+    "Imagens": [".jpg", ".jpeg", ".png", ".gif", ".svg"],
+    "Videos": [".mp4", ".mkv", ".avi", ".mov"],
+    "Compactados": [".zip", ".tar.gz", ".rar", ".7z"]
   },
-  "ignore_names": [".DS_Store", "Thumbs.db"],
-  "ignore_globs": ["*.tmp", "*.part"],
   "ignore_dirs": [".git", "node_modules", "__pycache__"],
-  "archive_dir": "Arquivo",
-  "report_dir": "reports",
-  "min_free_mb": 50
+  "max_depth": 5,
+  "follow_symlinks": false
 }
 ```
 
@@ -412,20 +225,12 @@ Consulte [`config/caoszero.example.json`](config/caoszero.example.json).
 python -m unittest discover -s tests -v
 ```
 
-O projeto usa apenas a biblioteca padrão do Python. Os testes cobrem
-configuração, utilitários, planejador, executor, journal, undo, relatórios,
-diagnóstico e a CLI ponta a ponta.
+A suíte cobre configuração, utilitários, planejador, executor, journal, undo,
+relatórios, diagnóstico e a CLI ponta a ponta.
 
 ```bash
-# Executar um módulo específico
 python -m unittest tests.test_planner -v
-
-# Validação rápida do ambiente
-./scripts/verificar.sh       # Linux/macOS
-.\scripts\verificar.ps1      # Windows
 ```
-
-Detalhes em [`docs/TESTES.md`](docs/TESTES.md).
 
 ---
 
@@ -433,28 +238,33 @@ Detalhes em [`docs/TESTES.md`](docs/TESTES.md).
 
 ```text
 caosZero/
-├── caoszero.py                 # atalho para executar sem instalar
-├── pyproject.toml              # metadados e entrypoint
-├── src/caoszero/
-│   ├── cli.py                  # interface de linha de comando
-???   ????????? web.py                  # servidor web local + API JSON
-???   ????????? native.py               # aplicacao nativa (pywebview)
-│   ├── config.py               # configuração e diretórios padrão
-│   ├── planner.py              # planejamento (sem efeitos colaterais)
-│   ├── executor.py             # execução e undo
-│   ├── journal.py              # persistência das execuções
-│   ├── reporter.py             # relatórios MD/CSV/JSON
-│   ├── system_info.py          # diagnóstico do SO
-│   ├── models.py               # modelos de domínio
-│   ├── utils.py                # utilitários
-│   └── demo.py                 # sandbox de demonstração
+├── src/                        # código-fonte
+│   └── caoszero/
+│       ├── cli.py                  # interface de linha de comando
+│       ├── web.py                  # servidor web local + API JSON
+│       ├── native.py               # aplicação nativa (pywebview)
+│       ├── config.py               # configuração e diretórios padrão
+│       ├── planner.py              # planejamento (sem efeitos colaterais)
+│       ├── executor.py             # execução e undo
+│       ├── journal.py              # persistência das execuções
+│       ├── reporter.py             # relatórios MD/CSV/JSON
+│       ├── system_info.py          # diagnóstico do SO
+│       ├── models.py               # modelos de domínio
+│       ├── utils.py                # utilitários
+│       └── demo.py                 # sandbox de demonstração
+├── ui/                         # interfaces web (galeria + app.html)
 ├── tests/                      # testes automatizados
 ├── scripts/                    # automação, agendamento e hooks
 ├── config/                     # configuração de exemplo
 ├── docs/                       # documentação do projeto
 ├── .github/                    # CI, templates e CODEOWNERS
-├── ui/                         # interfaces web (galeria + app.html)
-????????? index.html                  # página do projeto (GitHub Pages)
+├── index.html                  # página do projeto (GitHub Pages)
+├── caoszero.py                 # atalho para executar sem instalar
+├── pyproject.toml              # metadados e entrypoint
+├── LICENSE
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── SECURITY.md
 └── README.md
 ```
 
@@ -462,47 +272,31 @@ caosZero/
 
 ## Documentação
 
-| Documento | Conteúdo |
+| Arquivo | Conteúdo |
 | --- | --- |
-| [Planejamento](docs/PLANEJAMENTO.md) | Escopo, backlog, riscos e cronograma |
-| [Arquitetura](docs/ARQUITETURA.md) | Módulos, fluxo de dados e decisões |
-| [Conceitos de SO](docs/CONCEITOS-SO.md) | Teoria aplicada ao código |
-| [Guia de uso](docs/GUIA-DE-USO.md) | Cenários passo a passo |
-| [Testes](docs/TESTES.md) | Estratégia, cobertura e como rodar |
-| [Divisão de tarefas](docs/DIVISAO-DE-TAREFAS.md) | Responsabilidades e histórico |
-| [Contribuição](CONTRIBUTING.md) | Branches, commits, PRs e revisão |
-| [Código de conduta](CODE_OF_CONDUCT.md) | Convivência e colaboração |
-| [Segurança](SECURITY.md) | Relato de vulnerabilidades e garantias |
-| [Changelog](CHANGELOG.md) | Histórico de versões |
-
-A wiki do projeto está em
-<https://github.com/julianasaunders/caosZero/wiki>.
+| [`docs/PLANEJAMENTO.md`](docs/PLANEJAMENTO.md) | Escopo, backlog e divisão de tarefas |
+| [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) | Módulos e fluxo de dados |
+| [`docs/CONCEITOS-SO.md`](docs/CONCEITOS-SO.md) | Conceitos de SO aplicados ao código |
+| [`docs/GUIA-DE-USO.md`](docs/GUIA-DE-USO.md) | Guia de uso completo |
+| [`docs/TESTES.md`](docs/TESTES.md) | Estratégia e execução dos testes |
+| [`docs/RELEASE.md`](docs/RELEASE.md) | Checklist de release |
+| [`docs/DIVISAO-DE-TAREFAS.md`](docs/DIVISAO-DE-TAREFAS.md) | Divisão entre as integrantes |
+| [Wiki](https://github.com/julianasaunders/caosZero/wiki) | Páginas de apoio do projeto |
 
 ---
 
 ## Comunidade e segurança
 
-- **Contribuições:** leia o [guia de contribuição](CONTRIBUTING.md) antes de
-  abrir uma issue ou pull request.
-- **Convivência:** todas as interações seguem o
-  [Código de Conduta](CODE_OF_CONDUCT.md).
-- **Vulnerabilidades:** não abra issues públicas com detalhes exploráveis. Use
-  o canal privado descrito na [Política de Segurança](SECURITY.md).
-
-O CaosZero foi projetado para reduzir riscos: simulação por padrão, nenhuma
-sobrescrita, nenhuma exclusão, recusa da raiz do sistema e undo baseado em
-journal.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — branches, commits, PRs e revisão
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) — convivência e colaboração
+- [`SECURITY.md`](SECURITY.md) — relato de vulnerabilidades e garantias
 
 ---
 
 ## Equipe
 
-| Integrante | GitHub |
-| --- | --- |
-| Juliana Saunders | [@julianasaunders](https://github.com/julianasaunders) |
-| Jaquelline Feitoza | [@jaquellinef](https://github.com/jaquellinef) |
-
-Orientação: disciplina de **Sistemas Operacionais**.
+- **Juliana Saunders** — [@julianasaunders](https://github.com/julianasaunders)
+- **Jaquelline Feitoza** — [@jaquellinef](https://github.com/jaquellinef)
 
 ---
 
