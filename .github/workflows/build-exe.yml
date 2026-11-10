@@ -36,21 +36,6 @@ jobs:
           python -m PyInstaller --onefile --name CaosZeroCLI --add-data "ui;ui" --paths src entry.py
           python -m PyInstaller --noconsole --onefile --name CaosZero --add-data "ui;ui" --paths src entry_gui.py
 
-      - name: Criar entry_gui.py (se necessário)
-        run: |
-          if (-not (Test-Path entry_gui.py)) {
-            @"
-            import sys
-            from pathlib import Path
-            src = Path(__file__).resolve().parent / 'src'
-            if str(src) not in sys.path:
-                sys.path.insert(0, str(src))
-            from caoszero.native import run_native
-            if __name__ == '__main__':
-                raise SystemExit(run_native())
-            "@ | Out-File -Encoding utf8 entry_gui.py
-          }
-
       - name: Upload artefatos
         uses: actions/upload-artifact@v4
         with:
