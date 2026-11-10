@@ -10,9 +10,8 @@ pasta, analisa e aplica a organização diretamente no seu computador.
 
 [![CI](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml/badge.svg)](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-green.svg)](LICENSE)
+[![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-green.svg)](LICENSE) [![Demonstração](https://img.shields.io/badge/DEMO-online-blue.svg)](https://julianasaunders.github.io/caosZero/)
 
-[![Demonstração](https://img.shields.io/badge/DEMO-online-blue.svg)](https://julianasaunders.github.io/caosZero/)
 > **Demonstração online:** https://julianasaunders.github.io/caosZero/
 
 > **Segurança em primeiro lugar:** por padrão o CaosZero apenas **simula** a
