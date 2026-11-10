@@ -4,8 +4,9 @@
 **Sistemas Operacionais**.
 
 O CaosZero organiza pastas por categoria, renomeia arquivos em massa, arquiva
-itens antigos, gera relatórios e permite **desfazer** a última execução. Tudo
-pela linha de comando, sem dependências externas obrigatórias.
+itens antigos, gera relatórios e permite **desfazer** a última execução. Possui
+interface gráfica nativa para Windows (sem terminal) e também funciona pela
+linha de comando, sem dependências externas obrigatórias.
 
 [![CI](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml/badge.svg)](https://github.com/julianasaunders/caosZero/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
@@ -16,8 +17,24 @@ pela linha de comando, sem dependências externas obrigatórias.
 
 ---
 
+## Interface gráfica (Windows)
+
+Para usuários finais, o CaosZero possui um aplicativo nativo para Windows
+(`CaosZero.exe`) que não exige terminal. Basta abrir o executável, selecionar
+a pasta, analisar e aplicar — tudo pela interface gráfica.
+
+- **Selecionar pasta** — abre o seletor nativo de pastas do Windows.
+- **Analisar** — planeja as operações e mostra a árvore "Antes/Depois".
+- **Aplicar organização** — botão flutuante com confirmação antes de mover.
+- **Desfazer** — restaura a última execução.
+- **Modo claro/escuro** — alternável pelo ícone de sol/lua no cabeçalho.
+
+O executável está em `dist/CaosZero.exe` (ou `Downloads/CaosZero.exe`).
+Para rodar pela linha de comando (avançado): `python caoszero.py web`.
+
 ## Sumário
 
+- [Interface gráfica (Windows)](#interface-gráfica-windows)
 - [Demonstração rápida](#demonstração-rápida)
 - [Funcionalidades](#funcionalidades)
 - [Instalação](#instalação)
@@ -399,6 +416,8 @@ caosZero/
 ├── pyproject.toml              # metadados e entrypoint
 ├── src/caoszero/
 │   ├── cli.py                  # interface de linha de comando
+???   ????????? web.py                  # servidor web local + API JSON
+???   ????????? native.py               # aplicacao nativa (pywebview)
 │   ├── config.py               # configuração e diretórios padrão
 │   ├── planner.py              # planejamento (sem efeitos colaterais)
 │   ├── executor.py             # execução e undo
@@ -413,7 +432,8 @@ caosZero/
 ├── config/                     # configuração de exemplo
 ├── docs/                       # documentação do projeto
 ├── .github/                    # CI, templates e CODEOWNERS
-├── index.html                  # página do projeto (GitHub Pages)
+├── ui/                         # interfaces web (galeria + app.html)
+????????? index.html                  # página do projeto (GitHub Pages)
 └── README.md
 ```
 

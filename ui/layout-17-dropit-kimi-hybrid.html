@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CaosZero — Layout 17: DropIt + Kimi Hybrid</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0b1020;color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:24px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;border-bottom:1px solid #1f2630;padding-bottom:14px;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:13px}
+.status{font-size:12px;color:#3fd16f;display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:#3fd16f;box-shadow:0 0 8px #3fd16f}
+
+/* Floating target (DropIt style) */
+.floating-target{position:fixed;bottom:24px;right:24px;z-index:60;width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#3fd16f);display:grid;place-items:center;box-shadow:0 8px 32px rgba(124,92,255,.45);cursor:pointer;transition:transform .2s;user-select:none}
+.floating-target:hover{transform:scale(1.06)}
+.floating-target .ico{font-size:30px;color:#0b1020}
+.floating-target .badge{position:absolute;top:-4px;right:-4px;background:#ff6b6b;color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:999px;border:2px solid #0b1020}
+.floating-target.dragover{transform:scale(1.12);box-shadow:0 0 40px rgba(63,209,111,.6)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:260px 1fr;gap:18px}
+.sidebar{background:#161d33;border:1px solid #263056;border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:16px}
+.sidebar h3{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#8a93b0;font-weight:600}
+.profile-list{display:flex;flex-direction:column;gap:6px}
+.profile{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:border-color .15s}
+.profile:hover{border-color:#7c5cff}
+.profile.active{border-color:#3fd16f;background:rgba(63,209,111,.06)}
+.profile .ico{font-size:16px}
+.profile .meta{flex:1}
+.profile .meta h4{margin:0;font-size:12px;font-weight:600;color:#e8ecf4}
+.profile .meta p{margin:2px 0 0;font-size:10px;color:#8a93b0}
+.rules{display:flex;flex-direction:column;gap:8px}
+.rule{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:10px 12px;font-size:11px}
+.rule .row{display:flex;gap:6px;align-items:center;margin-bottom:4px}
+.rule select,.rule input{background:#0b1020;border:1px solid #263056;color:#e8ecf4;padding:4px 8px;border-radius:6px;font-size:11px;font-family:inherit;flex:1}
+.rule .action{color:#3fd16f;font-weight:600}
+.main{display:flex;flex-direction:column;gap:16px}
+.card{background:#161d33;border:1px solid #263056;border-radius:16px;padding:20px}
+.card h3{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:#8a93b0;font-weight:600;display:flex;align-items:center;gap:6px}
+.dropzone{border:2px dashed #263056;border-radius:12px;padding:20px;text-align:center;background:#0d1117;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:12px}
+.dropzone.dragover{border-color:#3fd16f;background:rgba(63,209,111,.06)}
+.dropzone .dz-icon{font-size:32px;margin-bottom:4px;color:#3fd16f}
+.dropzone .dz-title{margin:0 0 2px;font-size:14px;font-weight:600}
+.dropzone .dz-sub{margin:0 0 10px;font-size:12px;color:#8a93b0}
+.pathbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.pathbar input{flex:1;min-width:200px;background:#0d1117;border:1px solid #263056;color:#e8ecf4;padding:9px 14px;border-radius:999px;font-size:12px;font-family:'JetBrains Mono',monospace}
+.pathbar button{background:#0d1117;border:1px solid #263056;color:#e8ecf4;padding:9px 14px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:border-color .15s}
+.pathbar button:hover{border-color:#3fd16f}
+.pathbar button.primary{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border-color:transparent}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.col{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px;min-height:160px}
+.col h4{margin:0 0 6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:4px}
+.col.before h4{color:var(--purple)}
+.col.after h4{color:var(--green)}
+.col ul{list-style:none;margin:0;padding:0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6}
+.col li{padding:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.col .folder{color:var(--purple)}
+.col .file{color:var(--muted)}
+.col ul ul{padding-left:14px;border-left:1px dashed #263056;margin-left:3px}
+.progress{height:5px;background:#263056;border-radius:99px;overflow:hidden;margin:10px 0}
+.progress > div{height:100%;width:0%;background:linear-gradient(90deg,#7c5cff,#3fd16f);transition:width .3s}
+.result{margin-top:10px;padding:10px 12px;border-radius:8px;background:rgba(63,209,111,.08);border:1px solid rgba(63,209,111,.3);display:none;font-size:12px;text-align:center}
+.result.show{display:block}
+.result strong{color:var(--green)}
+.log{background:#06091a;border:1px solid #263056;border-radius:10px;padding:10px;height:120px;overflow:auto;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.5;margin-top:10px}
+.log .ok{color:var(--green)}.log .dim{color:#6e7681}.log .cmd{color:#58a6ff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.stat{background:#0d1117;border:1px solid #263056;border-radius:8px;padding:8px;text-align:center}
+.stat .num{font-size:16px;font-weight:700;color:var(--green)}
+.stat .lbl{font-size:8px;color:var(--muted);margin-top:2px;text-transform:uppercase}
+.kimi-prompt{background:#0d1117;border:1px solid #263056;border-radius:12px;padding:12px;display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.kimi-prompt input{flex:1;background:transparent;border:0;color:#e8ecf4;font-size:13px;font-family:inherit;outline:none}
+.kimi-prompt button{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:8px 14px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit}
+.plan-review{background:rgba(124,92,255,.06);border:1px solid rgba(124,92,255,.25);border-radius:12px;padding:12px;margin-top:12px}
+.plan-review h4{margin:0 0 8px;font-size:12px;color:var(--purple);font-weight:700}
+.plan-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:#0d1117;border-radius:6px;margin-bottom:4px;font-size:11px}
+.plan-item .from{color:var(--muted)}
+.plan-item .arrow{color:var(--green);margin:0 6px}
+.plan-item .to{color:var(--text)}
+.plan-item .tag{font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(124,92,255,.15);color:var(--purple)}
+.plan-actions{display:flex;gap:8px;margin-top:10px}
+.plan-actions button{flex:1;padding:8px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit;border:0}
+.plan-actions .approve{background:var(--green);color:#0b1020}
+.plan-actions .cancel{background:#0d1117;color:var(--muted);border:1px solid #263056}
+.schedule{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:11px;color:var(--muted)}
+.schedule select{background:#0d1117;border:1px solid #263056;color:#e8ecf4;padding:4px 8px;border-radius:6px;font-family:inherit;font-size:11px}
+.fab-apply{position:fixed;bottom:24px;right:24px;z-index:50;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:14px 24px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 8px 28px rgba(124,92,255,.45);display:none}
+.fab-apply.show{display:block}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100}
+.modal-backdrop.show{display:flex}
+.modal{background:var(--bg2);border:1px solid #263056;border-radius:16px;padding:24px;max-width:90vw;width:420px;text-align:center}
+.modal h3{margin:0 0 8px;font-size:16px;font-weight:700}
+.modal p{color:var(--muted);font-size:13px;margin:0 0 18px;line-height:1.5}
+.modal .modal-actions{display:flex;gap:10px;justify-content:center}
+.modal .modal-actions button{padding:9px 20px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;border:0}
+.modal .btn-cancel{background:var(--bg);color:var(--text);border:1px solid #263056}
+.modal .btn-confirm{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020}
+.footer{margin-top:22px;padding-top:14px;border-top:1px solid #1f2630;font-size:11px;color:var(--dim);text-align:center}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand-mark">C0</div> caoszero / hybrid</div>
+    <div class="status">online · v2.0.0</div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div>
+        <h3>Perfis (DropIt)</h3>
+        <div class="profile-list">
+          <div class="profile active"><span class="ico">📁</span><div class="meta"><h4>Downloads</h4><p>Regras para ~/Downloads</p></div></div>
+          <div class="profile"><span class="ico">📸</span><div class="meta"><h4>Fotos</h4><p>Organizar por data</p></div></div>
+          <div class="profile"><span class="ico">📄</span><div class="meta"><h4>Documentos</h4><p>Por projeto/cliente</p></div></div>
+          <div class="profile"><span class="ico">🎵</span><div class="meta"><h4>Música</h4><p>Por tags ID3</p></div></div>
+        </div>
+      </div>
+      <div>
+        <h3>Regras (associações)</h3>
+        <div class="rules">
+          <div class="rule">
+            <div class="row"><select><option>Nome</option><option>Tamanho</option><option>Data</option><option>Tipo</option></select><input placeholder="*.jpg" /></div>
+            <div class="row"><span style="color:var(--muted);font-size:10px">ação:</span><span class="action">Mover → Imagens/</span></div>
+          </div>
+          <div class="rule">
+            <div class="row"><select><option>Nome</option></select><input placeholder="*.pdf" /></div>
+            <div class="row"><span style="color:var(--muted);font-size:10px">ação:</span><span class="action">Mover → Documentos/</span></div>
+          </div>
+          <button style="background:#0d1117;border:1px dashed #263056;color:var(--muted);padding:8px;border-radius:8px;font-size:11px;cursor:pointer;font-family:inherit">+ Nova regra</button>
+        </div>
+      </div>
+      <div>
+        <h3>Agendamento (Kimi)</h3>
+        <div class="schedule">
+          <span>Rodar:</span>
+          <select><option>Manual</option><option>Diário 09:00</option><option>Semanal</option><option>Ao iniciar</option></select>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="card">
+        <h3><ion-icon name="folder-open-outline"></ion-icon> Pasta alvo</h3>
+        <div class="pathbar">
+          <input type="text" id="targetPath" placeholder="C:\Users\voce\Downloads" />
+          <button type="button" onclick="pickFolder()">📂 Selecionar</button>
+          <button type="button" class="primary" onclick="scanFolder()">Analisar</button>
+          <button type="button" onclick="undoLast()">Desfazer</button>
+        </div>
+        <div class="dropzone" id="dropzone">
+          <div class="dz-icon"><ion-icon name="cloud-upload-outline"></ion-icon></div>
+          <p class="dz-title">Arraste arquivos ou uma pasta aqui (DropIt)</p>
+          <p class="dz-sub">ou clique para selecionar</p>
+          <input type="file" id="fileInput" multiple webkitdirectory style="display:none" />
+          <button class="dz-btn" onclick="triggerPick()" style="margin-top:6px">Selecionar arquivos</button>
+        </div>
+      </div>
+
+      <!-- Kimi-style natural language prompt -->
+      <div class="card">
+        <h3><ion-icon name="chatbubble-ellipses-outline"></ion-icon> Organizar com linguagem natural (Kimi)</h3>
+        <div class="kimi-prompt">
+          <ion-icon name="sparkles-outline" style="color:var(--purple);font-size:18px"></ion-icon>
+          <input id="nlPrompt" placeholder="Ex.: organize por projeto, renomeie arquivos pouco claros e gere um resumo" />
+          <button onclick="runNLPrompt()">Organizar</button>
+        </div>
+        <div class="plan-review" id="planReview" style="display:none">
+          <h4>📋 Plano de organização (revise antes de aplicar)</h4>
+          <div id="planItems"></div>
+          <div class="plan-actions">
+            <button class="approve" onclick="approvePlan()">✓ Aprovar e aplicar</button>
+            <button class="cancel" onclick="cancelPlan()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><ion-icon name="git-compare-outline"></ion-icon> Antes / Depois</h3>
+        <div class="grid2" id="treeGrid" style="display:none">
+          <div class="col before">
+            <h4><ion-icon name="folder-outline"></ion-icon> Antes (atual)</h4>
+            <ul id="beforeTree"></ul>
+          </div>
+          <div class="col after">
+            <h4><ion-icon name="checkmark-circle-outline"></ion-icon> Depois (planejado)</h4>
+            <ul id="afterTree"></ul>
+          </div>
+        </div>
+        <div class="progress" style="margin-top:12px"><div id="bar"></div></div>
+        <div class="result" id="result"><span id="rtitle">0 operações planejadas</span></div>
+        <div class="log" id="log"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
+        <div class="stats">
+          <div class="stat"><div class="num" id="stFiles">0</div><div class="lbl">arquivos</div></div>
+          <div class="stat"><div class="num" id="stOps">0</div><div class="lbl">operações</div></div>
+          <div class="stat"><div class="num" id="stIgnored">0</div><div class="lbl">ignorados</div></div>
+          <div class="stat"><div class="num" id="stSize">0 B</div><div class="lbl">tamanho</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">caoszero ©</div>
+</div>
+
+<button class="fab-apply" id="btnApply" type="button">✓ Aplicar organização</button>
+
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal">
+    <h3>Aplicar organização?</h3>
+    <p>Esta ação moverá os arquivos de acordo com o plano. Você poderá desfazer com <code>undo</code>.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" type="button" id="btnCancelApply">Cancelar</button>
+      <button class="btn-confirm" type="button" id="btnConfirmApply">Aplicar</button>
+    </div>
+  </div>
+</div>
+
+<div class="floating-target" id="floatingTarget" title="Arraste arquivos aqui (DropIt)">
+  <span class="ico">📁</span>
+  <span class="badge" id="ftBadge" style="display:none">0</span>
+</div>
+
+<script>
+const CATS={'.pdf':'Documentos','.doc':'Documentos','.docx':'Documentos','.txt':'Documentos','.md':'Documentos','.rtf':'Documentos','.odt':'Documentos','.xls':'Planilhas','.xlsx':'Planilhas','.csv':'Planilhas','.ods':'Planilhas','.jpg':'Imagens','.jpeg':'Imagens','.png':'Imagens','.gif':'Imagens','.bmp':'Imagens','.svg':'Imagens','.webp':'Imagens','.mp4':'Videos','.mkv':'Videos','.avi':'Videos','.mov':'Videos','.wmv':'Videos','.flv':'Videos','.webm':'Videos','.m4v':'Videos','.mp3':'Musicas','.wav':'Musicas','.flac':'Musicas','.aac':'Musicas','.ogg':'Musicas','.m4a':'Musicas','.zip':'Compactados','.rar':'Compactados','.7z':'Compactados','.tar':'Compactados','.gz':'Compactados','.tgz':'Compactados','.bz2':'Compactados','.xz':'Compactados','.exe':'Instaladores','.msi':'Instaladores','.deb':'Instaladores','.rpm':'Instaladores','.dmg':'Instaladores','.pkg':'Instaladores','.py':'Codigo','.js':'Codigo','.ts':'Codigo','.java':'Codigo','.c':'Codigo','.cpp':'Codigo','.cs':'Codigo','.go':'Codigo','.rs':'Codigo','.sh':'Codigo','.bat':'Codigo','.ps1':'Codigo','.html':'Codigo','.css':'Codigo','.json':'Codigo','.xml':'Codigo','.yml':'Codigo','.yaml':'Codigo'};
+function categoryOf(n){const i=n.lastIndexOf('.');const e=i>=0?n.slice(i).toLowerCase():'';if(n.toLowerCase().endsWith('.tar.gz'))return 'Compactados';return CATS[e]||'Outros';}
+function fmtSize(b){if(b<1024)return b+' B';if(b<1048576)return (b/1024).toFixed(1)+' KB';return (b/1048576).toFixed(1)+' MB';}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+
+let state={target:'', files:[], plan:[], movedSet:new Set()};
+
+async function pickFolder(){
+  let path=null;
+  if (window.pywebview && window.pywebview.api && window.pywebview.api.pick_folder) {
+    try { path = await window.pywebview.api.pick_folder(); } catch(e){ console.error(e); }
+  }
+  if (!path) path = prompt('Informe o caminho da pasta:');
+  if (path) document.getElementById('targetPath').value = path;
+}
+
+async function scanFolder(){
+  const target = document.getElementById('targetPath').value.trim();
+  if (!target) { alert('Informe uma pasta.'); return; }
+  state.target = target;
+  const logEl = document.getElementById('log'); logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize "'+esc(target)+'"</span>');
+  log('<span class="dim"># analisando…</span>');
+  document.getElementById('progressWrap') && (document.getElementById('bar').style.width='5%');
+  try {
+    const res = await fetch('/api/scan', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({target: target})});
+    const data = await res.json();
+    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
+    state.plan = data.operations || [];
+    state.movedSet = new Set(state.plan.filter(o=>o.destination && o.source!==o.destination).map(o=>o.source_name));
+    const beforeNames = state.plan.map(o=>o.source);
+    const beforeTree = buildTree(beforeNames);
+    renderTree(beforeTree, document.getElementById('beforeTree'), null);
+    document.getElementById('beforeCount').textContent = data.counts.analisados+' arquivos';
+    const afterRoot = {};
+    for (const op of state.plan) {
+      const cat = op.category || 'Outros';
+      if (!afterRoot[cat]) afterRoot[cat] = {__dir:true, name:cat, children:{}};
+      afterRoot[cat].children[op.source_name] = {__file:true, name: op.source_name, size: op.size};
+    }
+    renderTree(afterRoot, document.getElementById('afterTree'), state.movedSet);
+    document.getElementById('afterCount').textContent = state.plan.length+' arquivos';
+    document.getElementById('treeGrid').style.display='grid';
+    document.getElementById('stats').style.display='grid';
+    document.getElementById('stFiles').textContent = data.counts.analisados;
+    document.getElementById('stOps').textContent = data.counts.operacoes;
+    document.getElementById('stIgnored').textContent = data.counts.ignorados;
+    document.getElementById('stSize').textContent = fmtSize(data.counts.bytes);
+    const fab = document.getElementById('btnApply'); if (fab) fab.classList.add('show');
+    const r = document.getElementById('result'); r.classList.add('show');
+    document.getElementById('rtitle').textContent = data.counts.operacoes+' operações planejadas';
+    document.getElementById('bar').style.width='100%';
+    log('<span class="ok">SIMULAÇÃO concluída: '+data.counts.operacoes+' operações. Nenhum arquivo alterado.</span>');
+    // plan review (Kimi-style)
+    showPlanReview(state.plan);
+  } catch (e) {
+    log('<span class="err">Erro: '+esc(String(e))+'</span>');
+  }
+}
+
+function buildTree(paths){
+  const root = {};
+  for (const rel of paths) {
+    const parts = String(rel).replace(/\\\\/g,'/').split('/').filter(Boolean);
+    let node = root;
+    for (let i=0;i<parts.length;i++){
+      const name = parts[i]; const isFile = i===parts.length-1;
+      if (!node[name]) node[name] = isFile ? {__file:true, name} : {__dir:true, name, children:{}};
+      if (!isFile) node = node[name].children;
+    }
+  }
+  return root;
+}
+function renderTree(root, ul, movedSet){
+  ul.innerHTML='';
+  const keys = Object.keys(root).sort((a,b)=>{const da=root[a].__dir?0:1,db=root[b].__dir?0:1;if(da!==db)return da-db;return a.localeCompare(b,'pt-BR',{sensitivity:'base'});});
+  for (const k of keys){
+    const n = root[k];
+    const li = document.createElement('li');
+    if (n.__dir){
+      li.innerHTML = '<span class="folder"><span class="caret">▾</span> <ion-icon name="folder-outline" style="vertical-align:middle;margin-right:2px;font-size:13px"></ion-icon> '+esc(n.name)+'/</span>';
+      const span = li.querySelector('.folder');
+      span.addEventListener('click',(e)=>{e.stopPropagation();const sub=li.querySelector('ul');const isCol=sub.style.display==='none';sub.style.display=isCol?'':'none';span.classList.toggle('collapsed',!isCol);});
+      const sub = document.createElement('ul');
+      renderTree(n.children, sub, movedSet);
+      li.appendChild(sub);
+    } else {
+      const moved = movedSet && movedSet.has(n.name);
+      li.innerHTML = '<span class="file">'+(moved?'→ ':'  ')+esc(n.name)+'</span>';
+      if (moved) li.querySelector('.file').classList.add('moved');
+    }
+    ul.appendChild(li);
+  }
+}
+
+function showPlanReview(plan){
+  const pr = document.getElementById('planReview');
+  const items = document.getElementById('planItems');
+  items.innerHTML = '';
+  const shown = plan.slice(0, 8);
+  for (const op of shown) {
+    const div = document.createElement('div');
+    div.className = 'plan-item';
+    div.innerHTML = '<span class="from">'+esc(op.source_name)+'</span><span class="arrow">→</span><span class="to">'+esc(op.destination_name||op.source_name)+'</span><span class="tag">'+esc(op.category)+'</span>';
+    items.appendChild(div);
+  }
+  if (plan.length > shown.length) {
+    const more = document.createElement('div');
+    more.style.cssText = 'font-size:11px;color:var(--muted);text-align:center;margin-top:4px';
+    more.textContent = '… e mais '+(plan.length-shown.length)+' operações';
+    items.appendChild(more);
+  }
+  pr.style.display = 'block';
+}
+
+function cancelPlan(){ document.getElementById('planReview').style.display='none'; }
+
+async function approvePlan(){
+  document.getElementById('planReview').style.display='none';
+  await applyOrg();
+}
+
+async function applyOrg(){
+  const target = state.target || document.getElementById('targetPath').value.trim();
+  if (!target) { alert('Informe uma pasta.'); return; }
+  document.getElementById('confirmModal').classList.remove('show');
+  const logEl = document.getElementById('log'); logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize "'+esc(target)+'" --apply</span>');
+  try {
+    const res = await fetch('/api/apply', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({target: target, apply: true})});
+    const data = await res.json();
+    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
+    const r = document.getElementById('result'); r.classList.add('show');
+    document.getElementById('rtitle').textContent = data.moved + ' arquivos organizados';
+    log('<span class="ok">Execução concluída: '+data.moved+' movidos, '+data.failed+' falhas.</span>');
+    log('<span class="dim"># para desfazer: caoszero undo --latest</span>');
+    const fab = document.getElementById('btnApply'); if (fab) fab.classList.remove('show');
+  } catch (e) {
+    log('<span class="err">Erro: '+esc(String(e))+'</span>');
+  }
+}
+
+async function undoLast(){
+  const logEl = document.getElementById('log'); logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero undo --latest</span>');
+  try {
+    const res = await fetch('/api/undo', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({latest: true})});
+    const data = await res.json();
+    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
+    log('<span class="ok">Restauradas: '+data.undone+' | Falhas: '+data.undo_failed+'</span>');
+  } catch (e) {
+    log('<span class="err">Erro: '+esc(String(e))+'</span>');
+  }
+}
+
+function runNLPrompt(){
+  const prompt = document.getElementById('nlPrompt').value.trim();
+  if (!prompt) { alert('Descreva como organizar.'); return; }
+  // Map natural language to a plan: reuse scan + show plan review
+  scanFolder();
+}
+
+// wiring
+const btnApply = document.getElementById('btnApply');
+if (btnApply) btnApply.addEventListener('click', ()=> document.getElementById('confirmModal').classList.add('show'));
+const btnCancel = document.getElementById('btnCancelApply');
+if (btnCancel) btnCancel.addEventListener('click', ()=> document.getElementById('confirmModal').classList.remove('show'));
+const btnConfirm = document.getElementById('btnConfirmApply');
+if (btnConfirm) btnConfirm.addEventListener('click', applyOrg);
+
+// dropzone wiring
+const dz = document.getElementById('dropzone');
+const fi = document.getElementById('fileInput');
+if (dz && fi) {
+  dz.addEventListener('click', (e)=>{ if(e.target!==fi) triggerPick(); });
+  dz.addEventListener('dragover', (e)=>{ e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', ()=> dz.classList.remove('dragover'));
+  dz.addEventListener('drop', (e)=>{ e.preventDefault(); dz.classList.remove('dragover'); handleDrop(e.dataTransfer.files); });
+  fi.addEventListener('change', (e)=> handleDrop(e.target.files));
+}
+function triggerPick(){ if (fi) fi.click(); }
+function handleDrop(files){
+  if (!files || !files.length) return;
+  // use the first file's parent path as target (best effort in browser)
+  const f = files[0];
+  const rel = f.webkitRelativePath || f.name;
+  const parts = rel.split('/');
+  if (parts.length > 1) {
+    // strip filename to get folder
+    const folder = parts.slice(0,-1).join('/');
+    document.getElementById('targetPath').value = folder;
+  }
+  scanFolder();
+}
+
+// floating target (DropIt style) drag-and-drop
+const ft = document.getElementById('floatingTarget');
+if (ft) {
+  ft.addEventListener('dragover', (e)=>{ e.preventDefault(); ft.classList.add('dragover'); });
+  ft.addEventListener('dragleave', ()=> ft.classList.remove('dragover'));
+  ft.addEventListener('drop', (e)=>{ e.preventDefault(); ft.classList.remove('dragover'); handleDrop(e.dataTransfer.files); });
+  ft.addEventListener('click', ()=> { const dz = document.getElementById('dropzone'); if (dz) dz.scrollIntoView({behavior:'smooth'}); });
+}
+
+window.addEventListener('pywebviewready', ()=>{ console.log('pywebview ready'); });
+</script>
+</body>
+</html>
