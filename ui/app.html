@@ -3,138 +3,179 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CaosZero 2.0</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>CaosZero — Layout 21: DropIt Wizard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <style>
-:root{--bg:#0b1020;--bg2:#0d1117;--panel:#0d1117;--border:#263056;--border2:#1f2630;--text:#e8ecf4;--muted:#8a93b0;--dim:#6e7681;--green:#3fd16f;--purple:#7c5cff;--blue:#58a6ff;--red:#ff6b6b;--radius:14px;--radius-sm:10px;}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+html,body{margin:0;padding:0;background:#0b1020;color:#e8ecf4;font-family:'Inter',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1080px;margin:0 auto;padding:24px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;border-bottom:1px solid var(--border2);padding-bottom:14px;gap:12px;flex-wrap:wrap}
-.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace}
-.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--green));color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:13px}
-.status{font-size:12px;color:var(--green);display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace}
-.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-.hero{text-align:center;margin-bottom:18px}
-.hero h1{font-size:30px;font-weight:800;margin:0 0 6px;letter-spacing:-.4px}
-.hero h1 .accent{color:var(--green)}
-.hero p{color:var(--muted);margin:0;font-size:13px}
-.pathbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-.pathbar input{flex:1;min-width:200px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:999px;font-size:13px;font-family:'JetBrains Mono',monospace}
-.pathbar button{background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s}
-.pathbar button:hover{border-color:var(--green);background:rgba(63,209,111,.06)}
-.pathbar button.primary{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border-color:transparent;font-weight:700}
-.pathbar button.primary:hover{filter:brightness(1.08)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;align-items:stretch}
-.col{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px;min-height:180px;display:flex;flex-direction:column;overflow:hidden}
-.col-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;min-height:22px}
-.col h4{margin:0;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.8px}
+.wrap{max-width:900px;margin:0 auto;padding:24px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;border-bottom:1px solid #1f2630;padding-bottom:14px}
+.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;display:grid;place-items:center;font-weight:800;font-size:13px}
+.status{font-size:12px;color:#3fd16f;display:flex;align-items:center;gap:6px}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:#3fd16f;box-shadow:0 0 8px #3fd16f}
+.stepper{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.step{flex:1;min-width:120px;background:#161d33;border:1px solid #263056;border-radius:10px;padding:10px 12px;text-align:center;font-size:11px;color:#8a93b0;cursor:pointer;transition:border-color .15s,background .15s}
+.step.active{border-color:#3fd16f;background:rgba(63,209,111,.08);color:#3fd16f;font-weight:700}
+.step.done{border-color:#7c5cff;color:#7c5cff}
+.step .num{display:block;font-size:16px;font-weight:800;margin-bottom:2px}
+.card{background:#161d33;border:1px solid #263056;border-radius:16px;padding:20px;margin-bottom:14px}
+.card h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:#8a93b0;font-weight:600;display:flex;align-items:center;gap:6px}
+.card .help{font-size:11px;color:#6e7681;margin:0 0 12px;line-height:1.5}
+.pathbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.pathbar input{flex:1;min-width:200px;background:#0d1117;border:1px solid #263056;color:#e8ecf4;padding:9px 14px;border-radius:999px;font-size:12px;font-family:'JetBrains Mono',monospace}
+.pathbar button{background:#0d1117;border:1px solid #263056;color:#e8ecf4;padding:9px 14px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.pathbar button:hover{border-color:#3fd16f}
+.pathbar button.primary{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border-color:transparent}
+.dropzone{border:2px dashed #263056;border-radius:12px;padding:18px;text-align:center;background:#0d1117;cursor:pointer;margin-bottom:10px}
+.dropzone .dz-icon{font-size:30px;margin-bottom:4px;color:#3fd16f}
+.dropzone .dz-title{margin:0 0 2px;font-size:13px;font-weight:600}
+.dropzone .dz-sub{margin:0 0 8px;font-size:11px;color:#8a93b0}
+.rule-builder{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px;margin-bottom:8px}
+.rule-builder .row{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.rule-builder select,.rule-builder input{background:#0b1020;border:1px solid #263056;color:#e8ecf4;padding:6px 10px;border-radius:6px;font-size:11px;font-family:inherit;flex:1;min-width:120px}
+.rule-builder .label{font-size:10px;color:#8a93b0;min-width:60px}
+.assoc-preview{background:rgba(124,92,255,.06);border:1px solid rgba(124,92,255,.2);border-radius:10px;padding:10px;margin-top:8px;font-size:11px}
+.assoc-preview .item{display:flex;justify-content:space-between;padding:4px 6px;background:#0d1117;border-radius:5px;margin-bottom:3px}
+.assoc-preview .item .from{color:var(--muted)}
+.assoc-preview .item .arrow{color:var(--green);margin:0 6px}
+.assoc-preview .item .to{color:var(--text)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.col{background:#0d1117;border:1px solid #263056;border-radius:10px;padding:12px;min-height:140px}
+.col h4{margin:0 0 6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:4px}
 .col.before h4{color:var(--purple)}
 .col.after h4{color:var(--green)}
-.col .count{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
-.col ul{list-style:none;margin:0;padding:0;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.7;overflow:visible;flex:1}
+.col ul{list-style:none;margin:0;padding:0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6}
 .col li{padding:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.col .folder{color:var(--purple);cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px}
-.col .folder:hover{color:var(--green)}
-.col .folder .caret{font-size:9px;transition:transform .15s;display:inline-block}
-.col .folder.collapsed .caret{transform:rotate(-90deg)}
+.col .folder{color:var(--purple)}
 .col .file{color:var(--muted)}
-.col .moved{color:var(--green)}
-.col .size{color:var(--dim);margin-left:6px;font-size:10px}
-.col ul ul{padding-left:16px;border-left:1px dashed rgba(124,92,255,.35);margin-left:4px}
-.progress-wrap{margin:14px 0 4px}
-.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'JetBrains Mono',monospace}
-.progress{height:6px;background:var(--border);border-radius:99px;overflow:hidden}
-.progress > div{height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--green));transition:width .35s ease}
-.result{margin-top:12px;padding:12px 14px;border-radius:var(--radius-sm);background:rgba(63,209,111,.08);border:1px solid rgba(63,209,111,.3);display:none;font-size:12px;text-align:center}
+.col ul ul{padding-left:14px;border-left:1px dashed #263056;margin-left:3px}
+.log{background:#06091a;border:1px solid #263056;border-radius:10px;padding:10px;height:110px;overflow:auto;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.5;margin-top:10px}
+.log .ok{color:var(--green)}.log .dim{color:#6e7681}.log .cmd{color:#58a6ff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.stat{background:#0d1117;border:1px solid #263056;border-radius:8px;padding:8px;text-align:center}
+.stat .num{font-size:16px;font-weight:700;color:var(--green)}
+.stat .lbl{font-size:8px;color:var(--muted);margin-top:2px;text-transform:uppercase}
+.result{margin-top:10px;padding:10px 12px;border-radius:8px;background:rgba(63,209,111,.08);border:1px solid rgba(63,209,111,.3);display:none;font-size:12px;text-align:center}
 .result.show{display:block}
 .result strong{color:var(--green)}
-.log{background:#06091a;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;min-height:60px;overflow:visible;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.6;margin-top:12px}
-.log .ok{color:var(--green)}.log .dim{color:var(--dim)}.log .cmd{color:var(--blue)}.log .warn{color:var(--purple)}.log .err{color:var(--red)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
-.stat{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center}
-.stat .num{font-size:20px;font-weight:800;color:var(--green)}
-.stat .lbl{font-size:9px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.6px}
-.fab-apply{position:fixed;bottom:24px;right:24px;z-index:50;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:14px 24px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 8px 28px rgba(124,92,255,.45);display:none;transition:transform .15s,filter .15s}
-.fab-apply:hover{transform:translateY(-2px);filter:brightness(1.08)}
-.fab-apply.show{display:block}
+.fab{position:fixed;bottom:24px;right:24px;z-index:50;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:14px 24px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 8px 28px rgba(124,92,255,.45);display:none}
+.fab.show{display:block}
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100}
 .modal-backdrop.show{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:90vw;width:90%;box-shadow:0 24px 60px rgba(0,0,0,.5);text-align:center}
+.modal{background:rgba(22,29,51,.9);backdrop-filter:blur(12px);border:1px solid rgba(124,92,255,.3);border-radius:16px;padding:24px;max-width:90vw;width:420px;text-align:center}
 .modal h3{margin:0 0 8px;font-size:16px;font-weight:700}
 .modal p{color:var(--muted);font-size:13px;margin:0 0 18px;line-height:1.5}
 .modal .modal-actions{display:flex;gap:10px;justify-content:center}
 .modal .modal-actions button{padding:9px 20px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;border:0}
-.modal .btn-cancel{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+.modal .btn-cancel{background:#0d1117;color:var(--text);border:1px solid #263056}
 .modal .btn-confirm{background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020}
-.footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--border2);font-size:11px;color:var(--dim);text-align:center}
-@media(max-width:820px){.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.wrap{padding:16px}}
-@media(max-width:480px){.hero h1{font-size:24px}.stats{grid-template-columns:1fr 1fr}}
+.footer{margin-top:20px;padding-top:14px;border-top:1px solid #1f2630;font-size:11px;color:#6e7681;text-align:center}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <div class="brand"><div class="brand-mark">C0</div> caoszero</div>
-    <div class="status" id="status">online · v2.0.0</div>
-  </div>
-  <div class="hero">
-    <h1>caoszero <span class="accent">organize</span></h1>
-    <p>Planeje, confirme e execute com segurança.</p>
+    <div class="brand"><div class="brand-mark">C0</div> caoszero / wizard</div>
+    <div class="status">online · v2.0.0</div>
   </div>
 
-  <div class="pathbar">
-    <input type="text" id="targetPath" placeholder="C:\Users\voce\Downloads" value="" />
-    <button type="button" id="btnPick" onclick="pickFolder()">📂 Selecionar pasta</button>
-    <button type="button" class="primary" onclick="scanFolder()">Analisar</button>
-    <button type="button" onclick="undoLast()">Desfazer</button>
+  <div class="stepper">
+    <div class="step active" onclick="goStep(1)"><span class="num">1</span>Escolher pasta</div>
+    <div class="step" onclick="goStep(2)"><span class="num">2</span>Definir regras</div>
+    <div class="step" onclick="goStep(3)"><span class="num">3</span>Revisar plano</div>
+    <div class="step" onclick="goStep(4)"><span class="num">4</span>Executar</div>
   </div>
 
-  <div class="grid2" id="treeGrid" style="display:none">
-    <div class="col before">
-      <div class="col-head">
+  <!-- Step 1 -->
+  <div class="card" id="step1">
+    <h3><ion-icon name="folder-open-outline"></ion-icon> Passo 1 — Escolher a pasta</h3>
+    <p class="help">Informe a pasta que você quer organizar. O CaosZero só atua dentro dela.</p>
+    <div class="pathbar">
+      <input type="text" id="targetPath" placeholder="C:\Users\voce\Downloads" />
+      <button type="button" onclick="pickFolder()">Selecionar</button>
+      <button type="button" class="primary" onclick="scanFolder()">Analisar</button>
+    </div>
+    <div class="dropzone" id="dropzone">
+      <div class="dz-icon"><ion-icon name="cloud-upload-outline"></ion-icon></div>
+      <p class="dz-title">Arraste arquivos ou uma pasta aqui</p>
+      <p class="dz-sub">ou clique para selecionar</p>
+      <input type="file" id="fileInput" multiple webkitdirectory style="display:none" />
+      <button class="dz-btn" onclick="triggerPick()" style="margin-top:6px;background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit">Selecionar arquivos</button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="card" id="step2" style="display:none">
+    <h3><ion-icon name="options-outline"></ion-icon> Passo 2 — Definir regras</h3>
+    <p class="help">Cada regra filtra arquivos e define uma ação. As regras são aplicadas por prioridade.</p>
+    <div class="rule-builder">
+      <div class="row"><span class="label">Filtrar por</span><select><option>Nome</option><option>Tamanho</option><option>Data</option><option>Tipo</option></select><input placeholder="*.jpg, >10MB, >30d…" /></div>
+      <div class="row"><span class="label">Ação</span><select><option>Mover</option><option>Copiar</option><option>Renomear</option><option>Comprimir</option><option>Extrair</option><option>Excluir</option><option>Abrir com</option></select><input placeholder="Destino ou padrão" /></div>
+      <div class="row"><span class="label">Prioridade</span><select><option>Alta</option><option>Média</option><option>Baixa</option></select></div>
+    </div>
+    <button style="background:#0d1117;border:1px dashed #263056;color:var(--muted);padding:8px;border-radius:8px;font-size:11px;cursor:pointer;font-family:inherit;width:100%">+ Adicionar regra</button>
+    <div class="assoc-preview">
+      <div class="item"><span class="from">*.jpg, *.png</span><span class="arrow">→</span><span class="to">Imagens/</span></div>
+      <div class="item"><span class="from">*.pdf, *.docx</span><span class="arrow">→</span><span class="to">Documentos/</span></div>
+      <div class="item"><span class="from">> 180 dias</span><span class="arrow">→</span><span class="to">Arquivo/AAAA/</span></div>
+    </div>
+    <div style="margin-top:12px;text-align:right">
+      <button class="dz-btn" onclick="goStep(3)" style="background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="card" id="step3" style="display:none">
+    <h3><ion-icon name="clipboard-outline"></ion-icon> Passo 3 — Revisar o plano</h3>
+    <p class="help">Revise todas as operações antes de executar. Nada é alterado sem sua aprovação.</p>
+    <div class="grid2" id="treeGrid" style="display:none">
+      <div class="col before">
         <h4><ion-icon name="folder-outline"></ion-icon> Antes (atual)</h4>
-        <span class="count" id="beforeCount">0 itens</span>
+        <ul id="beforeTree"></ul>
       </div>
-      <ul id="beforeTree"></ul>
-    </div>
-    <div class="col after">
-      <div class="col-head">
+      <div class="col after">
         <h4><ion-icon name="checkmark-circle-outline"></ion-icon> Depois (planejado)</h4>
-        <span class="count" id="afterCount">0 itens</span>
+        <ul id="afterTree"></ul>
       </div>
-      <ul id="afterTree"></ul>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="result" id="result"><span id="rtitle">0 operações planejadas</span></div>
+    <div class="log" id="log"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
+    <div class="stats">
+      <div class="stat"><div class="num" id="stFiles">0</div><div class="lbl">arquivos</div></div>
+      <div class="stat"><div class="num" id="stOps">0</div><div class="lbl">operações</div></div>
+      <div class="stat"><div class="num" id="stIgnored">0</div><div class="lbl">ignorados</div></div>
+      <div class="stat"><div class="num" id="stSize">0 B</div><div class="lbl">tamanho</div></div>
+    </div>
+    <div style="margin-top:12px;text-align:right">
+      <button class="dz-btn" onclick="goStep(4)" style="background:linear-gradient(135deg,#7c5cff,#3fd16f);color:#0b1020;border:0;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit">Aprovar e executar →</button>
     </div>
   </div>
 
-  <div class="progress-wrap" id="progressWrap" style="display:none">
-    <div class="progress-label"><span id="progressText">Aguardando…</span><span id="progressPct">0%</span></div>
-    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="bar"></div></div>
-  </div>
-
-  <div class="result" id="result"><span id="rtitle">0 operações planejadas</span> — Nenhum arquivo alterado.</div>
-
-  <div class="log" id="log" aria-live="polite"><div class="dim"># caoszero v2.0.0 — aguardando comando…</div></div>
-
-  <div class="stats" id="stats" style="display:none">
-    <div class="stat"><div class="num" id="stFiles">0</div><div class="lbl">arquivos</div></div>
-    <div class="stat"><div class="num" id="stOps">0</div><div class="lbl">operações</div></div>
-    <div class="stat"><div class="num" id="stIgnored">0</div><div class="lbl">ignorados</div></div>
-    <div class="stat"><div class="num" id="stSize">0 B</div><div class="lbl">tamanho</div></div>
+  <!-- Step 4 -->
+  <div class="card" id="step4" style="display:none">
+    <h3><ion-icon name="checkmark-done-outline"></ion-icon> Passo 4 — Execução</h3>
+    <p class="help">Aplicando as operações aprovadas. Cada passo é registrado no journal.</p>
+    <div class="log" id="log2"><div class="dim"># caoszero v2.0.0 — aguardando execução…</div></div>
+    <div style="margin-top:12px;text-align:center">
+      <button class="dz-btn" onclick="goStep(1)" style="background:#0d1117;border:1px solid #263056;color:var(--muted);padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit">Voltar ao início</button>
+    </div>
   </div>
 
   <div class="footer">caoszero ©</div>
 </div>
 
-<button class="fab-apply" id="btnApply" type="button">✓ Aplicar organização</button>
+<button class="fab" id="btnApply" type="button">✓ Aplicar organização</button>
 
 <div class="modal-backdrop" id="confirmModal">
   <div class="modal">
     <h3>Aplicar organização?</h3>
-    <p>Esta ação moverá os arquivos de acordo com o plano simulado. Você poderá desfazer com <code>undo</code> depois.</p>
+    <p>Esta ação moverá os arquivos de acordo com o plano. Você poderá desfazer com <code>undo</code>.</p>
     <div class="modal-actions">
       <button class="btn-cancel" type="button" id="btnCancelApply">Cancelar</button>
       <button class="btn-confirm" type="button" id="btnConfirmApply">Aplicar</button>
@@ -143,54 +184,49 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <script>
-const CATS={'.pdf':'Documentos','.doc':'Documentos','.docx':'Documentos','.txt':'Documentos','.md':'Documentos','.rtf':'Documentos','.odt':'Documentos','.xls':'Planilhas','.xlsx':'Planilhas','.csv':'Planilhas','.ods':'Planilhas','.jpg':'Imagens','.jpeg':'Imagens','.png':'Imagens','.gif':'Imagens','.bmp':'Imagens','.svg':'Imagens','.webp':'Imagens','.heic':'Imagens','.tif':'Imagens','.tiff':'Imagens','.mp4':'Videos','.mkv':'Videos','.avi':'Videos','.mov':'Videos','.wmv':'Videos','.flv':'Videos','.webm':'Videos','.m4v':'Videos','.mp3':'Musicas','.wav':'Musicas','.flac':'Musicas','.aac':'Musicas','.ogg':'Musicas','.m4a':'Musicas','.zip':'Compactados','.rar':'Compactados','.7z':'Compactados','.tar':'Compactados','.gz':'Compactados','.tgz':'Compactados','.bz2':'Compactados','.xz':'Compactados','.exe':'Instaladores','.msi':'Instaladores','.deb':'Instaladores','.rpm':'Instaladores','.dmg':'Instaladores','.pkg':'Instaladores','.py':'Codigo','.js':'Codigo','.ts':'Codigo','.java':'Codigo','.c':'Codigo','.cpp':'Codigo','.cs':'Codigo','.go':'Codigo','.rs':'Codigo','.sh':'Codigo','.bat':'Codigo','.ps1':'Codigo','.html':'Codigo','.css':'Codigo','.json':'Codigo','.xml':'Codigo','.yml':'Codigo','.yaml':'Codigo'};
+const CATS={'.pdf':'Documentos','.doc':'Documentos','.docx':'Documentos','.txt':'Documentos','.md':'Documentos','.rtf':'Documentos','.odt':'Documentos','.xls':'Planilhas','.xlsx':'Planilhas','.csv':'Planilhas','.ods':'Planilhas','.jpg':'Imagens','.jpeg':'Imagens','.png':'Imagens','.gif':'Imagens','.bmp':'Imagens','.svg':'Imagens','.webp':'Imagens','.mp4':'Videos','.mkv':'Videos','.avi':'Videos','.mov':'Videos','.wmv':'Videos','.flv':'Videos','.webm':'Videos','.m4v':'Videos','.mp3':'Musicas','.wav':'Musicas','.flac':'Musicas','.aac':'Musicas','.ogg':'Musicas','.m4a':'Musicas','.zip':'Compactados','.rar':'Compactados','.7z':'Compactados','.tar':'Compactados','.gz':'Compactados','.tgz':'Compactados','.bz2':'Compactados','.xz':'Compactados','.exe':'Instaladores','.msi':'Instaladores','.deb':'Instaladores','.rpm':'Instaladores','.dmg':'Instaladores','.pkg':'Instaladores','.py':'Codigo','.js':'Codigo','.ts':'Codigo','.java':'Codigo','.c':'Codigo','.cpp':'Codigo','.cs':'Codigo','.go':'Codigo','.rs':'Codigo','.sh':'Codigo','.bat':'Codigo','.ps1':'Codigo','.html':'Codigo','.css':'Codigo','.json':'Codigo','.xml':'Codigo','.yml':'Codigo','.yaml':'Codigo'};
 function categoryOf(n){const i=n.lastIndexOf('.');const e=i>=0?n.slice(i).toLowerCase():'';if(n.toLowerCase().endsWith('.tar.gz'))return 'Compactados';return CATS[e]||'Outros';}
 function fmtSize(b){if(b<1024)return b+' B';if(b<1048576)return (b/1024).toFixed(1)+' KB';return (b/1048576).toFixed(1)+' MB';}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function log(h){const l=document.getElementById('log');const d=document.createElement('div');d.innerHTML=h;l.appendChild(d);l.scrollTop=l.scrollHeight;}
 
-let state={target:'', plan:[], movedSet:new Set()};
+let state={target:'',plan:[],movedSet:new Set()};
+
+function goStep(n){
+  for (let i=1;i<=4;i++){
+    const s=document.getElementById('step'+i);
+    if (s) s.style.display = (i===n)?'block':'none';
+    const st=document.querySelectorAll('.stepper .step')[i-1];
+    if (st){ st.classList.remove('active','done'); if(i<n) st.classList.add('done'); if(i===n) st.classList.add('active'); }
+  }
+  if (n===3) scanFolder();
+  if (n===4) runApply();
+}
 
 async function pickFolder(){
-  let path = null;
-  if (window.pywebview && window.pywebview.api && window.pywebview.api.pick_folder) {
-    try { path = await window.pywebview.api.pick_folder(); } catch(e){ console.error(e); }
-  }
-  if (!path) {
-    path = prompt('Informe o caminho da pasta:');
-  }
-  if (path) {
-    document.getElementById('targetPath').value = path;
-  }
+  let path=null;
+  if (window.pywebview && window.pywebview.api && window.pywebview.api.pick_folder) { try { path = await window.pywebview.api.pick_folder(); } catch(e){ console.error(e); } }
+  if (!path) path = prompt('Informe o caminho da pasta:');
+  if (path) document.getElementById('targetPath').value = path;
 }
 
 async function scanFolder(){
   const target = document.getElementById('targetPath').value.trim();
   if (!target) { alert('Informe uma pasta.'); return; }
   state.target = target;
-  const logEl = document.getElementById('log');
-  logEl.innerHTML = '';
-  log('<span class="cmd">$ caoszero organize "' + esc(target) + '"</span>');
+  const logEl=document.getElementById('log'); if(logEl) logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize "'+esc(target)+'"</span>');
   log('<span class="dim"># analisando…</span>');
-  document.getElementById('progressWrap').style.display='block';
-  document.getElementById('bar').style.width='5%';
-  document.getElementById('progressText').textContent='Analisando…';
-  document.getElementById('progressPct').textContent='5%';
-
   try {
     const res = await fetch('/api/scan', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({target: target})});
     const data = await res.json();
     if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
     state.plan = data.operations || [];
     state.movedSet = new Set(state.plan.filter(o=>o.destination && o.source!==o.destination).map(o=>o.source_name));
-
-    // before tree
     const beforeNames = state.plan.map(o=>o.source);
     const beforeTree = buildTree(beforeNames);
     renderTree(beforeTree, document.getElementById('beforeTree'), null);
-    document.getElementById('beforeCount').textContent = data.counts.analisados + ' arquivos';
-
-    // after tree (grouped by category)
+    document.getElementById('beforeCount').textContent = data.counts.analisados+' arquivos';
     const afterRoot = {};
     for (const op of state.plan) {
       const cat = op.category || 'Outros';
@@ -198,65 +234,17 @@ async function scanFolder(){
       afterRoot[cat].children[op.source_name] = {__file:true, name: op.source_name, size: op.size};
     }
     renderTree(afterRoot, document.getElementById('afterTree'), state.movedSet);
-    document.getElementById('afterCount').textContent = state.plan.length + ' arquivos';
-
+    document.getElementById('afterCount').textContent = state.plan.length+' arquivos';
     document.getElementById('treeGrid').style.display='grid';
     document.getElementById('stats').style.display='grid';
     document.getElementById('stFiles').textContent = data.counts.analisados;
     document.getElementById('stOps').textContent = data.counts.operacoes;
     document.getElementById('stIgnored').textContent = data.counts.ignorados;
     document.getElementById('stSize').textContent = fmtSize(data.counts.bytes);
-    const fab = document.getElementById('btnApply'); if (fab) fab.classList.add('show');
     const r = document.getElementById('result'); r.classList.add('show');
-    document.getElementById('rtitle').textContent = data.counts.operacoes + ' operações planejadas';
-    document.getElementById('bar').style.width='100%';
-    document.getElementById('progressText').textContent='Concluído';
-    document.getElementById('progressPct').textContent='100%';
+    document.getElementById('rtitle').textContent = data.counts.operacoes+' operações planejadas';
     log('<span class="ok">SIMULAÇÃO concluída: '+data.counts.operacoes+' operações. Nenhum arquivo alterado.</span>');
-    if (data.skipped && data.skipped.length) {
-      for (const s of data.skipped) log('<span class="dim">ignorado: '+esc(s.path)+' — '+esc(s.reason)+'</span>');
-    }
-  } catch (e) {
-    log('<span class="err">Erro: '+esc(String(e))+'</span>');
-  }
-}
-
-async function applyOrg(){
-  const target = state.target || document.getElementById('targetPath').value.trim();
-  if (!target) { alert('Informe uma pasta.'); return; }
-  document.getElementById('confirmModal').classList.remove('show');
-  const logEl = document.getElementById('log');
-  logEl.innerHTML = '';
-  log('<span class="cmd">$ caoszero organize "'+esc(target)+'" --apply</span>');
-  document.getElementById('bar').style.width='0%';
-  document.getElementById('progressText').textContent='Aplicando…';
-  document.getElementById('progressPct').textContent='0%';
-  try {
-    const res = await fetch('/api/apply', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({target: target, apply: true})});
-    const data = await res.json();
-    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
-    const r = document.getElementById('result'); r.classList.add('show');
-    document.getElementById('rtitle').textContent = data.moved + ' arquivos organizados';
-    document.getElementById('bar').style.width='100%';
-    document.getElementById('progressText').textContent='Concluído';
-    document.getElementById('progressPct').textContent='100%';
-    log('<span class="ok">Execução concluída: '+data.moved+' movidos, '+data.failed+' falhas.</span>');
-    log('<span class="dim"># para desfazer: caoszero undo --latest</span>');
-    const fab = document.getElementById('btnApply'); if (fab) fab.classList.remove('show');
-  } catch (e) {
-    log('<span class="err">Erro: '+esc(String(e))+'</span>');
-  }
-}
-
-async function undoLast(){
-  const logEl = document.getElementById('log');
-  logEl.innerHTML = '';
-  log('<span class="cmd">$ caoszero undo --latest</span>');
-  try {
-    const res = await fetch('/api/undo', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({latest: true})});
-    const data = await res.json();
-    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
-    log('<span class="ok">Restauradas: '+data.undone+' | Falhas: '+data.undo_failed+'</span>');
+    const fab = document.getElementById('btnApply'); if (fab) fab.classList.add('show');
   } catch (e) {
     log('<span class="err">Erro: '+esc(String(e))+'</span>');
   }
@@ -275,27 +263,96 @@ function buildTree(paths){
   }
   return root;
 }
-function renderTree(root, ul){
+function renderTree(root, ul, movedSet){
   ul.innerHTML='';
   const keys = Object.keys(root).sort((a,b)=>{const da=root[a].__dir?0:1,db=root[b].__dir?0:1;if(da!==db)return da-db;return a.localeCompare(b,'pt-BR',{sensitivity:'base'});});
   for (const k of keys){
     const n = root[k];
     const li = document.createElement('li');
     if (n.__dir){
-      li.innerHTML = '<span class="folder"><span class="caret">▾</span> <ion-icon name="folder-outline" style="vertical-align:middle;margin-right:2px;font-size:13px"></ion-icon> '+esc(n.name)+'/</span>';
+      li.innerHTML = '<span class="folder"><span class="caret">▾</span> <ion-icon name="folder-outline" style="vertical-align:middle;margin-right:2px;font-size:12px"></ion-icon> '+esc(n.name)+'/</span>';
       const span = li.querySelector('.folder');
       span.addEventListener('click',(e)=>{e.stopPropagation();const sub=li.querySelector('ul');const isCol=sub.style.display==='none';sub.style.display=isCol?'':'none';span.classList.toggle('collapsed',!isCol);});
       const sub = document.createElement('ul');
-      renderTree(n.children, sub);
+      renderTree(n.children, sub, movedSet);
       li.appendChild(sub);
     } else {
-      li.innerHTML = '<span class="file">  '+esc(n.name)+'</span>';
+      const moved = movedSet && movedSet.has(n.name);
+      li.innerHTML = '<span class="file">'+(moved?'→ ':'  ')+esc(n.name)+'</span>';
+      if (moved) li.querySelector('.file').classList.add('moved');
     }
     ul.appendChild(li);
   }
 }
 
-// wiring
+function runApply(){
+  const log2 = document.getElementById('log2');
+  if (log2) { log2.innerHTML=''; const d=document.createElement('div'); d.innerHTML='<span class="cmd">$ caoszero organize --apply</span>'; log2.appendChild(d); }
+  const fab = document.getElementById('btnApply'); if (fab) fab.classList.add('show');
+}
+
+async function applyOrg(){
+  const target = document.getElementById('targetPath').value.trim();
+  if (!target) { alert('Informe uma pasta.'); return; }
+  document.getElementById('confirmModal').classList.remove('show');
+  const logEl = document.getElementById('log'); logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero organize "'+esc(target)+'" --apply</span>');
+  try {
+    const res = await fetch('/api/apply', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({target: target, apply: true})});
+    const data = await res.json();
+    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
+    const r = document.getElementById('result'); r.classList.add('show');
+    document.getElementById('rtitle').textContent = data.moved + ' arquivos organizados';
+    log('<span class="ok">Execução concluída: '+data.moved+' movidos, '+data.failed+' falhas.</span>');
+    log('<span class="dim"># para desfazer: caoszero undo --latest</span>');
+    const fab = document.getElementById('btnApply'); if (fab) fab.classList.remove('show');
+  } catch (e) {
+    log('<span class="err">Erro: '+esc(String(e))+'</span>');
+  }
+}
+
+async function undoLast(){
+  const logEl = document.getElementById('log'); logEl.innerHTML='';
+  log('<span class="cmd">$ caoszero undo --latest</span>');
+  try {
+    const res = await fetch('/api/undo', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({latest: true})});
+    const data = await res.json();
+    if (data.error) { log('<span class="err">Erro: '+esc(data.error)+'</span>'); return; }
+    log('<span class="ok">Restauradas: '+data.undone+' | Falhas: '+data.undo_failed+'</span>');
+  } catch (e) {
+    log('<span class="err">Erro: '+esc(String(e))+'</span>');
+  }
+}
+
+function pickFolder(){
+  let path = null;
+  if (window.pywebview && window.pywebview.api && window.pywebview.api.pick_folder) {
+    window.pywebview.api.pick_folder().then(p => { if (p) document.getElementById('targetPath').value = p; }).catch(()=>{});
+  } else {
+    const p = prompt('Informe o caminho da pasta:');
+    if (p) document.getElementById('targetPath').value = p;
+  }
+}
+
+const dz = document.getElementById('dropzone');
+const fi = document.getElementById('fileInput');
+if (dz && fi) {
+  dz.addEventListener('dragover', (e)=>{ e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', ()=> dz.classList.remove('dragover'));
+  dz.addEventListener('drop', (e)=>{ e.preventDefault(); dz.classList.remove('dragover'); handleDrop(e.dataTransfer.files); });
+  fi.addEventListener('change', (e)=> handleDrop(e.target.files));
+}
+function triggerPick(){ if (fi) fi.click(); }
+function handleDrop(files){
+  if (!files || !files.length) return;
+  const f = files[0];
+  const rel = f.webkitRelativePath || f.name;
+  const parts = rel.split('/');
+  if (parts.length > 1) document.getElementById('targetPath').value = parts.slice(0,-1).join('/');
+  else document.getElementById('targetPath').value = '.';
+  scanFolder();
+}
+
 const btnApply = document.getElementById('btnApply');
 if (btnApply) btnApply.addEventListener('click', ()=> document.getElementById('confirmModal').classList.add('show'));
 const btnCancel = document.getElementById('btnCancelApply');
@@ -303,7 +360,6 @@ if (btnCancel) btnCancel.addEventListener('click', ()=> document.getElementById(
 const btnConfirm = document.getElementById('btnConfirmApply');
 if (btnConfirm) btnConfirm.addEventListener('click', applyOrg);
 
-// pywebview ready
 window.addEventListener('pywebviewready', ()=>{ console.log('pywebview ready'); });
 </script>
 </body>

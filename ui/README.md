@@ -1,9 +1,11 @@
 # Interfaces do CaosZero (protótipos)
 
-Dezesseis layouts alternativos para a interface gráfica do CaosZero, inspirados
+Vinte e dois layouts alternativos para a interface gráfica do CaosZero, inspirados
 na estética do CleanMyMac (hero roxo, botões em pílula, cartões arredondados,
-tipografia limpa) e nas cores do Dark Dashboard. Todos são arquivos HTML
-autocontidos, com simulação em JavaScript, sem backend.
+tipografia limpa), nas cores do Dark Dashboard e nos recursos do DropIt e do
+Kimi Work (perfis, associações, filtros, ações, prompt em linguagem natural,
+plano de revisão, agendamento). Todos são arquivos HTML autocontidos, com
+simulação em JavaScript, sem backend.
 
 ## Primeira rodada
 
@@ -35,6 +37,22 @@ autocontidos, com simulação em JavaScript, sem backend.
 | `layout-14-dualtree-neon.html` | Dual Tree Neon — brilho neon verde/roxo, cartões de vidro com glow |
 | `layout-15-dualtree-splitpanels.html` | Dual Tree Split Panels — entrada à esquerda, saída planejada à direita |
 | `layout-16-dualtree-terminallog.html` | Dual Tree Terminal Log — estética de terminal, árvores como blocos de código |
+
+## Quarta rodada — baseado em DropIt + Kimi AI
+
+| Arquivo | Estilo |
+| --- | --- |
+| `layout-17-dropit-kimi-hybrid.html` | DropIt + Kimi Hybrid — perfis, regras, prompt NL, plano de revisão, agendamento |
+| `layout-18-kimi-work.html` | Kimi Work Style — gradientes, glass, prompt NL, plano de revisão |
+| `layout-19-dropit-pro.html` | DropIt Pro — desktop-app: perfis, associações, filtros, ações, progress window |
+
+## Quinta rodada — DropIt explicativo
+
+| Arquivo | Estilo |
+| --- | --- |
+| `layout-20-dropit-explained.html` | DropIt Explained — passo a passo numerado, associações explicadas, ícone flutuante |
+| `layout-21-dropit-wizard.html` | DropIt Wizard — assistente em 4 passos: pasta → regras → revisar → executar |
+| `layout-22-dropit-dashboard.html` | DropIt Dashboard — dashboard explicativo: perfis, associações, filtros, funcionalidades, IA, agendamento |
 
 Abra `index.html` para ver a galeria e escolher um layout. Após a escolha, o
 layout selecionado será integrado à aplicação (backend Python, persistência de
